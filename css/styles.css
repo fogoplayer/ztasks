@@ -1,0 +1,33 @@
+.collapsible-header, .collection-item.collapsible {
+    /*border:none;*/
+    padding:0px;
+}
+
+    .taskElement {
+        display: inline-block;
+    }
+        .taskElement.checkboxContainer {
+            vertical-align:middle;
+            height:20px;
+            margin:9px;
+            margin-right:0px;
+        }
+        
+        .taskElement.taskName {
+            width:-webkit-fill-available;
+            line-height:38px;
+            font-size:1em;
+        }
+        
+            .taskElement.taskName:focus {
+                outline:none;
+            }
+            
+        .taskElement.menu{
+            height:38px;
+            padding:9px;
+        }
+        
+            .taskElement.menu .material-icons {
+                margin:0px;
+            }

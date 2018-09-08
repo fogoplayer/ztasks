@@ -1,5 +1,7 @@
+import List from "./List.js";
 
-
+const L = new List();
+L.renderTasks()
 
 //Register Service Worker (PWABuilder)
 if (navigator.serviceWorker.controller) {

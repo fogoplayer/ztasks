@@ -51,3 +51,8 @@
                 .collapsible-body .collapsible li .collapsible-header{
                     border:none;
                 }
+
+#newTask{
+    display:flex;
+    width:-webkit-fill-available;
+}

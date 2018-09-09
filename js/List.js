@@ -18,6 +18,7 @@ class List {
             }
         ];
         this.renderTasks("root");
+        document.getElementById("newTask").onclick=()=>{ this.addTask() };
     }
     
     /**
@@ -183,6 +184,34 @@ class List {
                     this.createTaskNode(subtask, reference.concat([taskObject.subtasks.indexOf(subtask)]), id);
                 });
             }
+    }
+    
+    /**
+     * Add task to database and update UI
+     * @param reference-An array of number references
+     * @return null
+    **/
+    addTask(reference = "root"){
+        const newTask = {
+                name: "",
+                checked: false,
+                dueDate: null,
+                details: "",
+                subtasks: []
+            }
+        if(reference === "root"){
+            this.tasks.push(newTask)
+            this.createTaskNode(newTask, [this.tasks.indexOf(newTask)]);
+        }else{
+            let tasksArray = this.tasks;
+            reference = reference.split("_").map(Number);
+            reference.forEach(ref => {
+                tasksArray = tasksArray[ref].subtasks;
+            });
+            tasksArray.push(newTask)
+            this.createTaskNode(newTask, reference.concat([tasksArray.indexOf(task)]), reference);
+        }
+        document.getElementById(reference).lastChild.querySelector(".taskName").focus();
     }
 }
 

@@ -1,33 +1,52 @@
 .collapsible-header, .collection-item.collapsible {
-    /*border:none;*/
-    padding:0px;
+    padding:0;
 }
-
-    .taskElement {
-        display: inline-block;
+    .collapsible{
+        margin:0;
     }
-        .taskElement.checkboxContainer {
-            vertical-align:middle;
-            height:20px;
-            margin:9px;
-            margin-right:0px;
+    
+        .taskElement {
+            display: inline-block;
         }
-        
-        .taskElement.taskName {
-            width:-webkit-fill-available;
-            line-height:38px;
-            font-size:1em;
-        }
-        
-            .taskElement.taskName:focus {
-                outline:none;
+            .taskElement.checkboxContainer {
+                vertical-align:middle;
+                height:20px;
+                margin:9px;
+                margin-right:0px;
             }
             
-        .taskElement.menu{
-            height:38px;
-            padding:9px;
-        }
-        
-            .taskElement.menu .material-icons {
-                margin:0px;
+            .taskElement.taskName {
+                width:-webkit-fill-available;
+                line-height:38px;
+                font-size:1em;
             }
+            
+                .taskElement.taskName:focus {
+                    outline:none;
+                }
+                
+            .taskElement.chevron,
+            .taskElement.menu{
+                height:38px;
+                padding:9px;
+            }
+            
+            .taskElement.chevron{
+                padding-right:0;
+            }
+            
+                .taskElement.chevron .material-icons,
+                .taskElement.menu .material-icons {
+                    margin:0px;
+                }
+        .collapsible-body {
+            padding:0;
+        }
+            
+            .collapsible-body .collapsible{
+                border:none;
+            }
+            
+                .collapsible-body .collapsible li .collapsible-header{
+                    border:none;
+                }

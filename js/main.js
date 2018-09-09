@@ -1,7 +1,6 @@
 import List from "./List.js";
 
 const L = new List();
-L.renderTasks();
 
 
 M.Dropdown.init(document.querySelectorAll('.menu .dropdown-trigger'), {

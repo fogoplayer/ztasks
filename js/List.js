@@ -17,6 +17,7 @@ class List {
                 subtasks:[]
             }
         ]
+        this.renderTasks()
     }
     
     renderTasks(){

@@ -66,19 +66,6 @@ class List {
                     taskName.contentEditable=true;
                     if(taskObject.name){ taskName.innerText = taskObject.name }
                     collapsibleHeader.appendChild(taskName);
-                //Add dropdown chevron
-                if (taskObject.subtasks && taskObject.subtasks.length){
-                    const chevronContainer = document.createElement("div");
-                        chevronContainer.classList.add("taskElement", "chevron")
-                        //Add i tag
-                        const i = document.createElement("i");
-                            i.classList.add("material-icons");
-                            // Add icon
-                            const icon = document.createTextNode("keyboard_arrow_up");
-                                i.appendChild(icon);
-                            chevronContainer.appendChild(i);
-                        collapsibleHeader.appendChild(chevronContainer);
-                }
                 //Add menu container
                 const menuContainer = document.createElement("div");
                     menuContainer.classList.add("taskElement", "menu");
@@ -94,6 +81,19 @@ class List {
                             dropdownTrigger.appendChild(i);
                         menuContainer.appendChild(dropdownTrigger);
                     collapsibleHeader.appendChild(menuContainer);
+                //Add dropdown chevron
+                if (taskObject.subtasks && taskObject.subtasks.length){
+                    const chevronContainer = document.createElement("div");
+                        chevronContainer.classList.add("taskElement", "chevron")
+                        //Add i tag
+                        const i = document.createElement("i");
+                            i.classList.add("material-icons");
+                            // Add icon
+                            const icon = document.createTextNode("keyboard_arrow_up");
+                                i.appendChild(icon);
+                            chevronContainer.appendChild(i);
+                        collapsibleHeader.appendChild(chevronContainer);
+                }
                 li.appendChild(collapsibleHeader);
             //Add body
             const collapsibleBody = document.createElement("div");

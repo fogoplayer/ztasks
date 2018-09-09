@@ -26,19 +26,24 @@
                 }
                 
             .taskElement.chevron,
-            .taskElement.menu{
+            .taskElement.menu {
                 height:38px;
                 padding:9px;
             }
             
-            .taskElement.chevron{
-                padding-right:0;
+            .taskElement.menu .material-icons {
+                color:rgb(34,34,34);
             }
+            
+                .collapsible-header:hover .taskElement.menu .material-icons {
+                    color:rgb(255,255,255);
+                }
             
                 .taskElement.chevron .material-icons,
                 .taskElement.menu .material-icons {
                     margin:0px;
                 }
+        
         .collapsible-body {
             padding:0;
         }

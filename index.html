@@ -7,31 +7,28 @@
     <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!--JS-->
     <script type="module" src="js/main.js"></script>
     <script src="js/futuristic-materialize.js"></script>
-
     <!--CSS-->
     <link rel="stylesheet" href="css/futuristic-materialize.css">
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="iconfont/material-icons.css">
-</head>
+    <link rel="stylesheet" href="iconfont/material-icons.css"> </head>
 
 <body>
     <div class="navbar-fixed">
         <nav>
-            <div class="nav-wrapper">
-                <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
-                <a href="" class="brand-logo left">ZTasks</a>
-                <ul class="right">
-                    <li><a><i class="material-icons">clear_all</i></a></li>
-                </ul>
+            <div class="nav-wrapper"> <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a> <a href="" class="brand-logo left">ZTasks</a>
             </div>
         </nav>
     </div>
-    <div id="list">
-        <ul class="collapsible" id="root"></div>
+    <div>
+        <ul class="collapsible" id="root"></ul>
+    </div>
+    <div style="display:flex;">
+        <div class="taskElement iconContainer"><i class="material-icons">add</i></div>
+        <div class="taskElement" style="padding-top:9px; width:-webkit-fill-available; line-height:26px">Add task</div>
+        <div class="taskElement iconContainer"><i class="material-icons">clear_all</i></div>
     </div>
 </body>
 

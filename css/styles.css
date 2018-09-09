@@ -7,9 +7,9 @@
     
         .taskElement {
             display: inline-block;
+            line-height:38px;
         }
             .taskElement.checkboxContainer {
-                vertical-align:middle;
                 height:20px;
                 margin:9px;
                 margin-right:0px;
@@ -17,16 +17,13 @@
             
             .taskElement.taskName {
                 width:-webkit-fill-available;
-                line-height:38px;
-                font-size:1em;
             }
             
                 .taskElement.taskName:focus {
                     outline:none;
                 }
-                
-            .taskElement.chevron,
-            .taskElement.menu {
+            
+            .iconContainer{
                 height:38px;
                 padding:9px;
             }
@@ -39,8 +36,7 @@
                     color:rgb(255,255,255);
                 }
             
-                .taskElement.chevron .material-icons,
-                .taskElement.menu .material-icons {
+                .taskElement .material-icons {
                     margin:0px;
                 }
         

@@ -4,8 +4,14 @@ const L = new List();
 L.renderTasks();
 
 
-// M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
-M.Collapsible.init(document.querySelectorAll('.collapsible'), {accordion:false});
+M.Dropdown.init(document.querySelectorAll('.menu .dropdown-trigger'), {
+    alignment:"right",
+    constrainWidth:false,
+    coverTrigger:false
+});
+M.Collapsible.init(document.querySelectorAll('.collapsible'), {
+    accordion: false
+});
 
 //Register Service Worker (PWABuilder)
 if (navigator.serviceWorker.controller) {

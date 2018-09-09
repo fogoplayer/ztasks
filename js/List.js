@@ -16,14 +16,40 @@ class List {
                 checked:false,
                 subtasks:[]
             }
-        ]
-        this.renderTasks()
+        ];
+        this.renderTasks("root");
     }
     
-    renderTasks(){
-        this.tasks.forEach(task =>{
-            this.createTaskNode(task, [this.tasks.indexOf(task)]);
-        })
+    /**
+     * Renders all tasks at a certain level in the list
+     * @param id-the id of the collapsible-body where the tasks will be placed
+     * @return null
+    **/
+    renderTasks(id) {
+        if (id === "root") {
+            this.tasks.forEach(task => {
+                this.createTaskNode(task, [this.tasks.indexOf(task)]);
+            });
+        }
+        else {
+            let tasksArray = this.tasks;
+            const reference = id.split("_").map(Number);
+            console.warn(reference);
+            reference.forEach(ref => {
+                tasksArray = tasksArray[ref].subtasks;
+            });
+            tasksArray.forEach(task => {
+                this.createTaskNode(task, reference.concat([tasksArray.indexOf(task)]), id);
+            });
+        }
+        M.Dropdown.init(document.querySelectorAll('.menu .dropdown-trigger'), {
+            alignment: "right",
+            constrainWidth: false,
+            coverTrigger: false
+        });
+        M.Collapsible.init(document.querySelectorAll('.collapsible'), {
+            accordion: false
+        });
     }
     
     /**
@@ -32,7 +58,22 @@ class List {
      * @return-either null, or the task node
     **/
     createTaskNode(taskObject, reference, parent = "root"){
-        const id=reference.join("");
+        //Add chevron to parent if not root and parent doesn't already have one
+        if (parent !== "root" && !document.getElementById(parent).parentNode.previousSibling.querySelector(".chevron")){
+            const chevronContainer = document.createElement("div");
+                chevronContainer.classList.add("taskElement", "chevron", "iconContainer");
+                //Add i tag
+                const i = document.createElement("i");
+                    i.classList.add("material-icons");
+                    // Add icon
+                    const icon = document.createTextNode("keyboard_arrow_up");
+                        i.appendChild(icon);
+                    chevronContainer.appendChild(i);
+                document.getElementById(parent).parentNode.previousSibling.appendChild(chevronContainer);
+                document.getElementById(parent).parentNode.parentNode.classList.add("active");
+        }
+        
+        const id = reference.join("_");
         const li = document.createElement("li");
             //Add header
             const collapsibleHeader = document.createElement("div");
@@ -47,7 +88,7 @@ class List {
                     }else{
                         e.target.parentNode.querySelector(".material-icons").innerText = "keyboard_arrow_down";
                     }
-                }
+                };
                 //Add checkbox
                 const checkboxContainer = document.createElement("div");
                     checkboxContainer.classList.add("taskElement", "checkboxContainer");
@@ -75,7 +116,7 @@ class List {
                     //Add dropdown trigger
                     const dropdownTrigger = document.createElement("a");
                         dropdownTrigger.classList.add("dropdown-trigger");
-                        dropdownTrigger.setAttribute("data-target", "menu" + id)
+                        dropdownTrigger.setAttribute("data-target", "menu" + id);
                         //Add i tag
                         const i = document.createElement("i");
                             i.classList.add("material-icons");
@@ -88,7 +129,7 @@ class List {
                 //Add dropdown chevron
                 if (taskObject.subtasks && taskObject.subtasks.length){
                     const chevronContainer = document.createElement("div");
-                        chevronContainer.classList.add("taskElement", "chevron", "iconContainer")
+                        chevronContainer.classList.add("taskElement", "chevron", "iconContainer");
                         //Add i tag
                         const i = document.createElement("i");
                             i.classList.add("material-icons");

@@ -1,3 +1,5 @@
+import Task from "./Task.js";
+
 class List {
     constructor(){
         this.tasks=[
@@ -35,7 +37,6 @@ class List {
         else {
             let tasksArray = this.tasks;
             const reference = id.split("_").map(Number);
-            console.warn(reference);
             reference.forEach(ref => {
                 tasksArray = tasksArray[ref].subtasks;
             });
@@ -56,11 +57,13 @@ class List {
     /**
      * Creates the HTML for a task
      * @param taskObject-the object representing the task to be rendered
+     * @param reference-the array reference of the task
+     * @param parent-the id of the parent node where the task is being inserted
      * @return-either null, or the task node
     **/
     createTaskNode(taskObject, reference, parent = "root"){
         //Add chevron to parent if not root and parent doesn't already have one
-        if (parent !== "root" && !document.getElementById(parent).parentNode.previousSibling.querySelector(".chevron")){
+        if (parent !== "root" && !document.getElementById("header" + parent).querySelector(".chevron")){
             const chevronContainer = document.createElement("div");
                 chevronContainer.classList.add("taskElement", "chevron", "iconContainer");
                 //Add i tag
@@ -70,8 +73,8 @@ class List {
                     const icon = document.createTextNode("keyboard_arrow_up");
                         i.appendChild(icon);
                     chevronContainer.appendChild(i);
-                document.getElementById(parent).parentNode.previousSibling.appendChild(chevronContainer);
-                document.getElementById(parent).parentNode.parentNode.classList.add("active");
+                document.getElementById("body" + parent).parentNode.previousSibling.appendChild(chevronContainer);
+                document.getElementById("body" + parent).parentNode.parentNode.classList.add("active");
         }
         
         const id = reference.join("_");
@@ -80,6 +83,7 @@ class List {
             const collapsibleHeader = document.createElement("div");
                 collapsibleHeader.style.paddingLeft = (30 * (reference.length - 1)) + "px";
                 collapsibleHeader.classList.add("collapsible-header");
+                collapsibleHeader.id="header"+id;
                 collapsibleHeader.onclick = e => {
                     //Don't toggle subtasks unless chevron is clicked
                     if (!(e.target.innerText === "keyboard_arrow_down" || e.target.innerText === "keyboard_arrow_up" || e.target.classList.contains(".chevron"))) {
@@ -110,6 +114,9 @@ class List {
                     taskName.classList.add("taskElement", "taskName");
                     taskName.contentEditable=true;
                     if(taskObject.name){ taskName.innerText = taskObject.name }
+                    taskName.onblur= () => {
+                        this.tasks = Task.deleteOrSaveOnBlur(document.getElementById("header" + id).querySelector(".taskName").innerHTML, id, this);
+                    };
                     collapsibleHeader.appendChild(taskName);
                 //Add menu container
                 const menuContainer = document.createElement("div");
@@ -147,7 +154,7 @@ class List {
                 collapsibleBody.classList.add("collapsible-body");
                 const subtasks = document.createElement("ul");
                     subtasks.classList.add("collapsible");
-                    subtasks.id=id;
+                    subtasks.id="body" + id;
                     collapsibleBody.appendChild(subtasks);
                 li.appendChild(collapsibleBody);    
             
@@ -174,8 +181,7 @@ class List {
                         deleteTask.appendChild(deleteTaskLink);
                     menu.appendChild(deleteTask);
                 li.appendChild(menu);
-                    
-            document.getElementById(parent).appendChild(li);
+            document.getElementById("body" + parent).appendChild(li);
             
             //Add subtasks, if they exist
             if(taskObject.subtasks && taskObject.subtasks.length){
@@ -188,30 +194,33 @@ class List {
     
     /**
      * Add task to database and update UI
-     * @param reference-An array of number references
+     * @param id-the id of the parent, as an underscore-separated string
      * @return null
     **/
-    addTask(reference = "root"){
+    addTask(id = "root"){
         const newTask = {
                 name: "",
                 checked: false,
                 dueDate: null,
                 details: "",
                 subtasks: []
-            }
-        if(reference === "root"){
-            this.tasks.push(newTask)
-            this.createTaskNode(newTask, [this.tasks.indexOf(newTask)]);
+            };
+        let tasksArray;
+        let reference;
+        if(id === "root"){
+            tasksArray = this.tasks;
+            reference = [];
         }else{
-            let tasksArray = this.tasks;
-            reference = reference.split("_").map(Number);
+            tasksArray = this.tasks;
+            reference = id.split("_").map(Number);
             reference.forEach(ref => {
                 tasksArray = tasksArray[ref].subtasks;
             });
-            tasksArray.push(newTask)
-            this.createTaskNode(newTask, reference.concat([tasksArray.indexOf(task)]), reference);
+            
         }
-        document.getElementById(reference).lastChild.querySelector(".taskName").focus();
+        tasksArray.push(newTask);
+        this.createTaskNode(newTask, reference.concat([tasksArray.length - 1]), id);
+        document.getElementById("header"+reference+(tasksArray.length - 1)).querySelector(".taskName").focus();
     }
 }
 

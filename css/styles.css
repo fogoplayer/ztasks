@@ -7,7 +7,6 @@
     
         .taskElement {
             display: inline-block;
-            line-height:38px;
         }
             .taskElement.checkboxContainer {
                 height:20px;
@@ -17,6 +16,7 @@
             
             .taskElement.taskName {
                 width:-webkit-fill-available;
+                padding-top:9px;
             }
             
                 .taskElement.taskName:focus {

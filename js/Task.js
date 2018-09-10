@@ -42,10 +42,10 @@ class Task {
         }
         taskList.splice(taskList[reference[reference.length - 1]], 1);
 
-        document.getElementById("header" + id).parentNode.remove();
+        document.getElementById("header_" + id).parentNode.remove();
 
         if (taskList.length === 0) {
-            document.getElementById("header" + id).querySelector(".chevron").remove();
+            document.getElementById("header_" + id.substring(0,id.length - 2)).querySelector(".chevron").remove();
         }
     }
 }

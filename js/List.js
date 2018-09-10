@@ -33,7 +33,7 @@ class List {
      * @return null
     **/
     renderTasks(id) {
-        document.getElementById("body" + id).innerHTML="";
+        document.getElementById("body_" + id).innerHTML="";
         if (id === "root") {
             this.tasks.forEach(task => {
                 this.createTaskNode(task, [this.tasks.indexOf(task)]);
@@ -66,37 +66,41 @@ class List {
      * @param parent-the id of the parent node where the task is being inserted
      * @return-either null, or the task node
     **/
-    createTaskNode(taskObject, reference, parent = "root"){
+    createTaskNode(taskObject, reference, parent = "root") {
+
         //Add chevron to parent if not root and parent doesn't already have one
-        if (parent !== "root" && !document.getElementById("header" + parent).querySelector(".chevron")){
+        if (parent !== "root" && !document.getElementById("header_" + parent).querySelector(".chevron")) {
             const chevronContainer = document.createElement("div");
                 chevronContainer.classList.add("taskElement", "chevron", "iconContainer");
                 //Add i tag
                 const i = document.createElement("i");
-                    i.classList.add("material-icons");
-                    // Add icon
-                    const icon = document.createTextNode("keyboard_arrow_up");
-                        i.appendChild(icon);
-                    chevronContainer.appendChild(i);
-                document.getElementById("body" + parent).parentNode.previousSibling.appendChild(chevronContainer);
-                document.getElementById("body" + parent).parentNode.parentNode.classList.add("active");
+                i.classList.add("material-icons");
+                // Add icon
+                const icon = document.createTextNode("keyboard_arrow_up");
+                i.appendChild(icon);
+                chevronContainer.appendChild(i);
+                document.getElementById("header_" + parent).appendChild(chevronContainer);
         }
-        
+        //Make sure parent is active
+        if (parent !== "root" && !document.getElementById("header_" + parent).parentNode.classList.contains("active")) {
+            document.getElementById("header_" + parent).querySelector(".chevron").click();
+        }
+    
         const id = reference.join("_");
         const li = document.createElement("li");
             //Add header
             const collapsibleHeader = document.createElement("div");
                 collapsibleHeader.style.paddingLeft = (30 * (reference.length - 1)) + "px";
                 collapsibleHeader.classList.add("collapsible-header");
-                collapsibleHeader.id="header"+id;
+                collapsibleHeader.id="header_"+id;
                 collapsibleHeader.onclick = e => {
                     //Don't toggle subtasks unless chevron is clicked
                     if (!(e.target.innerText === "keyboard_arrow_down" || e.target.innerText === "keyboard_arrow_up" || e.target.classList.contains(".chevron"))) {
                         e.stopPropagation();
                     }else if (e.target.innerText === "keyboard_arrow_down"){
-                        e.target.parentNode.querySelector(".material-icons").innerText = "keyboard_arrow_up";
+                        e.target.parentNode.querySelector(".chevron .material-icons").innerText = "keyboard_arrow_up";
                     }else{
-                        e.target.parentNode.querySelector(".material-icons").innerText = "keyboard_arrow_down";
+                        e.target.parentNode.querySelector(".chevron .material-icons").innerText = "keyboard_arrow_down";
                     }
                 };
                 //Add checkbox
@@ -120,7 +124,7 @@ class List {
                     taskName.contentEditable=true;
                     if(taskObject.name){ taskName.innerText = taskObject.name }
                     taskName.onblur= () => {
-                        this.tasks = Task.deleteOrSaveOnBlur(document.getElementById("header" + id).querySelector(".taskName").innerHTML, id, this);
+                        this.tasks = Task.deleteOrSaveOnBlur(document.getElementById("header_" + id).querySelector(".taskName").innerHTML, id, this);
                     };
                     collapsibleHeader.appendChild(taskName);
                 //Add menu container
@@ -159,7 +163,7 @@ class List {
                 collapsibleBody.classList.add("collapsible-body");
                 const subtasks = document.createElement("ul");
                     subtasks.classList.add("collapsible");
-                    subtasks.id="body" + id;
+                    subtasks.id="body_" + id;
                     collapsibleBody.appendChild(subtasks);
                 li.appendChild(collapsibleBody);    
             
@@ -176,7 +180,7 @@ class List {
                 const addSubtask = document.createElement("li");
                     const addSubtaskLink = document.createElement("a");
                         addSubtaskLink.innerHTML = "Add Subtask";
-                        addSubtaskLink.onclick="";                                    //TODO
+                        addSubtaskLink.onclick = () => { this.addTask(id) };
                         addSubtask.appendChild(addSubtaskLink);
                     menu.appendChild(addSubtask);
                 const deleteTask = document.createElement("li");
@@ -186,7 +190,7 @@ class List {
                         deleteTask.appendChild(deleteTaskLink);
                     menu.appendChild(deleteTask);
                 li.appendChild(menu);
-            document.getElementById("body" + parent).appendChild(li);
+            document.getElementById("body_" + parent).appendChild(li);
             
             //Add subtasks, if they exist
             if(taskObject.subtasks && taskObject.subtasks.length){
@@ -225,7 +229,7 @@ class List {
         }
         tasksArray.push(newTask);
         this.createTaskNode(newTask, reference.concat([tasksArray.length - 1]), id);
-        document.getElementById("header"+reference+(tasksArray.length - 1)).querySelector(".taskName").focus();
+        document.getElementById("header_"+reference.join("_")+"_"+(tasksArray.length - 1)).querySelector(".taskName").focus();
     }
 }
 

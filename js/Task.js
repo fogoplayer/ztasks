@@ -41,20 +41,13 @@ class Task {
             taskList = taskList[ref].subtasks;
         }
         taskList.splice(taskList[reference[reference.length - 1]], 1);
-        //If root
-        if (reference.length === 1) {
-            document.getElementById("header" + id).parentNode.remove();
-        }
-        //If not
-        else {
-            reference.pop();
-            list.renderTasks(reference.join("_"));
-            if (taskList.length === 0) {
-                document.getElementById("header" + id).querySelector(".chevron").remove();
-            }
+
+        document.getElementById("header" + id).parentNode.remove();
+
+        if (taskList.length === 0) {
+            document.getElementById("header" + id).querySelector(".chevron").remove();
         }
     }
-
 }
 
 export default Task;

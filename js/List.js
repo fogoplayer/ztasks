@@ -10,6 +10,10 @@ class List {
                     {
                         name:"subtask1",
                         subtasks:[]
+                    },
+                    {
+                        name:"subtask2",
+                        subtasks:[]
                     }
                 ]
             },
@@ -29,6 +33,7 @@ class List {
      * @return null
     **/
     renderTasks(id) {
+        document.getElementById("body" + id).innerHTML="";
         if (id === "root") {
             this.tasks.forEach(task => {
                 this.createTaskNode(task, [this.tasks.indexOf(task)]);
@@ -109,7 +114,7 @@ class List {
                             label.appendChild(span);
                         checkboxContainer.appendChild(label);
                     collapsibleHeader.appendChild(checkboxContainer);
-                //Add taskk name
+                //Add task name
                 const taskName = document.createElement("div");
                     taskName.classList.add("taskElement", "taskName");
                     taskName.contentEditable=true;
@@ -177,7 +182,7 @@ class List {
                 const deleteTask = document.createElement("li");
                     const deleteTaskLink = document.createElement("a");
                         deleteTaskLink.innerHTML = "Delete Task";
-                        deleteTaskLink.onclick="";                                    //TODO
+                        deleteTaskLink.onclick = () => {Task.deleteTask(id, this);};
                         deleteTask.appendChild(deleteTaskLink);
                     menu.appendChild(deleteTask);
                 li.appendChild(menu);

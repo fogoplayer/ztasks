@@ -1,5 +1,5 @@
 class Task {
-    constructor(){}
+    constructor() {}
 
     /**
      * When a task unfocuses, save it, or delete it if it's now blank
@@ -16,13 +16,15 @@ class Task {
             return list.tasks;
         }
         else {
-            /*var*/ taskList = list.tasks;
-            /*let*/ reference = id.split("_");
+            /*var*/
+            taskList = list.tasks;
+            /*let*/
+            reference = id.split("_").map(Number);
             for (let i = 0; i < reference.length - 1; i++) {
                 const ref = reference[i];
                 taskList = taskList[ref].subTasks;
             }
-            taskList[reference[reference.length- 1]].name = name;
+            taskList[reference[reference.length - 1]].name = name;
             return list.tasks;
         }
     }
@@ -32,20 +34,24 @@ class Task {
      * @param list-the List being edited
      **/
     static deleteTask(id, list) {
-        let reference = id.split("_");
+        let reference = id.split("_").map(Number);
         let taskList = list.tasks;
         for (let i = 0; i < reference.length - 1; i++) {
             const ref = reference[i];
-            taskList = taskList[ref].subTasks;
+            taskList = taskList[ref].subtasks;
         }
-        taskList.splice(taskList[reference[reference.length- 1]], 1);
+        taskList.splice(taskList[reference[reference.length - 1]], 1);
         //If root
-        if(reference.length === 1){
-            document.getElementById("bodyroot").removeChild(document.getElementById("header"+id).parentNode);
+        if (reference.length === 1) {
+            document.getElementById("header" + id).parentNode.remove();
         }
         //If not
-        else{
-            list.renderTasks(reference.pop().join("_"));
+        else {
+            reference.pop();
+            list.renderTasks(reference.join("_"));
+            if (taskList.length === 0) {
+                document.getElementById("header" + id).querySelector(".chevron").remove();
+            }
         }
     }
 

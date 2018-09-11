@@ -23,8 +23,13 @@ class List {
                 subtasks:[]
             }
         ];
-        this.renderTasks("root");
-        document.getElementById("newTask").onclick=()=>{ this.addTask() };
+        if (window.location.pathname === "/") {
+            this.renderTasks("root");
+            document.getElementById("newTask").onclick = () => {
+                this.addTask()
+            };
+        }
+        
     }
     
     /**

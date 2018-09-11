@@ -195,7 +195,7 @@ class List {
                 const openTaskDetails = document.createElement("li");
                     const openTaskDetailsLink = document.createElement("a");
                         openTaskDetailsLink.innerHTML = "Open Task Details";
-                        openTaskDetailsLink.onclick="";                                    //TODO
+                        openTaskDetailsLink.href="/task-details#"+id;                                    //TODO
                         openTaskDetails.appendChild(openTaskDetailsLink);
                     menu.appendChild(openTaskDetails);
                 const addSubtask = document.createElement("li");

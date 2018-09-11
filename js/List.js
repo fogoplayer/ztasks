@@ -13,6 +13,7 @@ class List {
                     },
                     {
                         name:"subtask2",
+                        checked:true,
                         subtasks:[]
                     }
                 ]
@@ -117,6 +118,11 @@ class List {
                         const checkbox = document.createElement("input");
                             checkbox.classList.add("filled-in");
                             checkbox.setAttribute("type", "checkbox");
+                            if(taskObject.checked){checkbox.setAttribute("checked", taskObject.checked); }
+                            checkbox.onclick = () => {
+                                taskObject.checked = checkbox.checked;
+                                console.log(this.tasks);
+                            }
                             label.appendChild(checkbox);
                         //Add span
                         const span = document.createElement("span");
@@ -195,7 +201,7 @@ class List {
                 const openTaskDetails = document.createElement("li");
                     const openTaskDetailsLink = document.createElement("a");
                         openTaskDetailsLink.innerHTML = "Open Task Details";
-                        openTaskDetailsLink.href="/task-details#"+id;                                    //TODO
+                        openTaskDetailsLink.href="/task-details#"+id;
                         openTaskDetails.appendChild(openTaskDetailsLink);
                     menu.appendChild(openTaskDetails);
                 const addSubtask = document.createElement("li");

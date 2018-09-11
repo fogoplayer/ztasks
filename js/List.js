@@ -126,6 +126,22 @@ class List {
                     taskName.onblur= () => {
                         this.tasks = Task.deleteOrSaveOnBlur(document.getElementById("header_" + id).querySelector(".taskName").innerHTML, id, this);
                     };
+                    taskName.onkeydown = (keypress) => {
+                        switch(keypress.key){
+                            case "Enter":
+                                keypress.preventDefault();      //Don't create a new line
+                                keypress.stopPropagation();     //Don't close/open collapsible
+                                this.addTask(parent);
+                                break;
+                                
+                            case "Escape":
+                                document.blur();
+                                break;
+                                
+                            default:
+                                break;
+                        }
+                    };
                     collapsibleHeader.appendChild(taskName);
                 //Add menu container
                 const menuContainer = document.createElement("div");
@@ -229,7 +245,7 @@ class List {
         }
         tasksArray.push(newTask);
         this.createTaskNode(newTask, reference.concat([tasksArray.length - 1]), id);
-        document.getElementById("header_"+reference.join("_")+"_"+(tasksArray.length - 1)).querySelector(".taskName").focus();
+        document.getElementById("header_"+reference.join("_")+ (id !== "root" ? "_" : "") +(tasksArray.length - 1)).querySelector(".taskName").focus();
     }
 }
 

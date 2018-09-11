@@ -22,8 +22,11 @@ class Task {
             reference = id.split("_").map(Number);
             for (let i = 0; i < reference.length - 1; i++) {
                 const ref = reference[i];
-                taskList = taskList[ref].subTasks;
+                console.warn(taskList[0]);
+                taskList = taskList[ref].subtasks;
+                console.warn(taskList);
             }
+            console.log(taskList,reference);
             taskList[reference[reference.length - 1]].name = name;
             return list.tasks;
         }

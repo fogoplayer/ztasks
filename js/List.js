@@ -97,19 +97,6 @@ class List {
     
         const id = reference.join("_");
         const li = document.createElement("li");
-            li.draggable = "true";
-            li.ondragstart = (e) => {e.stopPropagation(); setTimeout(() => { li.remove(); }, 1); e.dataTransfer.setDragImage(li,0,15); this.taskBeingDragged = taskObject; let parentArray = (parent === "root") ? this.tasks : this.getTasksArrayFromId(parent); parentArray.splice(parentArray.findIndex(t => t.name === taskObject.name), 1); };
-            li.ondragover = (e) => { e.stopPropagation(); li.style.marginBottom="38px"; return false };
-            li.ondragleave = (e) => { e.stopPropagation(); li.style.marginBottom=0 };
-            li.ondrop = (e) => {
-                e.stopPropagation();
-                const mouseDepth = Math.round(e.clientX / 30 );
-                let tempRef = reference.slice(0,mouseDepth);
-                const tasksArray = this.getTasksArrayFromId(tempRef.join("_"));
-                console.warn(tempRef.join("_"));
-                tasksArray.push(this.taskBeingDragged);
-                this.renderTasks();
-            };
             //Add header
             const collapsibleHeader = document.createElement("div");
                 collapsibleHeader.style.paddingLeft = (38 * (reference.length - 1) - 8) + "px";
@@ -232,6 +219,13 @@ class List {
                         deleteTask.appendChild(deleteTaskLink);
                     menu.appendChild(deleteTask);
                 li.appendChild(menu);
+                
+            //Set up drag/drop
+            li.draggable = "true";
+            li.ondragstart = (e) => { e.stopPropagation(); setTimeout(() => { li.remove(); }, 1); collapsibleHeader.style.paddingLeft = "0"; e.dataTransfer.setDragImage(li, 0, 15); this.taskBeingDragged = taskObject; let parentArray = (parent === "root") ? this.tasks : this.getTasksArrayFromId(parent); parentArray.splice(parentArray.findIndex(t => t.name === taskObject.name), 1); };
+            li.ondragover = (e) => { e.stopPropagation(); li.style.marginBottom="38px"; return false };
+            li.ondragleave = (e) => { e.stopPropagation(); li.style.marginBottom=0 };
+            li.ondrop = (e) =>{ e.stopPropagation(); const mouseDepth = Math.round((e.clientX - 8)/ 30 ); let tempRef = reference.slice(0,mouseDepth); const tasksArray = this.getTasksArrayFromId(tempRef.join("_")); console.warn(tempRef.join("_")); tasksArray.push(this.taskBeingDragged); this.renderTasks(); };
             document.getElementById("body_" + parent).appendChild(li);
             
             //Add subtasks, if they exist

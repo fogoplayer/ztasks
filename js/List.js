@@ -65,14 +65,6 @@ class List {
                 this.createTaskNode(task, reference.concat([tasksArray.findIndex(t => t.name === task.name)]), id);
             });
         }
-        M.Dropdown.init(document.querySelectorAll('.menu .dropdown-trigger'), {
-            alignment: "right",
-            constrainWidth: false,
-            coverTrigger: false
-        });
-        M.Collapsible.init(document.querySelectorAll('.collapsible'), {
-            accordion: false
-        });
     }
     
     /**
@@ -225,6 +217,7 @@ class List {
                         deleteTaskLink.onclick = () => {Task.deleteTask(id, this);};
                         deleteTask.appendChild(deleteTaskLink);
                     menu.appendChild(deleteTask);
+                console.log("append menu")
                 li.appendChild(menu);
                 
             //Set up drag/drop
@@ -242,6 +235,15 @@ class List {
                     this.createTaskNode(subtask, reference.concat([taskObject.subtasks.findIndex(t => t.name === subtask.name)]), id);
                 });
             }
+            //Init Materialize
+            M.Dropdown.init(document.querySelectorAll('.menu .dropdown-trigger'), {
+                alignment: "right",
+                constrainWidth: false,
+                coverTrigger: false
+            });
+            M.Collapsible.init(document.querySelectorAll('.collapsible'), {
+                accordion: false
+            });
     }
     
     /**

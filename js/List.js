@@ -5,6 +5,8 @@ class List {
         this.tasks = [{
                 name: "task1",
                 checked: false,
+                dueDate:new Date("July 2"),
+                description: "Blah blah blah",
                 subtasks: [{
                         name: "subtask1",
                         subtasks: [{
@@ -155,6 +157,20 @@ class List {
                         }
                     };
                     collapsibleHeader.appendChild(taskName);
+                
+                //Add Due Date
+                if(taskObject.dueDate){
+                    const dueDateContainer = document.createElement("div");
+                        dueDateContainer.classList.add("taskElement", "iconContainer", "dueDateContainer");
+                        //Add badge
+                        const dueDate = document.createElement("span");
+                            dueDate.classList.add("new","badge","dueDate");
+                            dueDate.setAttribute("data-badge-caption", "");
+                            dueDate.innerText=taskObject.dueDate.toLocaleDateString("nu-arab",{month:"long", day:"numeric"});
+                            dueDateContainer.appendChild(dueDate);
+                        collapsibleHeader.appendChild(dueDateContainer);
+                }
+                
                 //Add menu container
                 const menuContainer = document.createElement("div");
                     menuContainer.classList.add("taskElement", "menu", "iconContainer");

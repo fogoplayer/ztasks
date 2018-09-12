@@ -34,16 +34,20 @@
                     outline:none;
                 }
             
+            .dueDate.badge {
+                width:max-content;
+            }
+            
             .iconContainer{
                 height:38px;
                 padding:9px;
             }
             
-            .taskElement.menu .material-icons {
+            .taskElement.menu {
                 display:none;
             }
             
-                .collapsible-header:hover .taskElement.menu .material-icons {
+                .collapsible-header:hover .taskElement.menu {
                     display:inherit;
                 }
             

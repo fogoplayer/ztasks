@@ -40,15 +40,15 @@
             }
             
             .taskElement.menu .material-icons {
-                color:rgb(34,34,34);
+                display:none;
             }
             
                 .collapsible-header:hover .taskElement.menu .material-icons {
-                    color:rgb(255,255,255);
+                    display:inherit;
                 }
             
                 .taskElement .material-icons {
-                    margin:0px;
+                    margin:0;
                 }
         
         .collapsible-body {

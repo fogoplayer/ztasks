@@ -21,6 +21,7 @@ class List {
             {
                 name:"task2",
                 checked:false,
+                randomProp:"asdf",
                 subtasks:[]
             }
         ];
@@ -42,7 +43,7 @@ class List {
         document.getElementById("body_" + id).innerHTML="";
         if (id === "root") {
             this.tasks.forEach(task => {
-                this.createTaskNode(task, [this.tasks.indexOf(task)]);
+                this.createTaskNode(task, [this.tasks.findIndex(t => t.name === task.name)]);
             });
         }
         else {
@@ -52,7 +53,7 @@ class List {
                 tasksArray = tasksArray[ref].subtasks;
             });
             tasksArray.forEach(task => {
-                this.createTaskNode(task, reference.concat([tasksArray.indexOf(task)]), id);
+                this.createTaskNode(task, reference.concat([tasksArray.findIndex(t => t.name === task.name)]), id);
             });
         }
         M.Dropdown.init(document.querySelectorAll('.menu .dropdown-trigger'), {
@@ -102,11 +103,10 @@ class List {
                 }, 1);
                 this.taskBeingDragged = taskObject;
                 let parentArray = (parent === "root") ? this.tasks : this.getTasksArrayFromId(parent);
-                parentArray.splice(parentArray.indexOf(taskObject),1); }
-            li.ondragover = () => {return false};
+                parentArray.splice(parentArray.findIndex(t => t.name === taskObject.name), 1);
+            }
+            li.ondragover = () => { return false };
             li.ondrop = (e) => {
-                console.log(id)
-                console.warn(JSON.parse(JSON.stringify(this.tasks)));
                 e.stopPropagation();
                 taskObject.subtasks.push(this.taskBeingDragged);
                 this.renderTasks();
@@ -150,7 +150,7 @@ class List {
                     taskName.classList.add("taskElement", "taskName");
                     taskName.contentEditable=true;
                     if(taskObject.name){ taskName.innerText = taskObject.name }
-                    taskName.onblur= () => {
+                    taskName.onblur= (e) => {
                         this.tasks = Task.deleteOrSaveOnBlur(document.getElementById("header_" + id).querySelector(".taskName").innerHTML, id, this);
                     };
                     taskName.onkeydown = (keypress) => {
@@ -239,7 +239,7 @@ class List {
             if(taskObject.subtasks && taskObject.subtasks.length){
                 li.classList.add("active");
                 taskObject.subtasks.forEach(subtask => {
-                    this.createTaskNode(subtask, reference.concat([taskObject.subtasks.indexOf(subtask)]), id);
+                    this.createTaskNode(subtask, reference.concat([taskObject.subtasks.findIndex(t => t.name === subtask.name)]), id);
                 });
             }
     }

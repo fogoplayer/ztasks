@@ -25,6 +25,8 @@ class List {
                 subtasks:[]
             }
         ];
+        
+        //Initial render
         if (window.location.pathname === "/") {
             this.renderTasks();
             document.getElementById("newTask").onclick = () => {
@@ -96,24 +98,21 @@ class List {
         const id = reference.join("_");
         const li = document.createElement("li");
             li.draggable = "true";
-            li.ondragstart = (e) => {
-                e.stopPropagation();
-                setTimeout(() => {
-                    li.remove()
-                }, 1);
-                this.taskBeingDragged = taskObject;
-                let parentArray = (parent === "root") ? this.tasks : this.getTasksArrayFromId(parent);
-                parentArray.splice(parentArray.findIndex(t => t.name === taskObject.name), 1);
-            }
-            li.ondragover = () => { return false };
+            li.ondragstart = (e) => {e.stopPropagation(); setTimeout(() => { li.remove(); }, 1); e.dataTransfer.setDragImage(li,0,15); this.taskBeingDragged = taskObject; let parentArray = (parent === "root") ? this.tasks : this.getTasksArrayFromId(parent); parentArray.splice(parentArray.findIndex(t => t.name === taskObject.name), 1); };
+            li.ondragover = (e) => { e.stopPropagation(); li.style.marginBottom="38px"; return false };
+            li.ondragleave = (e) => { e.stopPropagation(); li.style.marginBottom=0 };
             li.ondrop = (e) => {
                 e.stopPropagation();
-                taskObject.subtasks.push(this.taskBeingDragged);
+                const mouseDepth = Math.round(e.clientX / 30 );
+                let tempRef = reference.slice(0,mouseDepth);
+                const tasksArray = this.getTasksArrayFromId(tempRef.join("_"));
+                console.warn(tempRef.join("_"));
+                tasksArray.push(this.taskBeingDragged);
                 this.renderTasks();
             };
             //Add header
             const collapsibleHeader = document.createElement("div");
-                collapsibleHeader.style.paddingLeft = (30 * (reference.length - 1)) + "px";
+                collapsibleHeader.style.paddingLeft = (38 * (reference.length - 1) - 8) + "px";
                 collapsibleHeader.classList.add("collapsible-header");
                 collapsibleHeader.id = "header_" + id;
                 collapsibleHeader.onclick = e => {
@@ -277,10 +276,12 @@ class List {
     
     getTasksArrayFromId(id){
         let tasksArray = this.tasks;
-        const reference = id.split("_").map(Number);
-        reference.forEach(ref => {
-            tasksArray = tasksArray[ref].subtasks;
-        });
+        if (id !== "" && id !== "root") {
+            const reference = id.split("_").map(Number);
+            reference.forEach(ref => {
+                tasksArray = tasksArray[ref].subtasks;
+            });
+        }
         return tasksArray;
     }
 }

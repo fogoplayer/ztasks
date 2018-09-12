@@ -22,11 +22,8 @@ class Task {
             reference = id.split("_").map(Number);
             for (let i = 0; i < reference.length - 1; i++) {
                 const ref = reference[i];
-                console.warn(taskList[0]);
                 taskList = taskList[ref].subtasks;
-                console.warn(taskList);
             }
-            console.log(taskList,reference);
             taskList[reference[reference.length - 1]].name = name;
             return list.tasks;
         }
@@ -37,13 +34,14 @@ class Task {
      * @param list-the List being edited
      **/
     static deleteTask(id, list) {
+        console.log(id);
         let reference = id.split("_").map(Number);
         let taskList = list.tasks;
         for (let i = 0; i < reference.length - 1; i++) {
             const ref = reference[i];
             taskList = taskList[ref].subtasks;
         }
-        taskList.splice(taskList[reference[reference.length - 1]], 1);
+        taskList.splice(reference[reference.length - 1], 1);
 
         document.getElementById("header_" + id).parentNode.remove();
 

@@ -25,9 +25,9 @@ class List {
             }
         ];
         if (window.location.pathname === "/") {
-            this.renderTasks("root");
+            this.renderTasks();
             document.getElementById("newTask").onclick = () => {
-                this.addTask()
+                this.addTask();
             };
         }
         
@@ -38,7 +38,7 @@ class List {
      * @param id-the id of the collapsible-body where the tasks will be placed
      * @return null
     **/
-    renderTasks(id) {
+    renderTasks(id = "root") {
         document.getElementById("body_" + id).innerHTML="";
         if (id === "root") {
             this.tasks.forEach(task => {
@@ -94,11 +94,28 @@ class List {
     
         const id = reference.join("_");
         const li = document.createElement("li");
+            li.draggable = "true";
+            li.ondragstart = (e) => {
+                e.stopPropagation();
+                setTimeout(() => {
+                    li.remove()
+                }, 1);
+                this.taskBeingDragged = taskObject;
+                let parentArray = (parent === "root") ? this.tasks : this.getTasksArrayFromId(parent);
+                parentArray.splice(parentArray.indexOf(taskObject),1); }
+            li.ondragover = () => {return false};
+            li.ondrop = (e) => {
+                console.log(id)
+                console.warn(JSON.parse(JSON.stringify(this.tasks)));
+                e.stopPropagation();
+                taskObject.subtasks.push(this.taskBeingDragged);
+                this.renderTasks();
+            };
             //Add header
             const collapsibleHeader = document.createElement("div");
                 collapsibleHeader.style.paddingLeft = (30 * (reference.length - 1)) + "px";
                 collapsibleHeader.classList.add("collapsible-header");
-                collapsibleHeader.id="header_"+id;
+                collapsibleHeader.id = "header_" + id;
                 collapsibleHeader.onclick = e => {
                     //Don't toggle subtasks unless chevron is clicked
                     if (!(e.target.innerText === "keyboard_arrow_down" || e.target.innerText === "keyboard_arrow_up" || e.target.classList.contains(".chevron"))) {
@@ -121,8 +138,7 @@ class List {
                             if(taskObject.checked){checkbox.setAttribute("checked", taskObject.checked); }
                             checkbox.onclick = () => {
                                 taskObject.checked = checkbox.checked;
-                                console.log(this.tasks);
-                            }
+                            };
                             label.appendChild(checkbox);
                         //Add span
                         const span = document.createElement("span");
@@ -257,6 +273,15 @@ class List {
         tasksArray.push(newTask);
         this.createTaskNode(newTask, reference.concat([tasksArray.length - 1]), id);
         document.getElementById("header_"+reference.join("_")+ (id !== "root" ? "_" : "") +(tasksArray.length - 1)).querySelector(".taskName").focus();
+    }
+    
+    getTasksArrayFromId(id){
+        let tasksArray = this.tasks;
+        const reference = id.split("_").map(Number);
+        reference.forEach(ref => {
+            tasksArray = tasksArray[ref].subtasks;
+        });
+        return tasksArray;
     }
 }
 

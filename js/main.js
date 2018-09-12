@@ -1,6 +1,7 @@
 import List from "./List.js";
 
 const L = new List();
+window.L = L;
 
 //Register Service Worker (PWABuilder)
 if (navigator.serviceWorker.controller) {

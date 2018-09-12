@@ -2,27 +2,34 @@ import Task from "./Task.js";
 
 class List {
     constructor(){
-        this.tasks=[
-            {
-                name:"task1",
-                checked:false,
-                subtasks:[
-                    {
-                        name:"subtask1",
-                        subtasks:[]
+        this.tasks = [{
+                name: "task1",
+                checked: false,
+                subtasks: [{
+                        name: "subtask1",
+                        subtasks: [{
+                                name: "subtask1",
+                                subtasks: []
+                            },
+                            {
+                                name: "subtask2",
+                                checked: true,
+                                subtasks: []
+                            }
+                        ]
                     },
                     {
-                        name:"subtask2",
-                        checked:true,
-                        subtasks:[]
+                        name: "subtask2",
+                        checked: true,
+                        subtasks: []
                     }
                 ]
             },
             {
-                name:"task2",
-                checked:false,
-                randomProp:"asdf",
-                subtasks:[]
+                name: "task2",
+                checked: false,
+                randomProp: "asdf",
+                subtasks: []
             }
         ];
         

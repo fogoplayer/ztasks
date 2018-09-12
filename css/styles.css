@@ -7,6 +7,15 @@
         margin:0;
     }
     
+    .collapsible,.collapsible-header,.collapsible-body{
+        border:none;
+        box-shadow:none;
+    }
+        
+        #body_root {
+            border-bottom:1px solid var(--accent-color);
+        }
+    
         .taskElement {
             display: inline-block;
         }
@@ -45,14 +54,6 @@
         .collapsible-body {
             padding:0;
         }
-            
-            .collapsible-body .collapsible{
-                border:none;
-            }
-            
-                .collapsible-body .collapsible li .collapsible-header{
-                    border:none;
-                }
 
 #newTask{
     display:flex;

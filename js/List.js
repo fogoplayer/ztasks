@@ -158,15 +158,19 @@ class List {
                                 break;
                                 
                             case "ArrowLeft":
-                                if(keypress.ctrlKey){
-                                    this.indentTask("left",id);
-                                }
+                                if(keypress.ctrlKey){ this.moveTask("left",id); }
                                 break;
                                 
                             case "ArrowRight":
-                                if(keypress.ctrlKey){
-                                    this.indentTask("right",id);
-                                }
+                                if(keypress.ctrlKey){ this.moveTask("right",id); }
+                                break;
+                                
+                            case "ArrowUp":
+                                if(keypress.ctrlKey){ this.moveTask("up",id); }
+                                break;
+                            
+                            case "ArrowDown":
+                                if(keypress.ctrlKey){ this.moveTask("down",id); }
                                 break;
                                 
                             default:
@@ -315,13 +319,14 @@ class List {
      * @param id-the id of the task being indented
      * @return null
     **/
-    indentTask(direction, id){
+    moveTask(direction, id){
         //Set task objects as variables
         const twoLevelsUp = this.getTaskFromId(id.substring(0, id.length - 4));
         const oneLevelUp = this.getTaskFromId(id.substring(0, id.length - 2));
         const taskObject = this.getTaskFromId(id);
         const prevSibling = oneLevelUp.subtasks[oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name) - 1];
-        this.taskBeingDragged="true";
+        const nextSibling = oneLevelUp.subtasks[oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name) + 1];
+        this.taskBeingDragged=true;
         if(direction === "left" && oneLevelUp.name){
             const youngerSiblings = oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name) + 1);
             taskObject.subtasks = taskObject.subtasks.concat(youngerSiblings);
@@ -333,9 +338,17 @@ class List {
             prevSibling.subtasks.push(taskObject);
             oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name), 1);
             this.renderTasks(oneLevelUp.name ? id.substring(0, id.length - 2) : "root");
-            document.getElementById(
-                "header_" + (id.length > 1 ? id.substring(0, id.length - 2) + "_" : "") + (prevSibling ? (oneLevelUp.subtasks.findIndex(t => t.name === prevSibling.name)) + "_" : "") + (prevSibling.subtasks.length - 1)
-                ).children[1].focus();
+            document.getElementById( "header_" + (id.length > 1 ? id.substring(0, id.length - 2) + "_" : "") + (prevSibling ? (oneLevelUp.subtasks.findIndex(t => t.name === prevSibling.name)) + "_" : "") + (prevSibling.subtasks.length - 1) ).children[1].focus();
+        }else if(direction === "up" && prevSibling){
+            oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name), 1);
+            oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === prevSibling.name), 0, taskObject);
+            this.renderTasks(oneLevelUp.name ? id.substring(0, id.length - 2) : "root");
+            document.getElementById("header_" + (id.length > 1 ? id.substring(0, id.length - 2) + "_" : "") + (prevSibling ? oneLevelUp.subtasks.findIndex(t => t.name === prevSibling.name) - 1: "") ).children[1].focus();
+        }else if(direction === "down" && nextSibling){
+            oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name), 1);
+            oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === nextSibling.name) + 1, 0, taskObject);
+            this.renderTasks(oneLevelUp.name ? id.substring(0, id.length - 2) : "root");
+            document.getElementById("header_" + (id.length > 1 ? id.substring(0, id.length - 2) + "_" : "") + (nextSibling ? oneLevelUp.subtasks.findIndex(t => t.name === nextSibling.name) + 1: "")).children[1].focus();
         }
         this.taskBeingDragged = false;
     }

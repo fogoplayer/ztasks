@@ -163,6 +163,12 @@ class List {
                                 }
                                 break;
                                 
+                            case "ArrowRight":
+                                if(keypress.ctrlKey){
+                                    this.indentTask("right",id);
+                                }
+                                break;
+                                
                             default:
                                 break;
                         }
@@ -310,21 +316,21 @@ class List {
      * @return null
     **/
     indentTask(direction, id){
-       if(direction === "left"){
-           //Set task objects as variables
-           const twoLevelsUp = this.getTaskFromId(id.substring(0, id.length - 4));
-           const oneLevelUp = this.getTaskFromId(id.substring(0, id.length - 2));
-           const taskObject = this.getTaskFromId(id);
-           this.taskBeingDragged="true";
-
-           const youngerSiblings = oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name) + 1);
-           taskObject.subtasks = taskObject.subtasks.concat(youngerSiblings);
-           console.warn();
-           oneLevelUp.subtasks.splice(oneLevelUp.subtasks.length - 1, 1);
-           twoLevelsUp.subtasks.splice(twoLevelsUp.subtasks.findIndex(t => t.name === oneLevelUp.name) + 1, 0, taskObject);
-           this.renderTasks(twoLevelsUp.name ? id.substring(0, id.length - 4) : "root");
-           this.taskBeingDragged = false;
-       }
+        //Set task objects as variables
+        const twoLevelsUp = this.getTaskFromId(id.substring(0, id.length - 4));
+        const oneLevelUp = this.getTaskFromId(id.substring(0, id.length - 2));
+        const taskObject = this.getTaskFromId(id);
+        this.taskBeingDragged="true";
+        if(direction === "left" && oneLevelUp.name){
+            const youngerSiblings = oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name) + 1);
+            taskObject.subtasks = taskObject.subtasks.concat(youngerSiblings);
+            oneLevelUp.subtasks.splice(oneLevelUp.subtasks.length - 1, 1);
+            twoLevelsUp.subtasks.splice(twoLevelsUp.subtasks.findIndex(t => t.name === oneLevelUp.name) + 1, 0, taskObject);
+            this.renderTasks(twoLevelsUp.name ? id.substring(0, id.length - 4) : "root");
+            document.getElementById("header_" + (id.length > 4 ? id.substring(0, id.length - 4) + "_" 
+            : "") + (Number(id.substring(id.length - 3, id.length - 2)) + 1)).children[1].focus();
+        }
+        this.taskBeingDragged = false;
     }
     
     getTasksArrayFromId(id){

@@ -353,6 +353,10 @@ class List {
         this.taskBeingDragged = false;
     }
     
+    /**
+     * @param id-the id of the parent task
+     * @return parent.subtasks
+    **/
     getTasksArrayFromId(id){
         let tasksArray = this.tasks;
         if (id !== "" && id !== "root") {
@@ -364,6 +368,11 @@ class List {
         return tasksArray;
     }
     
+    /**
+     * Convert ID to task object
+     * @param id-the id of the parent task
+     * @return task object
+    **/
     getTaskFromId(id){
         let tasksArray = this.tasks;
         let task;

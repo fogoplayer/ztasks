@@ -145,11 +145,16 @@ class List {
                             case "Enter":
                                 keypress.preventDefault();      //Don't create a new line
                                 keypress.stopPropagation();     //Don't close/open collapsible
-                                this.addTask(parent);
+                                if(keypress.ctrlKey){
+                                    location.pathname = "/task-detials#" + id;
+                                }else
+                                {
+                                    this.addTask(parent);
+                                }
                                 break;
                                 
                             case "Escape":
-                                document.blur();
+                                taskName.blur();
                                 break;
                                 
                             default:
@@ -240,7 +245,7 @@ class List {
             li.ondragstart = (e) => { e.stopPropagation(); setTimeout(() => { li.remove(); }, 1); collapsibleHeader.style.paddingLeft = "0"; e.dataTransfer.setDragImage(li, 0, 15); this.taskBeingDragged = taskObject; let parentArray = (parent === "root") ? this.tasks : this.getTasksArrayFromId(parent); parentArray.splice(parentArray.findIndex(t => t.name === taskObject.name), 1); };
             li.ondragover = (e) => { e.stopPropagation(); li.style.marginBottom="38px"; return false };
             li.ondragleave = (e) => { e.stopPropagation(); li.style.marginBottom=0 };
-            li.ondrop = (e) =>{ e.stopPropagation(); const mouseDepth = Math.round((e.clientX - 8)/ 30 ); let tempRef = reference.slice(0,mouseDepth); const tasksArray = this.getTasksArrayFromId(tempRef.join("_")); console.warn(tempRef.join("_")); tasksArray.push(this.taskBeingDragged); this.renderTasks(); };
+            li.ondrop = (e) =>{ e.stopPropagation(); const mouseDepth = Math.round((e.clientX - 8)/ 30 ); let tempRef = reference.slice(0,mouseDepth); const tasksArray = this.getTasksArrayFromId(tempRef.join("_")); tasksArray.push(this.taskBeingDragged); this.renderTasks(); };
             document.getElementById("body_" + parent).appendChild(li);
             
             //Add subtasks, if they exist
@@ -304,14 +309,12 @@ class List {
     }
     
     getTaskFromId(id){
-        console.warn(id);
         let tasksArray = this.tasks;
         let task;
             const reference = id.split("_").map(Number);
             reference.forEach(ref => {
                 task = tasksArray[ref];
                 tasksArray = task.subtasks;
-                console.log(task);
             });
         return task;
     }

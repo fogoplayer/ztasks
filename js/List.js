@@ -137,8 +137,8 @@ class List {
                     taskName.classList.add("taskElement", "taskName");
                     taskName.contentEditable=true;
                     if(taskObject.name){ taskName.innerText = taskObject.name }
-                    taskName.onblur= (e) => {
-                        this.tasks = Task.deleteOrSaveOnBlur(document.getElementById("header_" + id).querySelector(".taskName").innerHTML, id, this);
+                    taskName.onkeyup= (e) => {
+                        this.tasks = Task.deleteOrSaveOnKeyup(document.getElementById("header_" + id).querySelector(".taskName").innerHTML, id, this);
                     };
                     taskName.onkeydown = (keypress) => {
                         switch(keypress.key){
@@ -315,7 +315,7 @@ class List {
            const twoLevelsUp = this.getTaskFromId(id.substring(0, id.length - 4));
            const oneLevelUp = this.getTaskFromId(id.substring(0, id.length - 2));
            const taskObject = this.getTaskFromId(id);
-          this.taskBeingDragged="true";
+           this.taskBeingDragged="true";
 
            oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name), 1);
            twoLevelsUp.subtasks.splice(twoLevelsUp.subtasks.findIndex(t => t.name === oneLevelUp.name) + 1, 0, taskObject);

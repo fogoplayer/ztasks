@@ -320,6 +320,7 @@ class List {
         const twoLevelsUp = this.getTaskFromId(id.substring(0, id.length - 4));
         const oneLevelUp = this.getTaskFromId(id.substring(0, id.length - 2));
         const taskObject = this.getTaskFromId(id);
+        const prevSibling = oneLevelUp.subtasks[oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name) - 1];
         this.taskBeingDragged="true";
         if(direction === "left" && oneLevelUp.name){
             const youngerSiblings = oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name) + 1);
@@ -327,8 +328,14 @@ class List {
             oneLevelUp.subtasks.splice(oneLevelUp.subtasks.length - 1, 1);
             twoLevelsUp.subtasks.splice(twoLevelsUp.subtasks.findIndex(t => t.name === oneLevelUp.name) + 1, 0, taskObject);
             this.renderTasks(twoLevelsUp.name ? id.substring(0, id.length - 4) : "root");
-            document.getElementById("header_" + (id.length > 4 ? id.substring(0, id.length - 4) + "_" 
-            : "") + (Number(id.substring(id.length - 3, id.length - 2)) + 1)).children[1].focus();
+            document.getElementById("header_" + (id.length > 3 ? id.substring(0, id.length - 4) + "_" : "") + (Number(id.substring(id.length - 3, id.length - 2)) + 1)).children[1].focus();
+        }else if(direction === "right" && prevSibling){
+            prevSibling.subtasks.push(taskObject);
+            oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name), 1);
+            this.renderTasks(oneLevelUp.name ? id.substring(0, id.length - 2) : "root");
+            document.getElementById(
+                "header_" + (id.length > 1 ? id.substring(0, id.length - 2) + "_" : "") + (prevSibling ? (oneLevelUp.subtasks.findIndex(t => t.name === prevSibling.name)) + "_" : "") + (prevSibling.subtasks.length - 1)
+                ).children[1].focus();
         }
         this.taskBeingDragged = false;
     }

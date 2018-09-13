@@ -6,7 +6,7 @@ class List {
                 name: "task1",
                 checked: false,
                 dueDate:new Date("July 2"),
-                description: "Blah blah blah",
+                notes: "Blah blah blah",
                 subtasks: [{
                         name: "subtask1",
                         subtasks: [{
@@ -233,7 +233,6 @@ class List {
                         deleteTaskLink.onclick = () => {Task.deleteTask(id, this);};
                         deleteTask.appendChild(deleteTaskLink);
                     menu.appendChild(deleteTask);
-                console.log("append menu")
                 li.appendChild(menu);
                 
             //Set up drag/drop
@@ -302,6 +301,19 @@ class List {
             });
         }
         return tasksArray;
+    }
+    
+    getTaskFromId(id){
+        console.warn(id);
+        let tasksArray = this.tasks;
+        let task;
+            const reference = id.split("_").map(Number);
+            reference.forEach(ref => {
+                task = tasksArray[ref];
+                tasksArray = task.subtasks;
+                console.log(task);
+            });
+        return task;
     }
 }
 

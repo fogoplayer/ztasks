@@ -8,7 +8,7 @@ class List {
                 dueDate:new Date("July 2"),
                 notes: "Blah blah blah",
                 subtasks: [{
-                        name: "subtask1",
+                        name: "subtask3",
                         subtasks: [{
                                 name: "subtask1",
                                 subtasks: []
@@ -21,7 +21,7 @@ class List {
                         ]
                     },
                     {
-                        name: "subtask2",
+                        name: "subtask0",
                         checked: true,
                         subtasks: []
                     }
@@ -282,7 +282,7 @@ class List {
                 name: "",
                 checked: false,
                 dueDate: null,
-                details: "",
+                notes: "",
                 subtasks: []
             };
         let tasksArray;
@@ -317,11 +317,11 @@ class List {
            const taskObject = this.getTaskFromId(id);
            this.taskBeingDragged="true";
 
-           oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name), 1);
+           const youngerSiblings = oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name) + 1);
+           taskObject.subtasks = taskObject.subtasks.concat(youngerSiblings);
+           console.warn();
+           oneLevelUp.subtasks.splice(oneLevelUp.subtasks.length - 1, 1);
            twoLevelsUp.subtasks.splice(twoLevelsUp.subtasks.findIndex(t => t.name === oneLevelUp.name) + 1, 0, taskObject);
-           console.log("twoLevelsUp", twoLevelsUp);
-           console.log("oneLevelUp", oneLevelUp);
-           console.log("taskObject",taskObject);
            this.renderTasks(twoLevelsUp.name ? id.substring(0, id.length - 4) : "root");
            this.taskBeingDragged = false;
        }

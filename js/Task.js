@@ -8,7 +8,7 @@ class Task {
      * @param list-the List being edited
      * @return an updated task list
      **/
-    static deleteOrSaveOnKeydown(name, id, list) {
+    static deleteOrSaveOnKeyup(name, id, list) {
         let taskList;
         let reference;
         if (!name) {

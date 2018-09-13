@@ -52,7 +52,7 @@ class List {
     **/
     renderTasks(id = "root") {
         document.getElementById("body_" + id).innerHTML="";
-        if (id === "root") {
+        if (id === "root" || id === "") {
             this.tasks.forEach(task => {
                 this.createTaskNode(task, [this.tasks.findIndex(t => t.name === task.name)]);
             });
@@ -146,7 +146,7 @@ class List {
                                 keypress.preventDefault();      //Don't create a new line
                                 keypress.stopPropagation();     //Don't close/open collapsible
                                 if(keypress.ctrlKey){
-                                    location.pathname = "/task-detials#" + id;
+                                    location.pathname = "/task-details#" + id;
                                 }else
                                 {
                                     this.addTask(parent);
@@ -154,7 +154,13 @@ class List {
                                 break;
                                 
                             case "Escape":
-                                taskName.blur();
+                                taskName.blur();    
+                                break;
+                                
+                            case "ArrowLeft":
+                                if(keypress.ctrlKey){
+                                    this.indentTask("left",id);
+                                }
                                 break;
                                 
                             default:
@@ -297,6 +303,30 @@ class List {
         document.getElementById("header_"+reference.join("_")+ (id !== "root" ? "_" : "") +(tasksArray.length - 1)).querySelector(".taskName").focus();
     }
     
+    /**
+     * Intent a task one way or the other
+     * @param direction-string, either "left" or "right"
+     * @param id-the id of the task being indented
+     * @return null
+    **/
+    indentTask(direction, id){
+       if(direction === "left"){
+           //Set task objects as variables
+           const twoLevelsUp = this.getTaskFromId(id.substring(0, id.length - 4));
+           const oneLevelUp = this.getTaskFromId(id.substring(0, id.length - 2));
+           const taskObject = this.getTaskFromId(id);
+          this.taskBeingDragged="true";
+
+           oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name), 1);
+           twoLevelsUp.subtasks.splice(twoLevelsUp.subtasks.findIndex(t => t.name === oneLevelUp.name) + 1, 0, taskObject);
+           console.log("twoLevelsUp", twoLevelsUp);
+           console.log("oneLevelUp", oneLevelUp);
+           console.log("taskObject",taskObject);
+           this.renderTasks(twoLevelsUp.name ? id.substring(0, id.length - 4) : "root");
+           this.taskBeingDragged = false;
+       }
+    }
+    
     getTasksArrayFromId(id){
         let tasksArray = this.tasks;
         if (id !== "" && id !== "root") {
@@ -311,11 +341,16 @@ class List {
     getTaskFromId(id){
         let tasksArray = this.tasks;
         let task;
+        if (id !== "" && id !== "root") {
             const reference = id.split("_").map(Number);
             reference.forEach(ref => {
                 task = tasksArray[ref];
                 tasksArray = task.subtasks;
             });
+        }else{
+            task = {};
+            task.subtasks = this.tasks;
+        }
         return task;
     }
 }

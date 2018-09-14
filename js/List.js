@@ -34,6 +34,7 @@ class List {
                 subtasks: []
             }
         ];
+        this.dismissedTasks=[];
         
         //Initial render
         if (window.location.pathname === "/") {
@@ -351,6 +352,19 @@ class List {
             document.getElementById("header_" + (id.length > 1 ? id.substring(0, id.length - 2) + "_" : "") + (nextSibling ? oneLevelUp.subtasks.findIndex(t => t.name === nextSibling.name) + 1: "")).children[1].focus();
         }
         this.taskBeingDragged = false;
+    }
+    
+    /**
+     * Dismiss a task
+     * @param id-The id of the task being dismissed
+     * return null
+    **/
+    dismissTask(id){
+        const oneLevelUp = this.getTaskFromId(id.substring(0, id.length - 2));
+        const taskObject = this.getTaskFromId(id);
+        oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name), 1);
+        this.dismissedTasks.push(taskObject);
+        this.renderTasks(id.substring(0, id.length - 2));
     }
     
     /**

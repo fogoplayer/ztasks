@@ -90,11 +90,11 @@ class Task {
      * @param list-the List being edited
      * @return an updated task list
      **/
-    static deleteOrSaveOnKeyup(name, id) {
+    static deleteOrSave(name, id) {
         let taskList;
         let reference;
         if (!name) {
-            Task.deleteTask(id, list);
+            Task.deleteTask(id);
             return tasks;
         }
         else if(!taskBeingDragged){
@@ -111,9 +111,9 @@ class Task {
         }
     }
     
-    static deleteTask(id, list) {
+    static deleteTask(id) {
         let reference = id.split("_").map(Number);
-        let taskList = list.tasks;
+        let taskList = tasks;
         for (let i = 0; i < reference.length - 1; i++) {
             const ref = reference[i];
             taskList = taskList[ref].subtasks;

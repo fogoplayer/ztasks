@@ -143,7 +143,7 @@ class List {
                     taskName.classList.add("taskElement", "taskName");
                     taskName.contentEditable=true;
                     if(taskObject.name){ taskName.innerText = taskObject.name }
-                    taskName.onkeyup = (e) => { Task.deleteOrSave(document.getElementById("header_" + id).querySelector(".taskName").innerHTML, id); };
+                    taskName.onkeyup = (e) => { if(e.code !== "Enter") { Task.deleteOrSave(document.getElementById("header_" + id).querySelector(".taskName").innerHTML, id); } };
                     taskName.onblur = (e) => { Task.deleteOrSave(document.getElementById("header_" + id).querySelector(".taskName").innerHTML, id); };
                     taskName.onkeydown = (keypress) => {
                         switch(keypress.key){

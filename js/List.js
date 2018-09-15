@@ -151,7 +151,8 @@ class List {
                                 keypress.preventDefault();      //Don't create a new line
                                 keypress.stopPropagation();     //Don't close/open collapsible
                                 if(keypress.ctrlKey){
-                                    location.pathname = "/task-details.html" + location.hash + "/" + id;
+                                    location.pathname = "/task-details.html";
+                                    location.hash += "/" + id;
                                 }else
                                 {
                                     Task.addTask(parent);
@@ -245,7 +246,7 @@ class List {
                 const openTaskDetailsContainer = document.createElement("li");
                     const openTaskDetailsLink = document.createElement("a");
                         openTaskDetailsLink.innerHTML = "Open Task Details";
-                        openTaskDetailsLink.href="/task-details#"+id;
+                        openTaskDetailsLink.href="/task-details.html" + location.hash + id;
                         openTaskDetailsContainer.appendChild(openTaskDetailsLink);
                     menu.appendChild(openTaskDetailsContainer);
                 const addSubtaskContainer = document.createElement("li");

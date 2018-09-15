@@ -4,60 +4,6 @@ import DismissedList from "./DismissedList.js"
 window.List = List;
 window.Task = Task;
 window.DismissedList = DismissedList;
-
-//Setup dummy data
-window.tasks = [{
-        name: "task1",
-        checked: false,
-        dueDate: new Date("July 2"),
-        notes: "Blah blah blah",
-        subtasks: [{
-                name: "subtask3",
-                subtasks: [{
-                        name: "subtask1",
-                        subtasks: []
-                    },
-                    {
-                        name: "subtask2",
-                        checked: true,
-                        subtasks: []
-                    }
-                ]
-            },
-            {
-                name: "subtask0",
-                checked: true,
-                subtasks: []
-            }
-        ]
-    },
-    {
-        name: "task2",
-        checked: false,
-        randomProp: "asdf",
-        subtasks: []
-    }
-];
-window.dismissedTasks = [{
-    name: "dismissed",
-    checked: false,
-    dueDate: new Date("July 2"),
-    notes: "Blah blah blah",
-    subtasks: [{
-        name: "dismissed",
-        checked: false,
-        dueDate: new Date("July 2"),
-        notes: "Blah blah blah",
-        subtasks: []
-    }, {
-        name: "dismissed",
-        checked: false,
-        dueDate: new Date("July 2"),
-        notes: "Blah blah blah",
-        subtasks: []
-    }]
-}];
-
 window.taskBeingDragged = false;
 
 //Firebase
@@ -76,21 +22,43 @@ if (!firebase || !firebase.apps.length) {
     firebase.firestore().enablePersistence()
         .catch(function(err) {
             if (err.code === 'failed-precondition') {
-                alert("Warning: You have LDS Youth open in another tab, so your data will not be available while offline in this tab. You will still be able to access site content, but if you would like your content to sync offline please close the app elsewhere.");
+                alert("Warning: You have ZTasks open in another tab, so your data will not be available while offline in this tab.");
             }
             else if (err.code === 'unimplemented') {
                 M.toast({
-                    html: "Warning: your browser does not support saving your data offline. Please update your browser if you would like to use LDS Youth without an internet connection"
+                    html: "Warning: your browser does not support saving your data offline. Please update your browser if you would like to use ZTasks without an internet connection"
                 });
             }
         });
 }
 
-//Initial render
-if (window.location.pathname === "/") {
-    window.onload = () => {
-        List.renderTasks("root");
-        DismissedList.renderTasks();
-        document.getElementById("newTask").onclick = () => Task.addTask('root');
+firebase.auth().onAuthStateChanged(function(user) {
+    if (!firebase.auth().currentUser && location.pathname !== "/") {
+        location.pathname = "/";
     }
-}
+    else if (firebase.auth().currentUser) {
+        if (location.pathname === "/") {
+            location.pathname = "/list.html#main";
+        }
+        //Initial render
+        if (window.location.pathname.includes("list")) {
+            document.getElementById("newTask").onclick = () => Task.addTask('root');
+            const ref = firebase.firestore().collection(firebase.auth().currentUser.uid).doc(location.hash.substring(1));
+            ref.get().then(doc => {
+                window.tasks = doc.data() && doc.data().tasks ? doc.data().tasks : [];
+                window.dismissedTasks = doc.data() && doc.data().dismissedTasks ? doc.data().dismissedTasks : [];
+                window.oldTasks = tasks.slice(0);
+                window.oldDismissedTasks = dismissedTasks.slice(0);
+                List.renderTasks("root");
+                DismissedList.renderTasks();
+            }).catch(error => console.error(error));
+            window.onbeforeunload = () => { ref.set({ tasks: tasks, dismissedTasks: dismissedTasks, }, { merge: true }); };
+            setInterval(() => {
+                let update = {};
+                if(JSON.stringify(tasks) !== JSON.stringify(oldTasks)){ oldTasks = tasks.slice(0); update.tasks = tasks; }
+                if(JSON.stringify(dismissedTasks) !== JSON.stringify(oldDismissedTasks)){ oldDismissedTasks = dismissedTasks.slice(0); update.dismissedTasks = dismissedTasks; }
+                if(JSON.stringify(update) !== "{}"){ref.set(update, { merge: true });}
+            }, 5000 * 60);
+        }
+    }
+});

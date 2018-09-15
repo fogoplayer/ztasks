@@ -18,28 +18,12 @@
     <link rel="stylesheet" href="css/futuristic-materialize.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="iconfont/material-icons.css"> </head>
-
-<body>
-    <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper"> <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a> <a href="" class="brand-logo left">ZTasks</a>
-            </div>
-        </nav>
-    </div>
-    <div>
-        <ul class="collapsible" id="body_root"></ul>
-    </div>
-    <div style="display:flex;">
-        <div id="newTask">
-            <div class="taskElement iconContainer"><i class="material-icons">add</i></div>
-            <div class="taskElement" style="padding-top:9px; width:-webkit-fill-available; line-height:26px">Add task</div>
-        </div>
-        <div class="taskElement iconContainer" onclick="let ul = document.getElementById('dismissed_body_root'); if (ul.style.display === 'none') { ul.style.display = 'block'; } else { ul.style.display = 'none'; }"><i class="material-icons">history</i></div>
-        <div class="taskElement iconContainer" onclick="List.dismissAllCheckedTasks()"><i class="material-icons">clear_all</i></div>
-    </div>
-    <div>
-        <ul class="collapsible" id="dismissed_body_root" style="display:none"></ul>
-    </div>
+</head>
+<body style="height:100vh">
+    <center style="margin-top:50vh; transform: translateY(-100%);">
+        <h1>ZTasks</h1>
+        <div class="btn" onclick="firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())">Sign In with Google</div>
+    </center>
 </body>
 
 </html>

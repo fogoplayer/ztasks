@@ -18,7 +18,7 @@
 <body>
     <div class="navbar-fixed">
         <nav>
-            <div class="nav-wrapper"> <a href="/" class="sidenav-trigger show-on-large"><i class="material-icons">arrow_back</i></a> <a id="title" class="brand-logo left">Task Details</a>
+            <div class="nav-wrapper"> <a id="backButton" class="sidenav-trigger show-on-large"><i class="material-icons">arrow_back</i></a> <a id="title" class="brand-logo left">Task Details</a>
             </div>
         </nav>
     </div>
@@ -64,6 +64,7 @@
     M.Datepicker.init(document.querySelectorAll('.datepicker'), {});
     let taskObject;
     let reminders;
+    document.getElementById("backButton").href = "/list.html" + location.hash.split("/")[0];
     document.addEventListener("DOMContentLoaded", ()=>{
         taskObject = L.getTaskFromId(window.location.hash.substring(1));
         document.getElementById("notes").value = taskObject.notes;

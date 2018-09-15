@@ -38,8 +38,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
     else if (firebase.auth().currentUser) {
         if (location.pathname === "/") {
-            location.pathname = "/list.html"
-            locations.hash = "#main";
+            location.href = "https://" + location.hostname + "/list.html#main";
         }
         //Initial render
         if (window.location.pathname.includes("list")) {

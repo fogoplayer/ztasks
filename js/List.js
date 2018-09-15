@@ -246,7 +246,7 @@ class List {
                 const openTaskDetailsContainer = document.createElement("li");
                     const openTaskDetailsLink = document.createElement("a");
                         openTaskDetailsLink.innerHTML = "Open Task Details";
-                        openTaskDetailsLink.href="/task-details.html" + location.hash + id;
+                        openTaskDetailsLink.href="/task-details.html" + location.hash + "/" + id;
                         openTaskDetailsContainer.appendChild(openTaskDetailsLink);
                     menu.appendChild(openTaskDetailsContainer);
                 const addSubtaskContainer = document.createElement("li");

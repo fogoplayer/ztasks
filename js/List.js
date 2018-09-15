@@ -186,8 +186,9 @@ class List {
                 
                 //Add Due Date
                 if(taskObject.dueDate){
-                    const dueDateContainer = document.createElement("div");
+                    const dueDateContainer = document.createElement("a");
                         dueDateContainer.classList.add("taskElement", "iconContainer", "dueDateContainer");
+                        dueDateContainer.href="/task-details#"+id;
                         //Add badge
                         const dueDate = document.createElement("span");
                             dueDate.classList.add("new","badge","dueDate");

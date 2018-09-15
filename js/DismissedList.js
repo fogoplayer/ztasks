@@ -139,7 +139,6 @@ class DismissedList {
     **/
     static restoreTask(taskObject, id) {
         const oneLevelUp = DismissedList.getTaskFromId(id.substring(0, id.length - 2));
-        console.log(oneLevelUp);
         oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name), 1);
         tasks.push(taskObject);
         List.renderTasks();

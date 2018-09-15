@@ -39,6 +39,16 @@ class List {
     }
     
     /**
+     * Finds all checked tasks and dismisses them
+     * return null
+    **/
+    static dismissAllCheckedTasks() {
+        const node = document.getElementById("body_root").querySelector(":checked");
+        Task.dismissTask(node.parentNode.parentNode.parentNode.id.substring(7));
+        if(document.getElementById("body_root").querySelector(":checked")){ List.dismissAllCheckedTasks() }
+    }
+    
+    /**
      * Convert ID to task object
      * @param id-the id of the parent task
      * @return task object

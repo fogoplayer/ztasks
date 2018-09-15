@@ -114,8 +114,13 @@ class List {
                             checkbox.classList.add("filled-in");
                             checkbox.setAttribute("type", "checkbox");
                             if(taskObject.checked){checkbox.setAttribute("checked", taskObject.checked); }
-                            checkbox.onclick = () => {
-                                taskObject.checked = checkbox.checked;
+                            checkbox.onclick = (e) => {
+                                if(e.shiftKey){
+                                    taskObject.checked = true;
+                                    Task.dismissTask(id);
+                                }else{
+                                    taskObject.checked = checkbox.checked;
+                                }
                             };
                             label.appendChild(checkbox);
                         //Add span

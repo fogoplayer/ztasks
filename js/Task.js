@@ -79,8 +79,9 @@ class Task {
         const oneLevelUp = List.getTaskFromId(id.substring(0, id.length - 2));
         const taskObject = List.getTaskFromId(id);
         oneLevelUp.subtasks.splice(oneLevelUp.subtasks.findIndex(t => t.name === taskObject.name), 1);
-        dismissedTasks.push(taskObject);
-        List.renderTasks(id.substring(0, id.length - 2));
+        dismissedTasks.splice(0,0,taskObject);
+        List.renderTasks(id.length > 2 ? id.substring(0, id.length - 2) : "root");
+        DismissedList.renderTasks();
     }
     
     /**

@@ -20,12 +20,16 @@
     <link rel="stylesheet" href="iconfont/material-icons.css"> </head>
 
 <body>
+    <!--Nav-->
     <div class="navbar-fixed">
         <nav>
-            <div class="nav-wrapper"> <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a> <a href="" class="brand-logo left">ZTasks</a>
+            <div class="nav-wrapper">
+                <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+                <a href="" class="brand-logo left">ZTasks</a>
             </div>
         </nav>
     </div>
+    <!--Body-->
     <div>
         <ul class="collapsible" id="body_root"></ul>
     </div>
@@ -40,6 +44,27 @@
     <div>
         <ul class="collapsible" id="dismissed_body_root" style="display:none"></ul>
     </div>
+    <!--Sidenav-->
+    <ul id="slide-out" class="sidenav">
+        <li>
+            <div class="user-view">
+                <a><img class="circle" id="userImage"></a>
+                <a><span class="white-text name" id="displayName"></span></a>
+                <a><span class="white-text email" id="email"></span></a>
+            </div>
+        </li>
+        <li class="divider"></li>
+        <li id="myTasks"><a href="/list.html#my_tasks" onclick="location.reload()">My Tasks</a></li>
+        <li><a><button class="btn"><i class="material-icons left">add</i>Create new list</button></a></li>
+        <li class="divider"></li>
+        <li><a>Help</a></li>
+        <li><a>Sign out</a></li>
+    </ul>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
+    });
+</script>
 
 </html>

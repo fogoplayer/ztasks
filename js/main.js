@@ -42,8 +42,23 @@ firebase.auth().onAuthStateChanged(function(user) {
         }
         //Initial render
         if (window.location.pathname.includes("list")) {
+            //Set up dom
             document.getElementById("newTask").onclick = () => Task.addTask('root');
-            const ref = firebase.firestore().collection(firebase.auth().currentUser.uid).doc(location.hash.substring(1));
+            const user = firebase.auth().currentUser;
+            document.getElementById("userImage").src=user.photoURL;
+            document.getElementById("displayName").innerHTML=user.displayName;
+            document.getElementById("email").innerHTML=user.email;
+            firebase.firestore().collection(firebase.auth().currentUser.uid).get().then(docs => {
+                docs = docs.docs.sort(function(a,b){
+                    return a.id.toLowerCase() < b.id.toLowerCase();
+                });
+                docs.forEach(doc => {
+                    const name = doc.id;
+                    document.getElementById("myTasks").insertAdjacentHTML("afterend", `<li><a href="/list.html#${name.replace(" ", "_")}" onclick='location.reload()'>${name}</li>`)
+                })
+            })
+            //Load data
+            const ref = firebase.firestore().collection(firebase.auth().currentUser.uid).doc(location.hash.substring(1).replace("_", " "));
             ref.get().then(doc => {
                 window.tasks = doc.data() && doc.data().tasks ? doc.data().tasks : [];
                 window.dismissedTasks = doc.data() && doc.data().dismissedTasks ? doc.data().dismissedTasks : [];

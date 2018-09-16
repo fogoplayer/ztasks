@@ -54,16 +54,39 @@
             </div>
         </li>
         <li class="divider"></li>
-        <li id="myTasks"><a href="/list.html#my_tasks" onclick="location.reload()">My Tasks</a></li>
-        <li><a><button class="btn"><i class="material-icons left">add</i>Create new list</button></a></li>
+        <li id="myTasks"><a href="/list.html#My_Tasks" onclick="location.reload()">My Tasks</a></li>
+        <li><a class="sidenav-close modal-trigger" data-target="addListModal"><button class="btn"><i class="material-icons left">add</i>Create new list</button></a></li>
         <li class="divider"></li>
-        <li><a>Help</a></li>
+        <li><a class="sidenav-close modal-trigger" data-target="helpModal">Help</a></li>
         <li><a>Sign out</a></li>
     </ul>
+    <!--Add list modal-->
+    <div id="addListModal" class="modal">
+        <div class="modal-content">
+            <h4>Create a new list</h4>
+            <div class="input-field">
+                <input id="newList"/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a onclick="location.href = location.hostname + '/list.html#' + document.getElementById('newList').value.replace(' ', '_')" class="modal-close waves-effect waves-green btn-flat">Add</a>
+        </div>
+    </div>
+    <!--Help modal-->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+    </div>
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
+        M.Modal.init(document.querySelectorAll('.modal'), {});
     });
 </script>
 

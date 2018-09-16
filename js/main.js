@@ -38,7 +38,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
     else if (firebase.auth().currentUser) {
         if (location.pathname === "/") {
-            location.href = "https://" + location.hostname + "/list.html#main";
+            location.href = "https://" + location.hostname + "/list.html#My_Tasks";
         }
         //Initial render
         if (window.location.pathname.includes("list")) {
@@ -49,14 +49,16 @@ firebase.auth().onAuthStateChanged(function(user) {
             document.getElementById("displayName").innerHTML=user.displayName;
             document.getElementById("email").innerHTML=user.email;
             firebase.firestore().collection(firebase.auth().currentUser.uid).get().then(docs => {
+                console.log(docs.docs.map(doc => doc.id));
                 docs = docs.docs.sort(function(a,b){
                     return a.id.toLowerCase() < b.id.toLowerCase();
                 });
                 docs.forEach(doc => {
                     const name = doc.id;
-                    document.getElementById("myTasks").insertAdjacentHTML("afterend", `<li><a href="/list.html#${name.replace(" ", "_")}" onclick='location.reload()'>${name}</li>`)
-                })
-            })
+                    if (name === "My Tasks"){ return false; }
+                    document.getElementById("myTasks").insertAdjacentHTML("afterend", `<li><a href="/list.html#${name.replace(" ", "_")}" onclick='location.reload()'>${name}</li>`);
+                });
+            });
             //Load data
             const ref = firebase.firestore().collection(firebase.auth().currentUser.uid).doc(location.hash.substring(1).replace("_", " "));
             ref.get().then(doc => {

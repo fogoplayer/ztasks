@@ -69,14 +69,21 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a onclick="location.href = location.hostname + '/list.html#' + document.getElementById('newList').value.replace(' ', '_')" class="modal-close waves-effect waves-green btn-flat">Add</a>
+            <a onclick="location.reload();location.href = '/list.html#' + document.getElementById('newList').value.replace(' ', '_')" class="modal-close waves-effect waves-green btn-flat">Add</a>
         </div>
     </div>
     <!--Help modal-->
     <div id="helpModal" class="modal">
         <div class="modal-content">
-            <h4>Modal Header</h4>
-            <p>A bunch of text</p>
+            <div class="row">
+                <div class="col m6 s12">
+                    <strong>Reorder tasks</strong>
+                    <div class="btn-flat">CTRL+SHIFT+UP/DOWN</div> Move task up or down
+                </div>
+                <div class="col m6 s12">
+                    
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>

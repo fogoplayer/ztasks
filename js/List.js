@@ -151,8 +151,7 @@ class List {
                                 keypress.preventDefault();      //Don't create a new line
                                 keypress.stopPropagation();     //Don't close/open collapsible
                                 if(keypress.ctrlKey){
-                                    location.pathname = "/task-details.html";
-                                    location.hash += "/" + id;
+                                    M.Modal.getInstance(document.getElementById("taskDetailsModal")).open();
                                 }else
                                 {
                                     Task.addTask(parent);
@@ -189,7 +188,7 @@ class List {
                 if(taskObject.dueDate){
                     const dueDateContainer = document.createElement("a");
                         dueDateContainer.classList.add("taskElement", "iconContainer", "dueDateContainer");
-                        dueDateContainer.href="/task-details#"+id;
+                        dueDateContainer.onclick = () => { M.Modal.getInstance(document.getElementById("taskDetailsModal")).open() };
                         //Add badge
                         const dueDate = document.createElement("span");
                             dueDate.classList.add("new","badge","dueDate");
@@ -244,9 +243,9 @@ class List {
                 menu.id = "menu" + id;
                 menu.classList.add("dropdown-content");
                 const openTaskDetailsContainer = document.createElement("li");
+                    openTaskDetailsContainer.onclick = () => { M.Modal.getInstance(document.getElementById("taskDetailsModal")).open() };
                     const openTaskDetailsLink = document.createElement("a");
                         openTaskDetailsLink.innerHTML = "Open Task Details";
-                        openTaskDetailsLink.href="/task-details.html" + location.hash + "/" + id;
                         openTaskDetailsContainer.appendChild(openTaskDetailsLink);
                     menu.appendChild(openTaskDetailsContainer);
                 const addSubtaskContainer = document.createElement("li");
@@ -287,6 +286,8 @@ class List {
             M.Collapsible.init(document.querySelectorAll('.collapsible'), {
                 accordion: false
             });
+            M.Modal.init(document.querySelectorAll('.modal'), {});
+
     }
 }
 

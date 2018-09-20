@@ -8,6 +8,10 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--JS-->
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
     <script type="module" src="js/main.js"></script>
     <script src="js/futuristic-materialize.js"></script>
     <!--CSS-->
@@ -36,24 +40,6 @@
                     <input id="dueDate" type="text" class="datepicker" />
                 </div>
             </div>
-            <div class="col s12 m6">
-                <h5>Reminders</h5>
-                <div id="reminders"></div>
-                <div id="addReminder">
-                    Add a reminder:
-                    <br/>
-                    <div class="input-field" style="display:inline-block ">
-                        <input type="number" style="width:40px;background-color:rgba(0,0,0,.2);text-align:center;margin-right:5px" />
-                    </div>
-                    <select class="browser-default" style="width:50%; display:inline-block;margin-right:5px">
-                        <option value="" disabled selected>Choose duration</option>
-                        <option value="3">days</option>
-                        <option value="3">weeks</option>
-                        <option value="3">months</option>
-                    </select>
-                    <span> before</span>
-                </div>
-            </div>
 
         </div>
     </div>
@@ -61,21 +47,65 @@
     </div>
 </body>
 <script>
-    M.Datepicker.init(document.querySelectorAll('.datepicker'), {});
     let taskObject;
     let reminders;
     document.getElementById("backButton").href = "/list.html" + location.hash.split("/")[0];
-    document.addEventListener("DOMContentLoaded", ()=>{
-        taskObject = L.getTaskFromId(window.location.hash.substring(1));
+    document.addEventListener("DOMContentLoaded", () => {
+        taskObject = List.getTaskFromId(window.location.hash.substring(1));
         document.getElementById("notes").value = taskObject.notes;
-        document.getElementById("dueDate").value = taskObject.dueDate.toLocaleDateString("nu-arab",{month:"long", day:"numeric"});;
+        document.getElementById("dueDate").value = taskObject.dueDate.toLocaleDateString("nu-arab", {
+            month: "long",
+            day: "numeric"
+        });
         reminders = taskObject.reminders;
-    })
+    });
     window.onbeforeunload = () => {
-        taskObject.notes = document.getElementById("notes").value;
-        taskObject.dueDate = new Date(document.getElementById("dueDate").value);
-        taskObject.reminders = reminders;
+        
     };
+    //Load data
+    if (!firebase || !firebase.apps.length) {
+        firebase.initializeApp({
+            apiKey: "AIzaSyBbjO5GBmmydh3nkLqK9t9OxsvH_9OqYeQ",
+            authDomain: "ztasks-1.firebaseapp.com",
+            databaseURL: "https://ztasks-1.firebaseio.com",
+            projectId: "ztasks-1",
+            storageBucket: "ztasks-1.appspot.com",
+            messagingSenderId: "628882993959"
+        });
+    }
+    const ref = firebase.firestore().collection(firebase.auth().currentUser.uid).doc(location.hash.substring(1).replace("_", " "));
+    ref.get().then(doc => {
+        window.tasks = doc.data() && doc.data().tasks ? doc.data().tasks : [];
+        window.dismissedTasks = doc.data() && doc.data().dismissedTasks ? doc.data().dismissedTasks : [];
+        window.oldTasks = tasks.slice(0);
+        window.oldDismissedTasks = dismissedTasks.slice(0);
+        List.renderTasks("root");
+        DismissedList.renderTasks();
+    }).catch(error => console.error(error));
+    window.onbeforeunload = () => {
+        ref.set({
+            tasks: tasks,
+            dismissedTasks: dismissedTasks,
+        }, {
+            merge: true
+        });
+    };
+    setInterval(() => {
+        let update = {};
+        if (JSON.stringify(tasks) !== JSON.stringify(oldTasks)) {
+            oldTasks = tasks.slice(0);
+            update.tasks = tasks;
+        }
+        if (JSON.stringify(dismissedTasks) !== JSON.stringify(oldDismissedTasks)) {
+            oldDismissedTasks = dismissedTasks.slice(0);
+            update.dismissedTasks = dismissedTasks;
+        }
+        if (JSON.stringify(update) !== "{}") {
+            ref.set(update, {
+                merge: true
+            });
+        }
+    }, 5000 * 60);
 </script>
 
 </html>

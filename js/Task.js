@@ -128,6 +128,21 @@ class Task {
             document.getElementById("header_" + id.substring(0,id.length - 2)).querySelector(".chevron").remove();
         }
     }
+    
+    static initModal() {
+        M.Modal.init(document.querySelectorAll('#taskDetailsModal'), {
+            onCloseStart: () => {
+                taskBeingDragged.notes = document.getElementById("notes").value ? document.getElementById("notes").value : false;
+                document.getElementById("notes").value = "";
+                taskBeingDragged.dueDate = document.getElementById("dueDate").value ? new Date(document.getElementById("dueDate").value) : false;
+                document.getElementById("dueDate").value = "";
+            },
+            onOpenStart: () => {
+                document.getElementById("notes").value = taskBeingDragged.notes;
+                document.getElementById("dueDate").value = taskBeingDragged.dueDate ? taskBeingDragged.dueDate.toDate().toLocaleDateString("nu-arab", { month: "long", day: "numeric" }) : "";
+            },
+        });
+    }
 }
 
 export default Task;

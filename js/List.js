@@ -151,6 +151,7 @@ class List {
                                 keypress.preventDefault();      //Don't create a new line
                                 keypress.stopPropagation();     //Don't close/open collapsible
                                 if(keypress.ctrlKey){
+                                    taskBeingDragged = taskObject; 
                                     M.Modal.getInstance(document.getElementById("taskDetailsModal")).open();
                                 }else
                                 {
@@ -188,12 +189,12 @@ class List {
                 if(taskObject.dueDate){
                     const dueDateContainer = document.createElement("a");
                         dueDateContainer.classList.add("taskElement", "iconContainer", "dueDateContainer");
-                        dueDateContainer.onclick = () => { M.Modal.getInstance(document.getElementById("taskDetailsModal")).open() };
+                        dueDateContainer.onclick = () => { taskBeingDragged = taskObject; M.Modal.getInstance(document.getElementById("taskDetailsModal")).open() };
                         //Add badge
                         const dueDate = document.createElement("span");
                             dueDate.classList.add("new","badge","dueDate");
                             dueDate.setAttribute("data-badge-caption", "");
-                            dueDate.innerText=taskObject.dueDate.toLocaleDateString("nu-arab",{month:"long", day:"numeric"});
+                            dueDate.innerText=taskObject.dueDate.toDate().toLocaleDateString("nu-arab",{month:"long", day:"numeric"});
                             dueDateContainer.appendChild(dueDate);
                         collapsibleHeader.appendChild(dueDateContainer);
                 }
@@ -243,7 +244,7 @@ class List {
                 menu.id = "menu" + id;
                 menu.classList.add("dropdown-content");
                 const openTaskDetailsContainer = document.createElement("li");
-                    openTaskDetailsContainer.onclick = () => { M.Modal.getInstance(document.getElementById("taskDetailsModal")).open() };
+                    openTaskDetailsContainer.onclick = () => { taskBeingDragged = taskObject; M.Modal.getInstance(document.getElementById("taskDetailsModal")).open() };
                     const openTaskDetailsLink = document.createElement("a");
                         openTaskDetailsLink.innerHTML = "Open Task Details";
                         openTaskDetailsContainer.appendChild(openTaskDetailsLink);
@@ -286,8 +287,7 @@ class List {
             M.Collapsible.init(document.querySelectorAll('.collapsible'), {
                 accordion: false
             });
-            M.Modal.init(document.querySelectorAll('.modal'), {});
-
+            Task.initModal();
     }
 }
 

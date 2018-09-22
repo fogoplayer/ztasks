@@ -209,15 +209,19 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a onclick="taskObject.notes = document.getElementById(" notes ").value; taskObject.dueDate = new Date(document.getElementById("dueDate ").value); taskObject.reminders = reminders;" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            <a class="modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
     </div>
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
-        M.Modal.init(document.querySelectorAll('.modal'), {});
-        M.Datepicker.init(document.querySelectorAll('.datepicker'), {container: document.body});
+        M.Modal.init(document.querySelectorAll('.modal:not(#taskDetailsModal)'), {});
+        Task.initModal();
+        M.Datepicker.init(document.querySelectorAll('.datepicker'), {
+            container: document.body
+        });
+
     });
 </script>
 

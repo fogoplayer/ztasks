@@ -30,7 +30,7 @@
       transition: transform var(--anim-time, 0.25s) ease-in-out,
         opacity var(--anim-time, 0.25s) ease-in-out;
 
-      .blue {
+      &.blue {
         border: 0.11em solid var(--accent-color);
         opacity: 0;
       }
@@ -43,7 +43,7 @@
 
     .border {
       transform: skew(-28deg, -28deg) translate(0.1em, calc(-100% + 0.1em));
-      .blue {
+      &.blue {
         opacity: 1;
       }
     }

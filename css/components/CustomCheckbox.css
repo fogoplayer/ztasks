@@ -1,0 +1,37 @@
+.skew-checkbox {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  position: relative;
+  border-radius: 0.05em;
+  overflow: hidden;
+  top: 0.162em; }
+  .skew-checkbox .clip {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    width: 1.1em;
+    height: 1em;
+    top: 0;
+    right: 0;
+    overflow: hidden;
+    transform-origin: top right;
+    transition: transform var(--anim-time, 0.25s) ease-in-out; }
+    .skew-checkbox .clip .border {
+      position: absolute;
+      bottom: 0;
+      width: 1em;
+      height: 1em;
+      border: 0.1em solid darkgray;
+      border-radius: 0.05em;
+      transform-origin: top right;
+      transition: transform var(--anim-time, 0.25s) ease-in-out, opacity var(--anim-time, 0.25s) ease-in-out; }
+      .skew-checkbox .clip .border .blue {
+        border: 0.11em solid var(--accent-color);
+        opacity: 0; }
+  .skew-checkbox .checked .clip {
+    transform: translate(-0.185em, 0.04em) rotate(-45deg) skew(15deg, 15deg) scale(1.2); }
+    .skew-checkbox .checked .clip .border {
+      transform: skew(-28deg, -28deg) translate(0.1em, calc(-100% + 0.1em)); }
+      .skew-checkbox .checked .clip .border .blue {
+        opacity: 1; }

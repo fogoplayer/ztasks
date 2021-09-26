@@ -37,7 +37,7 @@
     }
   }
 
-  .checked .clip {
+  &.checked .clip {
     transform: translate(-0.185em, 0.04em) rotate(-45deg) skew(15deg, 15deg)
       scale(1.2);
 

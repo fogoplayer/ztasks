@@ -1,22 +1,23 @@
-const template = document.createElement("template");
-template.innerHTML = `
-  <label>
-    <div class="skew-checkbox">
-      <div class="clip">
-        <span class="border"></span>
-        <span class="border blue"></span>
-      </div>
-    </div>
-    lorem
-  </label>
-
-  <link rel="stylesheet" href="/css/main.css"/>
-  <link rel="stylesheet" href="/css/components/CustomCheckbox.css"/>
-`;
-
 class CustomCheckbox extends HTMLElement {
   constructor() {
     super();
+
+    const template = document.createElement("template");
+    template.innerHTML = `
+      <label>
+        <div class="skew-checkbox">
+          <div class="clip">
+            <span class="border"></span>
+            <span class="border blue"></span>
+          </div>
+        </div>
+        ${this.getAttribute("label") || ""}
+      </label>
+
+      <link rel="stylesheet" href="/css/main.css"/>
+      <link rel="stylesheet" href="/css/components/CustomCheckbox.css"/>
+    `;
+
     this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
     this.addEventListener('click', e => { this.checked = !this.checked })

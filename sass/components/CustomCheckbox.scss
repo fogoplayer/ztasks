@@ -31,7 +31,8 @@
         opacity var(--anim-time, 0.25s) ease-in-out;
 
       &.blue {
-        border: 0.11em solid var(--accent-color);
+        border: 0.11em solid
+          hsl(var(--accent-hue), 100%, var(--accent-lightness));
         opacity: 0;
       }
     }

@@ -1,8 +1,6 @@
 {
   "scripts": {
-    "sass": "sass --watch sass:css --style=compressed --no-source-map"
   },
   "dependencies": {
-    "sass": "^1.42.1"
   }
 }

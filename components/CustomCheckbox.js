@@ -14,8 +14,8 @@ class CustomCheckbox extends HTMLElement {
         ${this.getAttribute("label") || ""}
       </label>
 
-      <link rel="stylesheet" href="/css/main.css"/>
-      <link rel="stylesheet" href="/css/components/CustomCheckbox.css"/>
+      <link rel="stylesheet" href="/styles/main.css"/>
+      <link rel="stylesheet" href="/styles/components/CustomCheckbox.css"/>
     `;
 
     this.attachShadow({ mode: "open" });

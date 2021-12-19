@@ -14,7 +14,6 @@ class CustomCheckbox extends HTMLElement {
         ${this.getAttribute("label") || ""}
       </label>
 
-      <link rel="stylesheet" href="/styles/main.css"/>
       <link rel="stylesheet" href="/styles/components/CustomCheckbox.css"/>
     `;
 

@@ -1,7 +1,7 @@
 * {
   box-sizing: border-box;
 }
-:root {
+body {
   font-size: 200%;
   --anim-time: 0.2s;
   --accent-color: #9ff;

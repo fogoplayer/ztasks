@@ -3,10 +3,10 @@ import "../components/CustomCheckbox.mjs";
 /**
  * @param complete whether the task is completed or not
  * @param name the name of the task
- * @param next-reminder the next the the user will be reminded of the task
  * @param due-date the due date of the task
- * @param description a description of the task
+ * @param has-reminder if the user has opted into reminder notifications
  * @param is-recurring whether or not the task is recurring
+ * @param description a description of the task
  * @param show-subtasks a boolean for whether or not to show the subtasks
   */
 
@@ -111,6 +111,27 @@ class TaskItem extends HTMLElement {
 
   parentChangedName(oldValue, newValue) {
     this.shadowRoot.querySelector(".task-name").value = this.name;
+  }
+
+  // Has Reminder
+  get hasReminder() {
+    return this.hasAttribute("has-reminder");
+  }
+
+  // set hasReminder(val) {
+  //   if (val) {
+  //     this.setAttribute("has-reminder", "");
+  //   } else {
+  //     this.removeAttribute("has-reminder");
+  //   }
+  // }
+
+  hasReminderChanged(oldValue, newValue) {
+    if (newValue !== null) {
+      this.shadowRoot.querySelector(".task").classList.add("has-reminder");
+    } else {
+      this.shadowRoot.querySelector(".task").classList.remove("has-reminder");
+    }
   }
 }
 

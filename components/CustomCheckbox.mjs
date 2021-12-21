@@ -2,29 +2,45 @@ class CustomCheckbox extends HTMLElement {
   constructor() {
     super();
 
+    // Shadow checkbox and label
     const template = document.createElement("template");
     template.innerHTML = `
-      <label>
-        <div class="skew-checkbox">
-          <div class="clip">
-            <span class="border"></span>
-            <span class="border blue"></span>
+        <label>
+          <div class="skew-checkbox">
+            <div class="clip">
+              <span class="border"></span>
+              <span class="border blue"></span>
+            </div>
           </div>
-        </div>
-        ${this.getAttribute("label") || ""}
-      </label>
+          ${this.getAttribute("label") || ""}
+        </label>
 
-      <link rel="stylesheet" href="/styles/components/CustomCheckbox.css"/>
-    `;
+        <link rel="stylesheet" href="/styles/components/CustomCheckbox.css"/>
+      `;
 
+
+    // Exposed, hidden checkbox for compatibility
+    const checkbox = document.createElement("input");
+    checkbox.hidden = true;
+    checkbox.type = "text";
+    checkbox.checked = this.checked;
+    checkbox.name = this.getAttribute("name") || "";
+
+    // Create
     this.attachShadow({ mode: "open" });
+
     this.shadowRoot.appendChild(template.content.cloneNode(true));
-    this.addEventListener('click', e => { this.checked = !this.checked })
+    this.appendChild(checkbox);
+
+    this.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.checked = !this.checked;
+    });
   }
 
   // Attributes
   static get observedAttributes() {
-    return ['checked'];
+    return ["checked"];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -45,21 +61,27 @@ class CustomCheckbox extends HTMLElement {
 
   set checked(val) {
     if (val) {
-      this.setAttribute('checked', '');
+      this.setAttribute("checked", "");
     } else {
-      this.removeAttribute('checked');
+      this.removeAttribute("checked");
     }
   }
 
   checkedChanged(oldValue, newValue) {
-    console.log(this.checked, oldValue, newValue);
+    console.log("Checked changed:", this.checked, oldValue, newValue);
+
+    // Displayed checkbox
     if (newValue !== null) {
       this.shadowRoot.querySelector(".skew-checkbox").classList.add("checked");
     } else {
-      this.shadowRoot.querySelector(".skew-checkbox").classList.remove("checked");
+      this.shadowRoot
+        .querySelector(".skew-checkbox")
+        .classList.remove("checked");
     }
-  }
 
+    // Hidden Checkbox
+    this.querySelector("input").checked = (newValue !== null);
+  }
 }
 
 window.customElements.define("custom-checkbox", CustomCheckbox);

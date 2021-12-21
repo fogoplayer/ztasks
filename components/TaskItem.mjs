@@ -6,7 +6,7 @@ import "../components/CustomCheckbox.mjs";
  * @param due-date the due date of the task
  * @param has-reminder if the user has opted into reminder notifications
  * @param is-recurring whether or not the task is recurring
- * @param description a description of the task
+ * @param has-description whether or not the task has a description
  * @param show-subtasks a boolean for whether or not to show the subtasks
   */
 
@@ -41,10 +41,11 @@ class TaskItem extends HTMLElement {
           <i class="material-icons">more_vert</i>
         </button>
       </a >
+      ${this.hasAttribute("subtasks") ? `<button>Caret will go here</button>` : ""}
     </div >
-    <ul class="subtasks"></ul>
+      ${this.hasAttribute("subtasks") ? `<slot class="subtasks" name="subtasks"></slot>` : ""}
         </li >
-    <link rel="stylesheet" href="/styles/components/TaskItem.css" />
+      <link rel="stylesheet" href="/styles/components/TaskItem.css" />;
     `;
 
     // Create
@@ -65,28 +66,13 @@ class TaskItem extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case "complete":
-        this.completeChanged(oldValue, newValue);
-        break;
-
-      case "name":
-        this.parentChangedName(oldValue, newValue);
-        break;
-
-      case "has-due-date":
-        this.hasDueDateChanged(oldValue, newValue);
-        break;
-
-      case "has-reminder":
-        this.hasReminderChanged(oldValue, newValue);
-        break;
-
-      case "is-recurring":
-        this.isRecurringChanged(oldValue, newValue);
-        break;
-
-      default:
-        break;
+      case "complete": this.completeChanged(oldValue, newValue); break;
+      case "name": this.parentChangedName(oldValue, newValue); break;
+      case "has-due-date": this.hasDueDateChanged(oldValue, newValue); break;
+      case "has-reminder": this.hasReminderChanged(oldValue, newValue); break;
+      case "is-recurring": this.isRecurringChanged(oldValue, newValue); break;
+      case "has-description": this.hasDescriptionChanged(oldValue, newValue); break;
+      default: break;
     }
   }
 
@@ -162,6 +148,19 @@ class TaskItem extends HTMLElement {
       this.shadowRoot.querySelector(".task").classList.remove("is-recurring");
     }
   }
+
+  // Has Description
+  get hasDescription() {
+    return this.hasAttribute("has-description");
+  }
+
+  hasDescriptionChanged(oldValue, newValue) {
+    if (newValue !== null) {
+      this.shadowRoot.querySelector(".task").classList.add("has-description");
+    } else {
+      this.shadowRoot.querySelector(".task").classList.remove("has-description");
+    }
+  }
 }
 
-window.customElements.define("task-item", TaskItem);;;
+window.customElements.define("task-item", TaskItem);;;;;

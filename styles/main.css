@@ -24,6 +24,7 @@ body {
   /* display */
   /* positioning */
   /* box-model */
+  margin: 0;
   background: var(--background-default);
 
   /* typography */

@@ -1,1 +1,1 @@
-import "../components/CustomCheckbox.mjs";
+import "../components/TaskItem.mjs";

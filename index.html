@@ -15,14 +15,15 @@
     <script defer type="module" src="/scripts/main.js"></script>
   </head>
   <body class="dark">
-    <form action="" submit="printData()">
-      <task-item
-        has-due-date="true"
-        has-reminder="true"
-        is-recurring="true"
-        has-description="true"
-      ></task-item>
-      <task-item></task-item>
-    </form>
+    <!-- <form action="" submit="printData()"> -->
+    <task-item
+      has-due-date="true"
+      has-reminder="true"
+      is-recurring="true"
+      has-description="true"
+      complete
+    ></task-item>
+    <task-item name="Hello world"></task-item>
+    <!-- </form> -->
   </body>
 </html>

@@ -73,8 +73,6 @@ class CustomCheckbox extends HTMLElement {
   }
 
   checkedChanged(oldValue, newValue) {
-    console.log("Checked changed:", this.checked, oldValue, newValue);
-
     // Displayed checkbox
     if (newValue !== null) {
       this.shadowRoot.querySelector(".skew-checkbox").classList.add("checked");

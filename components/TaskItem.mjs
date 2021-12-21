@@ -18,7 +18,7 @@ class TaskItem extends HTMLElement {
     // Shadow checkbox and label
     const template = document.createElement("template");
     template.innerHTML = `    <li class="task${this.hasDueDate ? " has-due-date" : ""
-      }${this.hasReminder ? " has-reminder" : ""
+      }${this.hasDueDate ? " has-reminder" : ""
       }${this.isRecurring ? " is-recurring" : ""
       }${this.hasDescription ? "has-description" : ""
       }"
@@ -60,7 +60,7 @@ class TaskItem extends HTMLElement {
 
   // Attributes
   static get observedAttributes() {
-    return ["complete", "name"];
+    return ["complete", "name", "has-due-date", "has-reminder"];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -71,6 +71,14 @@ class TaskItem extends HTMLElement {
 
       case "name":
         this.parentChangedName(oldValue, newValue);
+        break;
+
+      case "has-due-date":
+        this.hasDueDateChanged(oldValue, newValue);
+        break;
+
+      case "has-reminder":
+        this.hasReminderChanged(oldValue, newValue);
         break;
 
       default:
@@ -111,6 +119,27 @@ class TaskItem extends HTMLElement {
 
   parentChangedName(oldValue, newValue) {
     this.shadowRoot.querySelector(".task-name").value = this.name;
+  }
+
+  // Has Due Date
+  get hasDueDate() {
+    return this.hasAttribute("has-due-date");
+  }
+
+  set hasDueDate(val) {
+    if (val) {
+      this.setAttribute("has-due-date", "");
+    } else {
+      this.removeAttribute("has-due-date");
+    }
+  }
+
+  hasDueDateChanged(oldValue, newValue) {
+    if (newValue !== null) {
+      this.shadowRoot.querySelector(".task").classList.add("has-due-date");
+    } else {
+      this.shadowRoot.querySelector(".task").classList.remove("has-due-date");
+    }
   }
 
   // Has Reminder

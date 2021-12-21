@@ -45,7 +45,7 @@ class TaskItem extends HTMLElement {
     </div >
       ${this.showSubtasks ? `<slot name="subtasks"></slot>` : "" /* TODO when replaced with a list component, will need to add indentation and switch to a class toggling height rather than toggling the display */}
         </li >
-      <link rel="stylesheet" href="/styles/components/TaskItem.css" />;
+      <link rel="stylesheet" href="/styles/components/TaskItem.css" />
     `;
 
     // Create
@@ -188,4 +188,4 @@ class TaskItem extends HTMLElement {
   }
 }
 
-window.customElements.define("task-item", TaskItem);;;;;
+window.customElements.define("task-item", TaskItem);

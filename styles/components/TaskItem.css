@@ -128,20 +128,26 @@
   display: inline-block;
 }
 
-.task-preview .task-more {
-  display: none;
-  font-size: inherit;
-}
-
-.task:not(.has-description):not(.has-due-date)
-  > .task-preview
-  > .details-link
-  > .task-more {
+.task > .task-preview button {
   display: inline-block;
   background: transparent;
   border: none;
   padding: 0;
   color: inherit;
+  font-size: inherit;
+}
+
+.task.has-description .task-preview .task-more,
+.task.task.has-due-date .task-preview .task-more {
+  display: none;
+}
+
+.task > .task-preview > .subtasks-toggle {
+  transition: transform var(--anim-time) linear;
+}
+
+.task > .task-preview > .subtasks-toggle.hide {
+  transform: rotate(180deg);
 }
 
 .task .subtasks {

@@ -41,9 +41,9 @@ class TaskItem extends HTMLElement {
           <i class="material-icons">more_vert</i>
         </button>
       </a >
-      ${this.hasAttribute("subtasks") ? `<button>Caret will go here</button>` : ""}
+      ${this.showSubtasks ? `<button class="subtasks-toggle ${this.showSubtasks ? "" : "hide"}">Caret will go here</button>` : ""}
     </div >
-      ${this.hasAttribute("subtasks") ? `<slot class="subtasks" name="subtasks"></slot>` : ""}
+      ${this.showSubtasks ? `<slot name="subtasks"></slot>` : "" /* TODO when replaced with a list component, will need to add indentation and switch to a class toggling height rather than toggling the display */}
         </li >
       <link rel="stylesheet" href="/styles/components/TaskItem.css" />;
     `;
@@ -56,12 +56,14 @@ class TaskItem extends HTMLElement {
     this.shadowRoot.querySelector(".task-name").onchange = (e) => {
       this.setAttribute("name", e.target.value);
     };
-
+    this.shadowRoot.querySelector(".subtasks-toggle").onclick = (e) => {
+      this.setAttribute("show-subtasks", !this.showSubtasks);
+    };
   }
 
   // Attributes
   static get observedAttributes() {
-    return ["complete", "name", "has-due-date", "has-reminder", "is-recurring"];
+    return ["complete", "name", "has-due-date", "has-reminder", "is-recurring", "show-subtasks"];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -72,6 +74,7 @@ class TaskItem extends HTMLElement {
       case "has-reminder": this.hasReminderChanged(oldValue, newValue); break;
       case "is-recurring": this.isRecurringChanged(oldValue, newValue); break;
       case "has-description": this.hasDescriptionChanged(oldValue, newValue); break;
+      case "show-subtasks": this.showSubtasksChanged(oldValue, newValue); break;
       default: break;
     }
   }
@@ -159,6 +162,28 @@ class TaskItem extends HTMLElement {
       this.shadowRoot.querySelector(".task").classList.add("has-description");
     } else {
       this.shadowRoot.querySelector(".task").classList.remove("has-description");
+    }
+  }
+
+  // Show Subtasks
+  get showSubtasks() {
+    return JSON.parse(this.getAttribute("show-subtasks"));
+  }
+
+  set showSubtasks(val) {
+    this.setAttribute("show-subtasks", val);
+  }
+
+  showSubtasksChanged(oldValue, newValue) {
+    if (newValue === null) {
+      this.removeAttribute("show-subtasks");
+    }
+    else if (JSON.parse(newValue)) {
+      this.shadowRoot.querySelector(".subtasks-toggle").classList.remove("hide");
+      this.shadowRoot.querySelector(".subtasks").classList.remove("hide");
+    } else {
+      this.shadowRoot.querySelector(".subtasks-toggle").classList.add("hide");
+      this.shadowRoot.querySelector(".subtasks").classList.add("hide");
     }
   }
 }

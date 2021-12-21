@@ -23,7 +23,17 @@
       has-description="true"
       complete
     ></task-item>
-    <task-item name="Hello world"></task-item>
+    <task-item name="Hello world" subtasks>
+      <task-item
+        slot="subtasks"
+        class="subtasks"
+        has-due-date="true"
+        has-reminder
+        is-recurring="true"
+        has-description="true"
+        complete
+      ></task-item>
+    </task-item>
     <!-- </form> -->
   </body>
 </html>

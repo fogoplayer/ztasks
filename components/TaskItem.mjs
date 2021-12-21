@@ -60,7 +60,7 @@ class TaskItem extends HTMLElement {
 
   // Attributes
   static get observedAttributes() {
-    return ["complete", "name", "has-due-date", "has-reminder"];
+    return ["complete", "name", "has-due-date", "has-reminder", "is-recurring"];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -79,6 +79,10 @@ class TaskItem extends HTMLElement {
 
       case "has-reminder":
         this.hasReminderChanged(oldValue, newValue);
+        break;
+
+      case "is-recurring":
+        this.isRecurringChanged(oldValue, newValue);
         break;
 
       default:
@@ -100,7 +104,6 @@ class TaskItem extends HTMLElement {
   }
 
   completeChanged(oldValue, newValue) {
-
     if (newValue !== null) {
       this.shadowRoot.querySelector("custom-checkbox").checked = true;
     } else {
@@ -126,14 +129,6 @@ class TaskItem extends HTMLElement {
     return this.hasAttribute("has-due-date");
   }
 
-  set hasDueDate(val) {
-    if (val) {
-      this.setAttribute("has-due-date", "");
-    } else {
-      this.removeAttribute("has-due-date");
-    }
-  }
-
   hasDueDateChanged(oldValue, newValue) {
     if (newValue !== null) {
       this.shadowRoot.querySelector(".task").classList.add("has-due-date");
@@ -147,19 +142,24 @@ class TaskItem extends HTMLElement {
     return this.hasAttribute("has-reminder");
   }
 
-  // set hasReminder(val) {
-  //   if (val) {
-  //     this.setAttribute("has-reminder", "");
-  //   } else {
-  //     this.removeAttribute("has-reminder");
-  //   }
-  // }
-
   hasReminderChanged(oldValue, newValue) {
     if (newValue !== null) {
       this.shadowRoot.querySelector(".task").classList.add("has-reminder");
     } else {
       this.shadowRoot.querySelector(".task").classList.remove("has-reminder");
+    }
+  }
+
+  // Is Recurring
+  get isRecurring() {
+    return this.hasAttribute("is-recurring");
+  }
+
+  isRecurringChanged(oldValue, newValue) {
+    if (newValue !== null) {
+      this.shadowRoot.querySelector(".task").classList.add("is-recurring");
+    } else {
+      this.shadowRoot.querySelector(".task").classList.remove("is-recurring");
     }
   }
 }

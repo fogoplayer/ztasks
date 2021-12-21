@@ -1,10 +1,29 @@
 * {
   box-sizing: border-box;
+  background: inherit;
 }
+
+/* Color Schemes */
+.dark {
+  --background-accent: black;
+  --background-default: #444;
+  --background-focus: #666;
+}
+
+/* Body */
 body {
-  font-size: 200%;
+  /* variables */
   --anim-time: 0.2s;
   --accent-color: #9ff;
   --accent-hue: 180deg;
   --accent-lightness: 80%;
+
+  /* display */
+  /* positioning */
+  /* box-model */
+  background: var(--background-default);
+
+  /* typography */
+  /* manipulation */
+  /* misc */
 }

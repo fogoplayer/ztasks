@@ -1,3 +1,5 @@
+import "../components/CustomCheckbox.mjs";
+
 class TaskItem extends HTMLElement {
   constructor() {
     super();
@@ -13,7 +15,7 @@ class TaskItem extends HTMLElement {
       >
         <div class="task-preview">
           <span class="material-icons task-drag-handle"> drag_handle </span>
-          <input type="checkbox" class="task-check" />
+          <custom-checkbox class="task-check"></custom-checkbox>
           <input type="text" class="task-name" />
           <a class="details-link" href="../task-details"
             ><div class="chip task-data">
@@ -31,7 +33,7 @@ class TaskItem extends HTMLElement {
         </div>
         <ul class="subtasks"></ul>
       </li>
-      <link rel="stylesheet" href="/styles/components/CustomCheckbox.css" />
+      <link rel="stylesheet" href="/styles/components/TaskItem.css" />
     `;
 
 

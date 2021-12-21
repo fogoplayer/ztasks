@@ -1,3 +1,8 @@
+/**
+ * @param label the text to label the checkbox
+ * @param name the name of the group the checkbox belongs to
+ * @param checked if the checkbox should be initially checked
+ */
 class CustomCheckbox extends HTMLElement {
   constructor() {
     super();

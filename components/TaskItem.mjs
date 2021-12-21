@@ -6,12 +6,11 @@ class TaskItem extends HTMLElement {
 
     // Shadow checkbox and label
     const template = document.createElement("template");
-    template.innerHTML = `<li class="task 
-        ${this.getAttribute("has-due-date") ? "has-due-date" : ""}
-        ${this.getAttribute("has-reminder") ? "has-reminder" : ""}
-        ${this.getAttribute("is-recurring") ? "is-recurring" : ""}
-        ${this.getAttribute("has-description") ? "has-description" : ""}
-        "
+    template.innerHTML = `<li class="task${this.getAttribute("has-due-date") ? " has-due-date" : ""
+      }${this.getAttribute("has-reminder") ? " has-reminder" : ""
+      }${this.getAttribute("is-recurring") ? " is-recurring" : ""
+      }${this.getAttribute(" has-description") ? "has-description" : ""
+      }"
       >
         <div class="task-preview">
           <span class="material-icons task-drag-handle"> drag_handle </span>

@@ -5,9 +5,12 @@
 
 /* Color Schemes */
 .dark {
-  --background-accent: black;
+  --background-pop: black;
   --background-default: #444;
   --background-focus: #666;
+
+  --text-default: #fff;
+  --text-accent: #000;
 }
 
 /* Body */
@@ -24,6 +27,8 @@ body {
   background: var(--background-default);
 
   /* typography */
+  font-size: 1em;
+  color: var(--text-default);
   /* manipulation */
   /* misc */
 }

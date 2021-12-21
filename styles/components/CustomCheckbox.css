@@ -28,7 +28,7 @@
   bottom: 0;
   width: 1em;
   height: 1em;
-  border: 0.1em solid #a9a9a9;
+  border: 0.1em solid currentColor;
   border-radius: 0.05em;
   transform-origin: top right;
   transition: transform var(--anim-time, 0.25s) ease-in-out,

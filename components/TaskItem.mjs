@@ -1,4 +1,5 @@
 import "../components/CustomCheckbox.mjs";
+import "../components/TaskList.mjs";
 
 /**
  * @param complete whether the task is completed or not
@@ -43,10 +44,13 @@ class TaskItem extends HTMLElement {
       </a >
       ${this.showSubtasks ? `<button class="subtasks-toggle ${this.showSubtasks ? "" : "hide"}">Caret will go here</button>` : ""}
     </div >
-      ${this.showSubtasks ? `<slot name="subtasks"></slot>` : "" /* TODO when replaced with a list component, will need to add indentation and switch to a class toggling height rather than toggling the display */}
+      <task-list class="subtasks">
+        <!--<slot slot="task" name="task"></slot>-->
+      </task-list>
+      ${/*this.showSubtasks ? `` : "" /* TODO when replaced with a list component, will need to add indentation and switch to a class toggling height rather than toggling the display */""}
         </li >
-      <link rel="stylesheet" href="/styles/components/TaskItem.css" />
-    `;
+  <link rel="stylesheet" href="/styles/components/TaskItem.css" />
+`;
 
     // Create
     this.attachShadow({ mode: "open" });
@@ -188,4 +192,4 @@ class TaskItem extends HTMLElement {
   }
 }
 
-window.customElements.define("task-item", TaskItem);
+window.customElements.define("task-item", TaskItem);;;;

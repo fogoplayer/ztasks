@@ -20,11 +20,10 @@ class TaskList extends HTMLElement {
     template.innerHTML = `<ul>
       <slot name="task"></slot>
     </ul>
-    <link rel="stylesheet" href="/styles/components/TaskList.css" />;`;
+    <link rel="stylesheet" href="/styles/components/TaskList.css" />`;
 
     // Create
-    this.attachShadow({ mode: "open" });
-    this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.appendChild(template.content.cloneNode(true));
 
     // Data binding
     // this.shadowRoot.querySelector(".task-name").onchange = (e) => {

@@ -50,25 +50,6 @@ let tasks = [{
   }],
 }]
 
-function renderTasks(taskArray) {
-  if (taskArray.length === 0) return [];
-
-  const taskElArray = taskArray.map((task) => {
-    const taskEl = document.createElement("task-item");
-    taskEl.setAttribute("name", task.name)
-    taskEl.setAttribute("slot", "task")
-    taskEl.setAttribute("show-subtasks", task.showSubtasks)
-    if (task.complete) taskEl.setAttribute("complete", "")
-    if (!!task.dueDate) taskEl.setAttribute("due-date", task.dueDate)
 
 
-    renderTasks(task.subtasks).forEach(subtask => {
-      taskEl.appendChild(subtask)
-    });
-    return taskEl
-  });
 
-  return taskElArray;
-}
-
-renderTasks(tasks).forEach(task => document.querySelector(".task-list").appendChild(task));

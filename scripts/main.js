@@ -1,3 +1,5 @@
+import { renderTasks } from "./task-list.mjs"
+
 let tasks = [{
   name: "Somebody once told me",
   description: "Task 1",
@@ -50,6 +52,4 @@ let tasks = [{
   }],
 }]
 
-
-
-
+renderTasks(tasks, ".task-list")

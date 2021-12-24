@@ -15,7 +15,7 @@ export function generateTaskTree(taskArray) {
     if (!!task.dueDate) taskEl.setAttribute("due-date", task.dueDate)
 
 
-    renderTasks(task.subtasks).forEach(subtask => {
+    generateTaskTree(task.subtasks).forEach(subtask => {
       taskEl.appendChild(subtask)
     });
     return taskEl
@@ -30,5 +30,5 @@ export function generateTaskTree(taskArray) {
  * @param {string} target the selector for the element to contain the task list
  */
 export function renderTasks(taskArray, target) {
-  renderTasks(tasks).forEach(task => document.querySelector(".task-list").appendChild(task));
+  generateTaskTree(taskArray).forEach(task => document.querySelector(target).appendChild(task));
 }

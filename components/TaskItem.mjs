@@ -18,7 +18,7 @@ class TaskItem extends HTMLElement {
     // Shadow checkbox and label
     const template = document.createElement("template");
     template.innerHTML = `    <li class="task${this.hasDueDate ? " has-due-date" : ""
-      }${this.hasDueDate ? " has-reminder" : ""
+      }${this.hasReminder ? " has-reminder" : ""
       }${this.isRecurring ? " is-recurring" : ""
       }${this.hasDescription ? " has-description" : ""
       }"
@@ -33,7 +33,7 @@ class TaskItem extends HTMLElement {
           <span class="material-icons notif-indicator">
             notifications_active
           </span>
-          <span class="task-due-date">Tomorrow</span>
+          <span class="task-due-date">${this.dueDate}</span>
           <span class="material-icons recurring-indicator">cached</span>
           <span class="material-icons description-indicator">notes</span>
         </div>
@@ -69,14 +69,14 @@ class TaskItem extends HTMLElement {
 
   // Attributes
   static get observedAttributes() {
-    return ["complete", "name", "has-due-date", "has-reminder", "is-recurring", "show-subtasks"];
+    return ["complete", "name", "due-date", "has-reminder", "is-recurring", "show-subtasks"];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case "complete": this.completeChanged(oldValue, newValue); break;
       case "name": this.parentChangedName(oldValue, newValue); break;
-      case "has-due-date": this.hasDueDateChanged(oldValue, newValue); break;
+      case "due-date": this.dueDateChanged(oldValue, newValue); break;
       case "has-reminder": this.hasReminderChanged(oldValue, newValue); break;
       case "is-recurring": this.isRecurringChanged(oldValue, newValue); break;
       case "has-description": this.hasDescriptionChanged(oldValue, newValue); break;
@@ -119,14 +119,40 @@ class TaskItem extends HTMLElement {
     this.shadowRoot.querySelector(".task-name").value = this.name;
   }
 
-  // Has Due Date
+  // Due Date
   get hasDueDate() {
-    return this.hasAttribute("has-due-date");
+    return this.hasAttribute("due-date");
   }
 
-  hasDueDateChanged(oldValue, newValue) {
+  get dueDate() {
+    const dueDate = new Date(this.getAttribute("due-date"))
+    const today = new Date(Date());
+    const ONE_DAY_MS = 1000 * 60 * 60 * 24;
+    const daysLeft = Math.round((dueDate - today) / ONE_DAY_MS);
+    let options;
+
+    console.log(dueDate)
+
+    if (daysLeft < 0) {               // Due date has passed
+      return `${-daysLeft} ${daysLeft === -1 ? "day" : "days"} ago`;
+    } else if (daysLeft === 0) {      // Today
+      return "Today";
+    } else if (daysLeft === 1) {      // Tomorrow
+      return "Tomorrow";
+    } else if (daysLeft < 7) {        // Day of the week if less than a week away
+      options = { weekday: 'long' }
+    } else if (daysLeft < 365) {      // Month and day if less than a year away
+      options = { month: 'short', day: 'numeric' };
+    } else {
+      options = { year: "numeric", month: 'short', day: 'numeric' };
+    }
+    return dueDate.toLocaleDateString(undefined, options)
+  }
+
+  dueDateChanged(oldValue, newValue) {
     if (newValue !== null) {
       this.shadowRoot.querySelector(".task").classList.add("has-due-date");
+      this.shadowRoot.querySelector(".task-due-date").innerText = this.dueDate;
     } else {
       this.shadowRoot.querySelector(".task").classList.remove("has-due-date");
     }

@@ -2,13 +2,13 @@ let tasks = [{
   name: "Somebody once told me",
   description: "Task 1",
   complete: true,
-  dueDate: new Date("04 Dec 2022 00:12:00 GMT"),
-  showSubtasks: false,
+  dueDate: new Date("04 Dec 2021"),
+  showSubtasks: true,
   subtasks: [{
     name: "The world was gonna roll me",
     complete: false,
     description: "Task 1a",
-    dueDate: new Date("04 Dec 2021 00:12:00 GMT"),
+    dueDate: new Date("24 Dec 2021"),
     showSubtasks: false,
     subtasks: [],
   },
@@ -16,7 +16,7 @@ let tasks = [{
     name: "I ain't the sharpest tool in the shed",
     complete: false,
     description: "",
-    dueDate: new Date("04 Dec 2022 00:12:00 GMT"),
+    dueDate: new Date("26 Dec 2021"),
     showSubtasks: true,
     subtasks: [],
   }],
@@ -30,7 +30,7 @@ let tasks = [{
     name: "With her finger and her thumb",
     complete: false,
     description: "",
-    dueDate: new Date("04 Dec 2022 00:12:00 GMT"),
+    dueDate: new Date("28 Dec 2021"),
     showSubtasks: true,
     subtasks: [],
   },
@@ -38,12 +38,12 @@ let tasks = [{
     name: "In the shape of an L",
     complete: false,
     description: "",
-    dueDate: new Date("04 Dec 2022 00:12:00 GMT"),
+    dueDate: new Date("04 Mar 2022"),
     showSubtasks: true,
     subtasks: [{
       name: "On her forhead",
       description: "",
-      dueDate: new Date("04 Dec 2022 00:12:00 GMT"),
+      dueDate: new Date("27 Dec 2022"),
       showSubtasks: true,
       subtasks: [],
     }],
@@ -59,7 +59,7 @@ function renderTasks(taskArray) {
     taskEl.setAttribute("slot", "task")
     taskEl.setAttribute("show-subtasks", task.showSubtasks)
     if (task.complete) taskEl.setAttribute("complete", "")
-    if (!!task.dueDate) taskEl.setAttribute("has-due-date", "")
+    if (!!task.dueDate) taskEl.setAttribute("due-date", task.dueDate)
 
 
     renderTasks(task.subtasks).forEach(subtask => {

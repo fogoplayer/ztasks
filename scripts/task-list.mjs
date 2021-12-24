@@ -1,9 +1,19 @@
 /**
+ * Recursively produces task list HTML, sorted by due date
+ * @param {Task[]} taskArray an array of task objects
+ * @returns an array of HTML elements
+ */
+function generateSortedTaskTree(taskArray) {
+  const sortedTasks = sortTasks(taskArray);
+  return generateTaskTree(sortedTasks)
+}
+
+/**
  * Recursively produces task list HTML
  * @param {Task[]} taskArray an array of task objects
  * @returns an array of HTML elements
  */
-export function generateTaskTree(taskArray) {
+function generateTaskTree(taskArray) {
   if (taskArray.length === 0) return [];
 
   const taskElArray = taskArray.map((task) => {
@@ -28,7 +38,31 @@ export function generateTaskTree(taskArray) {
  * Takes an array of task objects and renders it in a specified element
  * @param {Task[]} taskArray an array of task objects
  * @param {string} target the selector for the ul to contain the task list
+ * @param {boolean} sorted whether or not the tasks should be sorted by due date. Defaults to false
  */
-export function renderTasks(taskArray, target) {
-  generateTaskTree(taskArray).forEach(task => document.querySelector(target).appendChild(task));
+export function renderTasks(taskArray, target, sorted = false) {
+  if (sorted) {
+    generateSortedTaskTree(taskArray).forEach(task => document.querySelector(target).appendChild(task));
+  } else {
+    generateTaskTree(taskArray).forEach(task => document.querySelector(target).appendChild(task));
+  }
+}
+
+/**
+ * @param {Task[]} taskArray an array of tasks to sort by due date
+ * @returns an array of sorted tasks
+ */
+function sortTasks(taskArray) {
+  if (taskArray.length === 0) return [];
+
+
+  const taskArraySorted = [...taskArray]
+  taskArraySorted.sort((first, second) => first.dueDate - second.dueDate)
+
+  taskArraySorted.map(task => {
+    task.subtasks = sortTasks(task.subtasks);
+    return task;
+  })
+
+  return taskArraySorted;
 }

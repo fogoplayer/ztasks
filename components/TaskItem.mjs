@@ -42,7 +42,9 @@ class TaskItem extends HTMLElement {
           <i class="material-icons">more_vert</i>
         </button>
       </a >
-      ${this.showSubtasks ? `<button class="subtasks-toggle ${this.showSubtasks ? "" : "hide"}">Caret will go here</button>` : ""}
+      ${this.showSubtasks ? `<button class="subtasks-toggle ${this.showSubtasks ? "" : "hide"}"><span class="material-icons">
+      expand_less
+      </span>` : ""}
     </div >
       <task-list class="subtasks">
         <slot name="task">
@@ -50,6 +52,7 @@ class TaskItem extends HTMLElement {
       ${/*this.showSubtasks ? `` : "" /* TODO when replaced with a list component, will need to add indentation and switch to a class toggling height rather than toggling the display */""}
         </li >
   <link rel="stylesheet" href="/styles/components/TaskItem.css" />
+  <link rel="stylesheet" href="/styles/icon-font.css" />
 `;
 
     // Create

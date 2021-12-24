@@ -1,5 +1,4 @@
 import "../components/CustomCheckbox.mjs";
-import "../components/TaskList.mjs";
 
 /**
  * @param complete whether the task is completed or not
@@ -44,11 +43,10 @@ class TaskItem extends HTMLElement {
       expand_less
       </button>` : ""}
     </div >
-      <task-list class="subtasks">
-        <slot name="task">
-      </task-list>
-      ${/*this.showSubtasks ? `` : "" /* TODO when replaced with a list component, will need to add indentation and switch to a class toggling height rather than toggling the display */""}
-        </li >
+    <ul class="subtasks">
+      <slot name="task">
+    </ul>
+  </li >
   <link rel="stylesheet" href="/styles/components/TaskItem.css" />
   <link rel="stylesheet" href="/styles/icon-font.css" />
 `;
@@ -67,17 +65,6 @@ class TaskItem extends HTMLElement {
       };
     }
   }
-
-  connectedCallback() {
-    Array.from(this.children).forEach(task => {
-      this.shadowRoot.querySelector("task-list").appendChild(task);
-    });
-
-    while (this.firstChild) {
-      this.removeChild(this.firstChild);
-    }
-  }
-
 
   // Attributes
   static get observedAttributes() {

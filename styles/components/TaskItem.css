@@ -152,6 +152,12 @@
   transform: scaleY(-1);
 }
 
-.task .subtasks {
-  padding-left: 2em;
+.subtasks  {
+  padding-left: 2.5em;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }

@@ -19,15 +19,19 @@
     <script defer type="module" src="/scripts/main.js"></script>
   </head>
   <body class="dark">
-    <!-- <form action="" submit="printData()"> -->
-    <task-list>
+    <ul>
       <task-item name="1"></task-item>
       <task-item name="2" show-subtasks="true">
-        <task-item name="2a" slot="task" has-due-date has-reminder></task-item>
+        <task-item name="2a" slot="task" has-due-date has-reminder>
+          <task-item
+            name="2a"
+            slot="task"
+            has-due-date
+            has-reminder
+          ></task-item>
+        </task-item>
         <task-item name="2b" slot="task" has-description></task-item>
       </task-item>
-    </task-list>
-
-    <!-- </form> -->
+    </ul>
   </body>
 </html>

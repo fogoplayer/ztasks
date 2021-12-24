@@ -45,7 +45,7 @@ class TaskItem extends HTMLElement {
       ${this.showSubtasks ? `<button class="subtasks-toggle ${this.showSubtasks ? "" : "hide"}">Caret will go here</button>` : ""}
     </div >
       <task-list class="subtasks">
-        <!--<slot slot="task" name="task"></slot>-->
+        <slot name="task">
       </task-list>
       ${/*this.showSubtasks ? `` : "" /* TODO when replaced with a list component, will need to add indentation and switch to a class toggling height rather than toggling the display */""}
         </li >
@@ -60,10 +60,23 @@ class TaskItem extends HTMLElement {
     this.shadowRoot.querySelector(".task-name").onchange = (e) => {
       this.setAttribute("name", e.target.value);
     };
-    this.shadowRoot.querySelector(".subtasks-toggle").onclick = (e) => {
-      this.setAttribute("show-subtasks", !this.showSubtasks);
-    };
+    if (this.shadowRoot.querySelector(".subtasks-toggle")) {
+      this.shadowRoot.querySelector(".subtasks-toggle").onclick = (e) => {
+        this.setAttribute("show-subtasks", !this.showSubtasks);
+      };
+    }
   }
+
+  connectedCallback() {
+    Array.from(this.children).forEach(task => {
+      this.shadowRoot.querySelector("task-list").appendChild(task);
+    });
+
+    while (this.firstChild) {
+      this.removeChild(this.firstChild);
+    }
+  }
+
 
   // Attributes
   static get observedAttributes() {

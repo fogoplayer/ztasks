@@ -16,33 +16,14 @@
   </head>
   <body class="dark">
     <!-- <form action="" submit="printData()"> -->
-    <task-item
-      has-due-date="true"
-      has-reminder
-      is-recurring="true"
-      has-description="true"
-      complete
-    ></task-item>
-    <task-item name="Hello world" show-subtasks="true">
-      <task-item
-        slot="task"
-        class="subtasks"
-        has-due-date="true"
-        has-reminder
-        is-recurring="true"
-        has-description="true"
-        complete
-      ></task-item>
-      <task-item
-        slot="task"
-        class="subtasks"
-        has-due-date="true"
-        has-reminder
-        is-recurring="true"
-        has-description="true"
-        complete
-      ></task-item>
-    </task-item>
+    <task-list>
+      <task-item name="1"></task-item>
+      <task-item name="2" show-subtasks="true">
+        <task-item name="2a" slot="task"></task-item>
+        <task-item name="2b" slot="task"></task-item>
+      </task-item>
+    </task-list>
+
     <!-- </form> -->
   </body>
 </html>

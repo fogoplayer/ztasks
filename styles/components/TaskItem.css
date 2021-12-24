@@ -59,6 +59,8 @@
 .task-preview .details-link {
   text-decoration: none;
   color: inherit;
+  display: flex;
+  align-items: center;
 }
 
 .task-preview .chip {
@@ -147,7 +149,7 @@
 }
 
 .task > .task-preview > .subtasks-toggle.hide {
-  transform: rotate(180deg);
+  transform: scaleY(-1);
 }
 
 .task .subtasks {

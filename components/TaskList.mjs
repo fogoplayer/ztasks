@@ -17,8 +17,7 @@ class TaskList extends HTMLElement {
 
     // Shadow checkbox and label
     const template = document.createElement("template");
-    template.innerHTML = `<ul>
-      <!--<slot name="task"></slot>-->
+    template.innerHTML = `<ul class=${this.getAttribute("class") || ""}>
     </ul>
     <link rel="stylesheet" href="/styles/components/TaskList.css" />`;
 

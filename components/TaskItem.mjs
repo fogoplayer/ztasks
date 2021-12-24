@@ -21,7 +21,7 @@ class TaskItem extends HTMLElement {
     template.innerHTML = `    <li class="task${this.hasDueDate ? " has-due-date" : ""
       }${this.hasDueDate ? " has-reminder" : ""
       }${this.isRecurring ? " is-recurring" : ""
-      }${this.hasDescription ? "has-description" : ""
+      }${this.hasDescription ? " has-description" : ""
       }"
       >
         <div class="task-preview">
@@ -38,13 +38,11 @@ class TaskItem extends HTMLElement {
           <span class="material-icons recurring-indicator">cached</span>
           <span class="material-icons description-indicator">notes</span>
         </div>
-        <button class="task-more">
-          <i class="material-icons">more_vert</i>
-        </button>
+        <span class="task-more material-icons">more_vert</span>
       </a >
-      ${this.showSubtasks ? `<button class="subtasks-toggle ${this.showSubtasks ? "" : "hide"}"><span class="material-icons">
+      ${this.showSubtasks ? `<button class="subtasks-toggle material-icons ${this.showSubtasks ? "" : "hide"}">
       expand_less
-      </span>` : ""}
+      </button>` : ""}
     </div >
       <task-list class="subtasks">
         <slot name="task">

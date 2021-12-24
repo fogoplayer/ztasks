@@ -41,7 +41,6 @@ let tasks = [{
     name: "In the shape of an L",
     complete: false,
     description: "",
-    dueDate: new Date("04 Dec 2021"),
     showSubtasks: true,
     subtasks: [{
       name: "On her forhead",
@@ -53,5 +52,4 @@ let tasks = [{
   }],
 }]
 
-// renderTasks(tasks, ".task-list")
-renderTasks(tasks, ".task-list", false)
+window.onload = renderTasks(tasks, ".task-list", false);

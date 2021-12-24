@@ -65,6 +65,8 @@ class TaskItem extends HTMLElement {
         this.setAttribute("show-subtasks", !this.showSubtasks);
       };
     }
+
+    this.shadowRoot.onload = () => { };
   }
 
   // Attributes

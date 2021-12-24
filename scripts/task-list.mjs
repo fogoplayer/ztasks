@@ -25,9 +25,9 @@ export function generateTaskTree(taskArray) {
 }
 
 /**
- * 
+ * Takes an array of task objects and renders it in a specified element
  * @param {Task[]} taskArray an array of task objects
- * @param {string} target the selector for the element to contain the task list
+ * @param {string} target the selector for the ul to contain the task list
  */
 export function renderTasks(taskArray, target) {
   generateTaskTree(taskArray).forEach(task => document.querySelector(target).appendChild(task));

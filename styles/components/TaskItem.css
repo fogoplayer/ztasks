@@ -1,18 +1,18 @@
 * {
   overflow: hidden;
   text-overflow: ellipsis;
+  box-sizing: border-box;
 }
 
 .task .material-icons {
   font-size: inherit;
+  line-height: 1.5em;
 }
 
 .task-preview {
   /* display */
   display: flex;
   flex-flow: row nowrap;
-  column-gap: 0.5em;
-  align-items: center;
 
   /* box-model */
   padding: 0.5em;
@@ -30,6 +30,7 @@
   margin: 0;
   font-size: 1em;
   padding-inline: 0.5em;
+  line-height: 1.5em;
 }
 
 .task-preview .task-name {
@@ -40,6 +41,7 @@
   background: transparent;
   border: none;
   border-bottom: 2px solid currentColor;
+  margin-inline: 0.5em;
 
   /* typography */
   font-size: inherit;
@@ -66,6 +68,7 @@
 .task-preview .chip {
   display: none;
   height: 1.5em;
+  min-width: 2em;
 }
 
 .task-preview .chip * {
@@ -85,6 +88,7 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+  justify-content: center;
   column-gap: 0.25em;
 
   /* box-model */
@@ -130,13 +134,15 @@
   display: inline-block;
 }
 
-.task > .task-preview button {
+.task > .task-preview button,
+.task > .task-preview .task-more {
   display: inline-block;
   background: transparent;
   border: none;
   padding: 0;
   color: inherit;
   font-size: inherit;
+  min-width: 2em;
 }
 
 .task.has-description .task-preview .task-more,
@@ -153,7 +159,13 @@
 }
 
 .subtasks  {
-  padding-left: 2.5em;
+  padding-left: 2em;
+  max-height: 400px;
+  transition: max-height var(--anim-time);
+}
+
+.subtasks.hide {
+  max-height: 0;
 }
 
 ul {

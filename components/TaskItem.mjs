@@ -39,17 +39,17 @@ class TaskItem extends HTMLElement {
         </div>
         <span class="task-more material-icons">more_vert</span>
       </a >
-      ${this.showSubtasks ? `<button class="subtasks-toggle material-icons ${this.showSubtasks ? "" : "hide"}">
+      ${this.firstChild ? `<button class="subtasks-toggle material-icons ${this.showSubtasks ? "" : "hide"}">
       expand_less
       </button>` : ""}
     </div >
-    <ul class="subtasks">
-      <slot name="task">
-    </ul>
+    <ul class="subtasks ${this.showSubtasks ? "" : "hide"} class">
+      <slot name = "task">
+    </ul >
   </li >
   <link rel="stylesheet" href="/styles/components/TaskItem.css" />
   <link rel="stylesheet" href="/styles/icon-font.css" />
-`;
+    `;
 
     // Create
     this.attachShadow({ mode: "open" });
@@ -59,6 +59,7 @@ class TaskItem extends HTMLElement {
     this.shadowRoot.querySelector(".task-name").onchange = (e) => {
       this.setAttribute("name", e.target.value);
     };
+
     if (this.shadowRoot.querySelector(".subtasks-toggle")) {
       this.shadowRoot.querySelector(".subtasks-toggle").onclick = (e) => {
         this.setAttribute("show-subtasks", !this.showSubtasks);
@@ -180,17 +181,25 @@ class TaskItem extends HTMLElement {
   }
 
   showSubtasksChanged(oldValue, newValue) {
+    let subtasks = this.shadowRoot.querySelector(".subtasks")
+    const animTime = getComputedStyle(this).getPropertyValue("--anim-time").slice(0, -1) * 1000;
+
     if (newValue === null) {
       this.removeAttribute("show-subtasks");
     }
     else if (JSON.parse(newValue)) {
       this.shadowRoot.querySelector(".subtasks-toggle").classList.remove("hide");
       this.shadowRoot.querySelector(".subtasks").classList.remove("hide");
+      subtasks.style.maxHeight = subtasks.scrollHeight + "px";
+      setTimeout(() => {
+        subtasks.style.removeProperty("max-height");
+      }, animTime)
     } else {
       this.shadowRoot.querySelector(".subtasks-toggle").classList.add("hide");
       this.shadowRoot.querySelector(".subtasks").classList.add("hide");
+      subtasks.style.removeProperty("max-height");
     }
   }
 }
 
-window.customElements.define("task-item", TaskItem);;;;
+window.customElements.define("task-item", TaskItem);

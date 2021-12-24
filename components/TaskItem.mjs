@@ -131,8 +131,6 @@ class TaskItem extends HTMLElement {
     const daysLeft = Math.round((dueDate - today) / ONE_DAY_MS);
     let options;
 
-    console.log(dueDate)
-
     if (daysLeft < 0) {               // Due date has passed
       return `${-daysLeft} ${daysLeft === -1 ? "day" : "days"} ago`;
     } else if (daysLeft === 0) {      // Today
@@ -210,10 +208,14 @@ class TaskItem extends HTMLElement {
     let subtasks = this.shadowRoot.querySelector(".subtasks")
     const animTime = getComputedStyle(this).getPropertyValue("--anim-time").slice(0, -1) * 1000;
 
+    // If there aren't any subtasks, just leave
+    if (!this.firstChild) {
+      return
+    }
+
     if (newValue === null) {
       this.removeAttribute("show-subtasks");
-    }
-    else if (JSON.parse(newValue)) {
+    } else if (JSON.parse(newValue)) {
       this.shadowRoot.querySelector(".subtasks-toggle").classList.remove("hide");
       this.shadowRoot.querySelector(".subtasks").classList.remove("hide");
       subtasks.style.maxHeight = subtasks.scrollHeight + "px";

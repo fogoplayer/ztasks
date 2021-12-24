@@ -25,30 +25,29 @@ class TaskItem extends HTMLElement {
       >
         <div class="task-preview">
           <span class="material-icons task-drag-handle"> drag_handle </span>
-          <custom-checkbox class="task-check" ${this.complete ? " checked" : ""
-      }></custom-checkbox>
-      <input type="text" class="task-name" value="${this.name}"/>
-      <a class="details-link" href = "../task-details">
-        <div class="chip task-data">
-          <span class="material-icons notif-indicator">
-            notifications_active
-          </span>
-          <span class="task-due-date">${this.dueDate}</span>
-          <span class="material-icons recurring-indicator">cached</span>
-          <span class="material-icons description-indicator">notes</span>
-        </div>
-        <span class="task-more material-icons">more_vert</span>
-      </a >
-      ${this.firstChild ? `<button class="subtasks-toggle material-icons ${this.showSubtasks ? "" : "hide"}">
-      expand_less
-      </button>` : ""}
-    </div >
-    <ul class="subtasks ${this.showSubtasks ? "" : "hide"} class">
-      <slot name = "task">
-    </ul >
-  </li >
-  <link rel="stylesheet" href="/styles/components/TaskItem.css" />
-  <link rel="stylesheet" href="/styles/icon-font.css" />
+          <custom-checkbox class="task-check" ${this.complete ? " checked" : ""}></custom-checkbox>
+          <input type="text" class="task-name" value="${this.name}"/>
+          <a class="details-link" href = "../task-details">
+            <div class="chip task-data">
+              <span class="material-icons notif-indicator">
+                notifications_active
+              </span>
+              <span class="task-due-date">${this.dueDate}</span>
+              <span class="material-icons recurring-indicator">cached</span>
+              <span class="material-icons description-indicator">notes</span>
+            </div>
+            <span class="task-more material-icons">more_vert</span>
+          </a >
+          ${this.firstChild ? `<button class="subtasks-toggle material-icons ${this.showSubtasks ? "" : "hide"}">
+          expand_less
+          </button>` : ""}
+        </div >
+        <ul class="subtasks ${this.showSubtasks ? "" : "hide"} class">
+          <slot name = "task">
+        </ul >
+      </li >
+      <link rel="stylesheet" href="/styles/components/TaskItem.css" />
+      <link rel="stylesheet" href="/styles/icon-font.css" />
     `;
 
     // Create

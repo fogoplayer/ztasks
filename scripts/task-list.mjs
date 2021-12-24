@@ -17,7 +17,8 @@ function generateTaskTree(taskArray) {
   if (taskArray.length === 0) return [];
 
   const taskElArray = taskArray.map((task) => {
-    const taskEl = document.createElement("task-item");
+
+    const taskEl = document.createElement(task.title ? "title-task" : "task-item");
     taskEl.setAttribute("name", task.name)
     taskEl.setAttribute("slot", "task")
     taskEl.setAttribute("show-subtasks", task.showSubtasks)

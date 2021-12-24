@@ -18,7 +18,7 @@
   padding: 0.5em;
 }
 
-.task-preview>* {
+.task-preview > * {
   flex: 0 0 auto;
 }
 
@@ -31,6 +31,10 @@
   font-size: 1em;
   padding-inline: 0.5em;
   line-height: 1.5em;
+}
+
+.task-preview h2 {
+  margin: 0;
 }
 
 .task-preview .task-name {
@@ -49,6 +53,11 @@
   color: inherit;
   text-overflow: ellipsis;
   overflow-x: hidden;
+}
+
+.task-preview h2.task-name {
+  border: none;
+  line-height: 1.5em;
 }
 
 .task-preview .task-name:focus {
@@ -82,8 +91,8 @@
   font-size: 0.75em;
 }
 
-.task.has-due-date>.task-preview>.details-link>.task-data,
-.task.has-description>.task-preview>.details-link>.task-data {
+.task.has-due-date > .task-preview > .details-link > .task-data,
+.task.has-description > .task-preview > .details-link > .task-data {
   /* display */
   display: flex;
   flex-flow: row nowrap;
@@ -100,27 +109,43 @@
   color: var(--text-accent);
 }
 
-.task.task.has-due-date.has-reminder>.task-preview>.details-link>.task-data .notif-indicator {
+.task.task.has-due-date.has-reminder
+  > .task-preview
+  > .details-link
+  > .task-data
+  .notif-indicator {
   display: inline-block;
 }
 
-.task.task.has-due-date>.task-preview>.details-link>.task-data .task-due-date {
+.task.task.has-due-date
+  > .task-preview
+  > .details-link
+  > .task-data
+  .task-due-date {
   display: inline-block;
   font-family: inherit;
   /* TODO is this required? */
   font-size: 0.75em;
 }
 
-.task.has-due-date.is-recurring>.task-preview>.details-link>.task-data .recurring-indicator {
+.task.has-due-date.is-recurring
+  > .task-preview
+  > .details-link
+  > .task-data
+  .recurring-indicator {
   display: inline-block;
 }
 
-.task.has-description>.task-preview>.details-link>.task-data .description-indicator {
+.task.has-description
+  > .task-preview
+  > .details-link
+  > .task-data
+  .description-indicator {
   display: inline-block;
 }
 
-.task>.task-preview button,
-.task>.task-preview .task-more {
+.task > .task-preview button,
+.task > .task-preview .task-more {
   display: inline-block;
   background: transparent;
   border: none;
@@ -135,11 +160,11 @@
   display: none;
 }
 
-.task>.task-preview>.subtasks-toggle {
+.task > .task-preview > .subtasks-toggle {
   transition: transform var(--anim-time) linear;
 }
 
-.task>.task-preview>.subtasks-toggle.hide {
+.task > .task-preview > .subtasks-toggle.hide {
   transform: scaleY(-1);
 }
 

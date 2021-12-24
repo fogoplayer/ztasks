@@ -2,9 +2,7 @@ import { renderTasks } from "./task-list.mjs"
 
 let tasks = [{
   name: "Somebody once told me",
-  description: "Task 1",
-  complete: true,
-  dueDate: new Date("27 Dec 2022"),
+  title: true,
   showSubtasks: true,
   subtasks: [{
     name: "The world was gonna roll me",
@@ -25,9 +23,7 @@ let tasks = [{
 },
 {
   name: "She was looking kinda dumb",
-  complete: true,
-  description: "Task 2",
-  dueDate: new Date("28 Dec 2022"),
+  title: true,
   showSubtasks: true,
   subtasks: [{
     name: "With her finger and her thumb",

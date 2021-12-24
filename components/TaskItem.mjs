@@ -66,7 +66,10 @@ class TaskItem extends HTMLElement {
       };
     }
 
-    this.shadowRoot.onload = () => { };
+    this.shadowRoot.querySelector("link").onload = () => {
+      document.querySelector(".task-list").style.removeProperty("display")
+      document.querySelector(".task-list.placeholder").style.display = "none";
+    };
   }
 
   // Attributes

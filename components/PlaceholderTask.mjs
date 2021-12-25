@@ -146,15 +146,15 @@ class PlaceholderTask extends HTMLElement {
           --gradient: linear-gradient(90deg, var(--background-focus) 0%, hsl(var(--accent-hue), 100%, var(--accent-lightness)), 10% ,var(--background-focus) 20%);
           background: var(--gradient);
           background-size: 200%;
-          animation: loading calc(var(--anim-time)*4) linear infinite;
+          animation: loading calc(var(--anim-time) * 10) linear infinite;
         }
 
         @keyframes loading {
           0% {
-            background-position: 0% 50%;
+            background-position: 200% 50%;
           }
           100% {
-            background-position: 200% 50%;
+            background-position: 0% 50%;
           }
         }
 

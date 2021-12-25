@@ -17,9 +17,9 @@
 body {
   /* variables */
   --anim-time: 0.2s;
-  --accent-color: #9ff;
   --accent-hue: 180deg;
   --accent-lightness: 80%;
+  --font: Roboto, Arial, sans-serif;
 
   /* display */
   /* positioning */
@@ -30,6 +30,8 @@ body {
   /* typography */
   font-size: 1em;
   color: var(--text-default);
+  font-family: var(--font);
+
   /* manipulation */
   /* misc */
 }

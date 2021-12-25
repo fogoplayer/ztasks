@@ -12,7 +12,10 @@ class TitleTask extends HTMLElement {
 
     // Shadow checkbox and label
     const template = document.createElement("template");
-    template.innerHTML = `<li class="task">
+    template.innerHTML = `
+      <link rel="stylesheet" href="/styles/components/TaskItem.css" />
+      <link rel="stylesheet" href="/styles/icon-font.css" />
+      <li class="task">
         <div class="task-preview">
           <span class="material-icons task-drag-handle"> drag_handle </span>
           <h2 class="task-name" contenteditable>${this.name}</h2>
@@ -27,8 +30,6 @@ class TitleTask extends HTMLElement {
           <slot name = "task">
         </ul >
       </li >
-      <link rel="stylesheet" href="/styles/components/TaskItem.css" />
-      <link rel="stylesheet" href="/styles/icon-font.css" />
     `;
 
     // Create

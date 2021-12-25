@@ -10,6 +10,7 @@ class CustomCheckbox extends HTMLElement {
     // Shadow checkbox and label
     const template = document.createElement("template");
     template.innerHTML = `
+        <link rel="stylesheet" href="/styles/components/CustomCheckbox.css"/>
         <label>
           <div class="skew-checkbox">
             <div class="clip">
@@ -19,8 +20,6 @@ class CustomCheckbox extends HTMLElement {
           </div>
           ${this.getAttribute("label") || ""}
         </label>
-
-        <link rel="stylesheet" href="/styles/components/CustomCheckbox.css"/>
       `;
 
 

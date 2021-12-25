@@ -17,7 +17,10 @@ class TaskItem extends HTMLElement {
 
     // Shadow checkbox and label
     const template = document.createElement("template");
-    template.innerHTML = `    <li class="task${this.hasDueDate ? " has-due-date" : ""
+    template.innerHTML = `    
+      <link rel="stylesheet" href="/styles/components/TaskItem.css" />
+      <link rel="stylesheet" href="/styles/icon-font.css" />  
+      <li class="task${this.hasDueDate ? " has-due-date" : ""
       }${this.hasReminder ? " has-reminder" : ""
       }${this.isRecurring ? " is-recurring" : ""
       }${this.hasDescription ? " has-description" : ""
@@ -46,8 +49,6 @@ class TaskItem extends HTMLElement {
           <slot name = "task">
         </ul >
       </li >
-      <link rel="stylesheet" href="/styles/components/TaskItem.css" />
-      <link rel="stylesheet" href="/styles/icon-font.css" />
     `;
 
     // Create

@@ -75,6 +75,7 @@ ul+* {
 }
 
 nav h3 {
+  color: hsl(var(--accent-hue), 100%, var(--accent-lightness));
   font-size: .875em;
   font-weight: 200;
   margin: 0;

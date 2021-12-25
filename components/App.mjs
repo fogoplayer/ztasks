@@ -19,6 +19,8 @@ class App extends HTMLElement {
     // Shadow checkbox and label
     const template = document.createElement("template");
     template.innerHTML = `
+      <link rel="stylesheet" href="../styles/main.css"/>
+      <link rel="stylesheet" href="/styles/icon-font.css" />
       <header class="app-header">
         <button class="nav-toggle">
           <span class="material-icons">menu</span>
@@ -40,8 +42,6 @@ class App extends HTMLElement {
         </li>
       </nav>
       <div class="nav-scrim"></div>
-      <link rel="stylesheet" href="../styles/components/App.css"/>
-      <link rel="stylesheet" href="/styles/icon-font.css" />
     `;
 
     // Create
@@ -49,10 +49,10 @@ class App extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     // Publicize Styles
-    let publicStyles = document.createElement("link");
-    publicStyles.rel = "stylesheet";
-    publicStyles.href = "../styles/components/App.css";
-    this.appendChild(publicStyles)
+    // let publicStyles = document.createElement("link");
+    // publicStyles.rel = "stylesheet";
+    // publicStyles.href = "../styles/components/App.css";
+    // this.appendChild(publicStyles)
 
     // Data binding
     console.log(this.shadowRoot.querySelector(".nav-toggle"));

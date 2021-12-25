@@ -26,12 +26,13 @@
   <body class="dark">
     <app-shell>
       <span slot="app-header">Lorem impsum</span>
-      <main slot="app-content">Dolor sit Amet</main>
+      <main slot="app-content">
+        <ul class="task-list" style="display: none;"></ul>
+        <ul class="task-list placeholder">
+          <placeholder-task></placeholder-task>
+          <placeholder-task></placeholder-task>
+        </ul>
+      </main>
     </app-shell>
-    <ul class="task-list" style="display: none;"></ul>
-    <ul class="task-list placeholder">
-      <placeholder-task></placeholder-task>
-      <placeholder-task></placeholder-task>
-    </ul>
   </body>
 </html>

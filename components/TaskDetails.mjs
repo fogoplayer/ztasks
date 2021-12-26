@@ -16,7 +16,7 @@ class TaskDetails extends HTMLElement {
     template.innerHTML = `
     <link rel="stylesheet" href="../styles/icon-font.css">
     <link rel="stylesheet" href="../styles/components/TaskDetails.css">
-    <form class="task-details grid" action="">
+    <section class="task-details grid">
       <span class="material-icons">event_available</span>
       <h2 class="detail-label">Due Date</h2>
       <input type="date" class="task-due-date" value="2021-09-25">
@@ -37,21 +37,21 @@ class TaskDetails extends HTMLElement {
       <textarea id="description" placeholder="Describe your task">This is going to be =
   tough.</textarea>
       </label>
-      
-    </form>
-    <ul class="task-list" style="display: none;"></ul>
-    <ul class="task-list placeholder">
-      <placeholder-task></placeholder-task>
-      <placeholder-task></placeholder-task>
-    </ul>
+    </section>
+
+    <section class="subtasks">
+      <ul class="task-list" style="display: none;"></ul>
+      <ul class="task-list placeholder">
+        <placeholder-task></placeholder-task>
+        <placeholder-task></placeholder-task>
+      </ul>
+    </section>
     `;
 
     // Create
     // this.attachShadow({ mode: "open" });
     this.appendChild(template.content.cloneNode(true));
     renderTasks(tasks, ".task-list")
-
-    this./* shadowRoot. */querySelector("form").onsubmit = e => e.preventDefault();
   }
 }
 

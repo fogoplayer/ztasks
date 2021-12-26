@@ -1,3 +1,17 @@
+export function loadTaskList(tasks) {
+  document.querySelector("app-shell").innerHTML = `
+  <span slot="app-header"></span>
+  <main slot="app-content">
+    <ul class="task-list" style="display: none;"></ul>
+    <ul class="task-list placeholder">
+      <placeholder-task></placeholder-task>
+      <placeholder-task></placeholder-task>
+    </ul>
+  </main>
+  `
+  renderTasks(tasks, ".task-list", false);
+}
+
 /**
  * Recursively produces task list HTML, sorted by due date
  * @param {Task[]} taskArray an array of task objects
@@ -23,6 +37,7 @@ function generateTaskTree(taskArray) {
     taskEl.setAttribute("slot", "task")
     taskEl.setAttribute("show-subtasks", task.showSubtasks)
     if (task.complete) taskEl.setAttribute("complete", "")
+    if (task.description) taskEl.setAttribute("has-description", "")
     if (!!task.dueDate) taskEl.setAttribute("due-date", task.dueDate)
 
 

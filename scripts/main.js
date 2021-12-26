@@ -1,6 +1,7 @@
+import { loadTaskList } from "./task-list.mjs";
 import { renderTasks } from "./task-list.mjs"
 
-let tasks = [{
+window.tasks = [{
   name: "Somebody once told me",
   title: true,
   showSubtasks: true,
@@ -142,4 +143,4 @@ let tasks = [{
   }],
 }]
 
-window.onload = renderTasks(tasks, ".task-list", false);
+// loadTaskList(tasks)

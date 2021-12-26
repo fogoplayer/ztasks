@@ -55,7 +55,6 @@ class App extends HTMLElement {
     // this.appendChild(publicStyles)
 
     // Data binding
-    console.log(this.shadowRoot.querySelector(".nav-toggle"));
     this.shadowRoot.querySelector(".nav-toggle").onclick = () => { this.toggleNav(this.shadowRoot) }
     this.shadowRoot.querySelector(".nav-scrim").onclick = () => { this.toggleNav(this.shadowRoot) }
   }

@@ -41,9 +41,9 @@ class TaskItem extends HTMLElement {
             </div>
             <span class="task-more material-icons">more_vert</span>
           </a >
-          ${this.firstChild ? `<button class="subtasks-toggle material-icons ${this.showSubtasks ? "" : "hide"}">
-          expand_less
-          </button>` : ""}
+          <button class="subtasks-toggle material-icons ${this.showSubtasks ? "" : "hide"}">
+            expand_less
+          </button>
         </div >
         <ul class="subtasks ${this.showSubtasks ? "" : "hide"} class">
           <slot name = "task">

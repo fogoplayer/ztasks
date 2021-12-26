@@ -70,7 +70,7 @@ h1 {
   font-size: inherit;
 }
 
-button {
+header button {
   all: unset;
   margin: -1rem;
   padding: 1rem;

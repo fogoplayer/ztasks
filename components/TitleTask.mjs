@@ -15,18 +15,18 @@ class TitleTask extends HTMLElement {
     template.innerHTML = `
       <link rel="stylesheet" href="/styles/components/TaskItem.css" />
       <link rel="stylesheet" href="/styles/icon-font.css" />
-      <li class="task">
+      <li class="task title">
         <div class="task-preview">
           <span class="material-icons task-drag-handle"> drag_handle </span>
           <h2 class="task-name" contenteditable>${this.name}</h2>
           <a class="details-link" href = "../task-details">
             <span class="task-more material-icons">more_vert</span>
           </a >
-          ${this.firstChild ? `<button class="subtasks-toggle material-icons ${this.showSubtasks ? "" : "hide"}">
-          expand_less
-          </button>` : ""}
+          <button class="subtasks-toggle material-icons ${this.showSubtasks ? "" : "hide"}">
+            expand_less
+          </button>
         </div >
-        <ul class="subtasks ${this.showSubtasks ? "" : "hide"} class">
+        <ul class="subtasks ${this.showSubtasks ? "" : "hide"}">
           <slot name = "task">
         </ul >
       </li >
@@ -53,6 +53,11 @@ class TitleTask extends HTMLElement {
     };
   }
 
+  connectedCallback() {
+    console.log("Connected");
+    this.showSubtasks = this.showSubtasks
+  }
+
   // Attributes
   static get observedAttributes() {
     return ["name", "show-subtasks"];
@@ -76,7 +81,7 @@ class TitleTask extends HTMLElement {
   }
 
   parentChangedName(oldValue, newValue) {
-    this.shadowRoot.querySelector(".task-name").value = this.name;
+    this.shadowRoot.querySelector(".task-name").innerText = this.name;
   }
 
   // Show Subtasks
@@ -94,7 +99,7 @@ class TitleTask extends HTMLElement {
 
     // If there aren't any subtasks, just leave
     if (!this.firstChild) {
-      return
+      return;
     }
 
     if (newValue === null) {

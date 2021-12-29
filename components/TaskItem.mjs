@@ -72,6 +72,11 @@ class TaskItem extends HTMLElement {
     };
   }
 
+
+  connectedCallback() {
+    this.showSubtasks = this.showSubtasks
+  }
+
   // Attributes
   static get observedAttributes() {
     return ["complete", "name", "due-date", "has-reminder", "is-recurring", "show-subtasks"];

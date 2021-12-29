@@ -54,7 +54,6 @@ class TitleTask extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log("Connected");
     this.showSubtasks = this.showSubtasks
   }
 

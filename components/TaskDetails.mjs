@@ -1,4 +1,4 @@
-import "../components/CustomCheckbox.mjs";
+import "../components/Modal.mjs";
 import { renderTasks } from "../scripts/task-list.mjs";
 
 /**
@@ -23,18 +23,18 @@ class TaskDetails extends HTMLElement {
       
       <span class="material-icons">cached</span>
       <h2 class="detail-label">Repeats</h2>
-      <button>
+      <button id="repeat-button">
         <span class="repeat-frequency">Daily</span>
       </button>
       
       <span class="material-icons"> notifications_active </span>
       <h2 class="detail-label">Reminder</h2>
-      <button>Daily at 9:00AM</button>
+      <button id="notification-button">Daily at 9:00AM</button>
 
       <label class="description grid">
         <span class="material-icons">notes</span>
         Description
-      <textarea id="description" placeholder="Describe your task">This is going to be =
+      <textarea id="description" placeholder="Describe your task">This is going to be
   tough.</textarea>
       </label>
     </section>
@@ -46,12 +46,16 @@ class TaskDetails extends HTMLElement {
         <placeholder-task></placeholder-task>
       </ul>
     </section>
+    <modal-component id="repeat-modal">This is for repeating</modal-component>
+    <modal-component id="notification-modal"This is for notifications></modal-component>
     `;
 
     // Create
-    // this.attachShadow({ mode: "open" });
     this.appendChild(template.content.cloneNode(true));
     renderTasks(tasks, ".task-list")
+
+    this.querySelector("#repeat-button").onclick = () => this.querySelector("#repeat-modal").setAttribute("show", "")
+    this.querySelector("#notification-button").onclick = () => this.querySelector("#notification-modal").setAttribute("show", "")
   }
 }
 

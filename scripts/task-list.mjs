@@ -12,6 +12,16 @@ export function loadTaskList(tasks) {
   renderTasks(tasks, ".task-list", false);
 }
 
+export function loadTaskDetails(tasks) {
+  document.querySelector("app-shell").innerHTML = `
+  <span slot="app-header"></span>
+  <main slot="app-content">
+    <task-details></task-details>
+  </main>
+  `
+  renderTasks(tasks, ".task-list", false);
+}
+
 /**
  * Recursively produces task list HTML, sorted by due date
  * @param {Task[]} taskArray an array of task objects

@@ -3,6 +3,14 @@
   background: inherit;
 }
 
+:root {
+  /* variables */
+  --anim-time: 0.2s;
+  --accent-hue: 180deg;
+  --accent-lightness: 80%;
+  --font: Roboto, Arial, sans-serif;
+}
+
 /* Color Schemes */
 .dark {
   --background-pop: black;
@@ -15,12 +23,6 @@
 
 /* Body */
 body {
-  /* variables */
-  --anim-time: 0.2s;
-  --accent-hue: 180deg;
-  --accent-lightness: 80%;
-  --font: Roboto, Arial, sans-serif;
-
   /* display */
   /* positioning */
   /* box-model */
@@ -34,6 +36,12 @@ body {
 
   /* manipulation */
   /* misc */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --anim-time: 0s;
+  }
 }
 
 * {

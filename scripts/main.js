@@ -143,4 +143,4 @@ window.tasks = [{
   }],
 }]
 
-// loadTaskList(tasks)
+loadTaskList(tasks)

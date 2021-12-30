@@ -12,6 +12,10 @@
     ],
     "rewrites": [
       {
+        "source": "/task/**",
+        "function": "getTaskWithSubtasks"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

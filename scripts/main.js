@@ -1,3 +1,4 @@
+import { firestore } from "./firebase.js";
 import { loadTaskList, loadTaskDetails } from "./task-list.mjs";
 // import page from "./page.mjs"
 // import page from "//unpkg.com/page/page.mjs";
@@ -145,12 +146,8 @@ window.tasks = [{
   }],
 }]
 
-console.log("loading routes");
 
 page("/", () => { loadTaskList(tasks) })
 page("/details", () => { loadTaskDetails(tasks) }) // TODO remove
 page("/details/:id", () => { loadTaskDetails(tasks) })
-
 page.start();
-
-console.log("routes loaded");

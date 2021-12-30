@@ -1,6 +1,6 @@
 {
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
+    "firebase": "^9.6.1"
   }
 }

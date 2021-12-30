@@ -1,5 +1,7 @@
-import { loadTaskList } from "./task-list.mjs";
-import { renderTasks } from "./task-list.mjs"
+import { loadTaskList, loadTaskDetails } from "./task-list.mjs";
+// import page from "./page.mjs"
+// import page from "//unpkg.com/page/page.mjs";
+
 
 window.tasks = [{
   name: "Somebody once told me",
@@ -143,4 +145,12 @@ window.tasks = [{
   }],
 }]
 
-loadTaskList(tasks)
+console.log("loading routes");
+
+page("/", () => { loadTaskList(tasks) })
+page("/details", () => { loadTaskDetails(tasks) }) // TODO remove
+page("/details/:id", () => { loadTaskDetails(tasks) })
+
+page.start();
+
+console.log("routes loaded");

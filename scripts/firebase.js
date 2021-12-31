@@ -3,7 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
 import { getFirestore, doc, collection, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import firebaseConfig from "../firebase/firebase_config.mjs";
+import firebaseConfig from "/firebase/firebase_config.mjs";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

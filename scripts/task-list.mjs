@@ -11,7 +11,10 @@ export async function loadTaskDetails(context) {
 
   if (task.checked === undefined) {
     document.querySelector("app-shell").innerHTML = `
-      <span slot="app-header"></span>
+      <span slot="app-header">
+      <task-item class="header-task">
+      </task-item>
+      </span>
       <main slot="app-content">
         <ul class="task-list" style="display: none;"></ul>
         <ul class="task-list placeholder">

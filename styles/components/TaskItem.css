@@ -166,3 +166,18 @@ ul {
   padding: 0;
   margin: 0;
 }
+
+:host(.header-task) {
+  list-style: none;
+}
+
+:host(.header-task) .task-preview {
+  padding: 0;
+}
+
+:host(.header-task) .task-drag-handle,
+:host(.header-task) .details-link,
+:host(.header-task) .subtasks-toggle,
+:host(.header-task) .subtasks {
+  display: none;
+}

@@ -9,6 +9,7 @@
   --accent-hue: 180deg;
   --accent-lightness: 80%;
   --font: Roboto, Arial, sans-serif;
+  --shadow: 0 0 0.5rem #222;
 }
 
 /* Color Schemes */
@@ -64,6 +65,7 @@ body {
   background: hsl(var(--accent-hue), 100%, var(--accent-lightness));
   z-index: 100;
   min-height: 3.5rem;
+  box-shadow: var(--shadow);
 
   /* typography */
   font: inherit;
@@ -105,6 +107,7 @@ nav {
   height: 100vh;
   width: 16em;
   max-width: 100vw;
+  box-shadow: var(--shadow);
 
   /* typography */
   font-size: 1rem;

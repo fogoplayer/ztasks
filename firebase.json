@@ -16,7 +16,7 @@
         "function": "getTaskWithSubtasks"
       },
       {
-        "source": "**",
+        "source": "/list/**",
         "destination": "/index.html"
       }
     ]

@@ -1,25 +1,34 @@
+import { getTask } from "./firebase.js";
+
 export function loadTaskList(tasks) {
-  document.querySelector("app-shell").innerHTML = `
-  <span slot="app-header"></span>
-  <main slot="app-content">
-    <ul class="task-list" style="display: none;"></ul>
-    <ul class="task-list placeholder">
-      <placeholder-task></placeholder-task>
-      <placeholder-task></placeholder-task>
-    </ul>
-  </main>
-  `
+
+  console.log(tasks);
   renderTasks(tasks, ".task-list", false);
 }
 
-export function loadTaskDetails(tasks) {
-  document.querySelector("app-shell").innerHTML = `
-  <span slot="app-header"></span>
-  <main slot="app-content">
-    <task-details></task-details>
-  </main>
-  `
-  renderTasks(tasks, ".task-list", false);
+export async function loadTaskDetails(context) {
+  const task = await getTask(context.params.id)
+
+  if (task.checked === undefined) {
+    document.querySelector("app-shell").innerHTML = `
+      <span slot="app-header"></span>
+      <main slot="app-content">
+        <ul class="task-list" style="display: none;"></ul>
+        <ul class="task-list placeholder">
+          <placeholder-task></placeholder-task>
+          <placeholder-task></placeholder-task>
+        </ul>
+      </main>
+    `
+  } else {
+    document.querySelector("app-shell").innerHTML = `
+      <span slot="app-header"></span>
+      <main slot="app-content">
+        <task-details></task-details>
+      </main>
+    `
+  }
+  renderTasks(task.subtasks, ".task-list", false);
 }
 
 /**
@@ -39,6 +48,8 @@ function generateSortedTaskTree(taskArray) {
  */
 function generateTaskTree(taskArray) {
   if (!taskArray || taskArray.length === 0) return [];
+
+  console.log(taskArray);
 
   const taskElArray = taskArray.map((task) => {
     const taskEl = document.createElement(task.title ? "title-task" : "task-item");

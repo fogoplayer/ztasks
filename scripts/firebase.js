@@ -1,9 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
-import { getFirestore, doc, collection, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"
+import { getFirestore, doc, collection, getDoc, addDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import firebaseConfig from "/firebase/firebase_config.mjs";
+import firebaseConfig from "../firebase/firebase_config.mjs";
+import Task from "./TaskSchema.mjs";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -35,6 +36,22 @@ export function login(email, password) {
       const errorCode = error.code;
       const errorMessage = error.message;
     });
+}
+
+export async function createSubtask(id) {
+  const subtaskRef = await addDoc(collection(firestore, "tasks"), {
+    name: "",
+    checked: false,
+    description: "",
+    recurring: false,
+    reminders: [],
+    subtasks: [],
+    showSubtasks: true,
+  });
+  const parentRef = await doc(tasksRef, id);
+  await updateDoc(parentRef, {
+    subtasks: arrayUnion(subtaskRef.id)
+  });
 }
 
 export default app

@@ -1,3 +1,4 @@
+import { createSubtask } from "./firebase.js";
 import { getTask } from "./firebase.js";
 
 export function loadTaskList(tasks) {
@@ -14,6 +15,7 @@ export async function loadTaskDetails(context) {
       <title-task 
         class="header-task"
         name="${task.name}"
+        id="${task.id}"
       >
       </title-task>
       </span>
@@ -60,10 +62,7 @@ function generateSortedTaskTree(taskArray) {
 function generateTaskTree(taskArray) {
   if (!taskArray || taskArray.length === 0) return [];
 
-  console.log(taskArray);
-
   const taskElArray = taskArray.map((task) => {
-    console.log(task.complete)
     const taskEl = document.createElement(task.complete === undefined ? "title-task" : "task-item");
     taskEl.setAttribute("name", task.name)
     taskEl.setAttribute("slot", "task")
@@ -77,7 +76,6 @@ function generateTaskTree(taskArray) {
     });
     return taskEl
   });
-  console.log(taskElArray)
   return taskElArray;
 }
 

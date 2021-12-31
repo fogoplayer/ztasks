@@ -1,4 +1,7 @@
 import "../components/CustomCheckbox.mjs";
+import { createSubtask } from "../scripts/firebase.js";
+import { renderTasks } from "../scripts/task-list.mjs";
+import Task from "../scripts/TaskSchema.mjs";
 
 /**
  * @param complete whether the task is completed or not
@@ -51,15 +54,16 @@ class App extends HTMLElement {
     this.attachShadow({ mode: "open" })
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    // Publicize Styles
-    // let publicStyles = document.createElement("link");
-    // publicStyles.rel = "stylesheet";
-    // publicStyles.href = "../styles/components/App.css";
-    // this.appendChild(publicStyles)
-
     // Data binding
     this.shadowRoot.querySelector(".nav-toggle").onclick = () => { this.toggleNav(this.shadowRoot) }
     this.shadowRoot.querySelector(".nav-scrim").onclick = () => { this.toggleNav(this.shadowRoot) }
+    this.shadowRoot.querySelector(".fab").onclick = () => {
+      const path = window.location.pathname.split("/");
+      const taskId = path[path.length - 1]
+      console.log(taskId);
+      createSubtask(taskId);
+      // window.location.reload();
+    }
   }
 
   toggleNav(shadowRoot) {

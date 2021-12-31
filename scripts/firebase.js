@@ -3,18 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
 import { getFirestore, doc, collection, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDrT1-P-gDVsgPAZujMXQGg_s9FmrS8Mys",
-  authDomain: "ztasks-d48a3.firebaseapp.com",
-  projectId: "ztasks-d48a3",
-  storageBucket: "ztasks-d48a3.appspot.com",
-  messagingSenderId: "427040187872",
-  appId: "1:427040187872:web:7091b156a3798219f87785",
-  measurementId: "G-JG2PP1P43Y"
-};
+import firebaseConfig from "../firebase/firebase_config.mjs";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

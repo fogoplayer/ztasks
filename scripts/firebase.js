@@ -24,9 +24,8 @@ export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
 export const firestore = getFirestore();
 
-const querySnapshot = await getDocs(collection(firestore, "tasks"));
-querySnapshot.forEach((doc) => {
-  console.log(doc.id, doc.data());
-});
+export function getTask(id) {
+  return fetch("/task/" + id).then(res => res.json());
+}
 
 export default app

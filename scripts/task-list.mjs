@@ -38,25 +38,23 @@ function generateSortedTaskTree(taskArray) {
  * @returns an array of HTML elements
  */
 function generateTaskTree(taskArray) {
-  if (taskArray.length === 0) return [];
+  if (!taskArray || taskArray.length === 0) return [];
 
   const taskElArray = taskArray.map((task) => {
-
     const taskEl = document.createElement(task.title ? "title-task" : "task-item");
     taskEl.setAttribute("name", task.name)
     taskEl.setAttribute("slot", "task")
-    taskEl.setAttribute("show-subtasks", task.showSubtasks)
+    taskEl.setAttribute("show-subtasks", !!task.showSubtasks)
     if (task.complete) taskEl.setAttribute("complete", "")
     if (task.description) taskEl.setAttribute("has-description", "")
     if (!!task.dueDate) taskEl.setAttribute("due-date", task.dueDate)
-
 
     generateTaskTree(task.subtasks).forEach(subtask => {
       taskEl.appendChild(subtask)
     });
     return taskEl
   });
-
+  console.log(taskElArray)
   return taskElArray;
 }
 
@@ -79,7 +77,7 @@ export function renderTasks(taskArray, target, sorted = false) {
  * @returns an array of sorted tasks
  */
 function sortTasks(taskArray) {
-  if (taskArray.length === 0) return [];
+  if (!taskArray || taskArray.length === 0) return [];
 
 
   const taskArraySorted = [...taskArray]

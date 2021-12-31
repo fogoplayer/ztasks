@@ -1,7 +1,6 @@
 import { getTask } from "./firebase.js";
 
 export function loadTaskList(tasks) {
-
   console.log(tasks);
   renderTasks(tasks, ".task-list", false);
 }
@@ -9,11 +8,14 @@ export function loadTaskList(tasks) {
 export async function loadTaskDetails(context) {
   const task = await getTask(context.params.id)
 
-  if (task.checked === undefined) {
+  if (task.complete === undefined) {
     document.querySelector("app-shell").innerHTML = `
       <span slot="app-header">
-      <task-item class="header-task">
-      </task-item>
+      <title-task 
+        class="header-task"
+        name="${task.name}"
+      >
+      </title-task>
       </span>
       <main slot="app-content">
         <ul class="task-list" style="display: none;"></ul>
@@ -25,7 +27,13 @@ export async function loadTaskDetails(context) {
     `
   } else {
     document.querySelector("app-shell").innerHTML = `
-      <span slot="app-header"></span>
+      <span slot="app-header">
+        <task-item
+          class="header-task"
+          name="${task.name}"
+        >
+        </task-item>
+      </span>
       <main slot="app-content">
         <task-details></task-details>
       </main>
@@ -55,7 +63,8 @@ function generateTaskTree(taskArray) {
   console.log(taskArray);
 
   const taskElArray = taskArray.map((task) => {
-    const taskEl = document.createElement(task.title ? "title-task" : "task-item");
+    console.log(task.complete)
+    const taskEl = document.createElement(task.complete === undefined ? "title-task" : "task-item");
     taskEl.setAttribute("name", task.name)
     taskEl.setAttribute("slot", "task")
     taskEl.setAttribute("show-subtasks", !!task.showSubtasks)

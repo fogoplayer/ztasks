@@ -63,6 +63,7 @@ body {
   padding: 1rem;
   background: hsl(var(--accent-hue), 100%, var(--accent-lightness));
   z-index: 100;
+  min-height: 3.5rem;
 
   /* typography */
   font: inherit;
@@ -74,7 +75,8 @@ body {
 }
 
 h1 {
-  margin: 0;
+  /* Lets content spill over the edges */
+  margin: -0.25em 0;
   font-size: inherit;
 }
 

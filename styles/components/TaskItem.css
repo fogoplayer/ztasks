@@ -175,6 +175,10 @@ ul {
   padding: 0;
 }
 
+:host(.header-task) .task-preview .task-name {
+  color: inherit;
+}
+
 :host(.header-task) .task-drag-handle,
 :host(.header-task) .details-link,
 :host(.header-task) .subtasks-toggle,

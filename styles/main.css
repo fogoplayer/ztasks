@@ -157,6 +157,28 @@ nav.open~.nav-scrim {
   transform: translateX(100%);
 }
 
+.fab {
+  all: unset;
+
+  /* display */
+  /* positioning */
+  position: fixed;
+
+  /* box-model */
+  bottom: 1rem;
+  right: 1rem;
+  padding: 1rem;
+  background: hsl(var(--accent-hue), 100%, var(--accent-lightness));
+  border-radius: 2rem;
+
+  /* typography */
+  color: var(--text-accent);
+  line-height: 0.6em;
+
+  /* manipulation */
+  /* misc */
+}
+
 ul {
   list-style: none;
   padding: 0;

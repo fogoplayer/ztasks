@@ -42,6 +42,9 @@ class App extends HTMLElement {
         </li>
       </nav>
       <div class="nav-scrim"></div>
+      <button class="fab">
+        <span class="material-icons">add</span>
+      </button>
     `;
 
     // Create

@@ -1,4 +1,4 @@
-import { firestore } from "./firebase.js";
+// import { firestore } from "./firebase.js";
 import { loadTaskList, loadTaskDetails } from "./task-list.mjs";
 // import page from "./page.mjs"
 // import page from "//unpkg.com/page/page.mjs";

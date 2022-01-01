@@ -14,7 +14,7 @@ import { updateTask } from "../scripts/firebase.js";
 class TaskItem extends HTMLElement {
   constructor() {
     super();
-
+    console.dir(this);
     // Shadow checkbox and label
     const template = document.createElement("template");
     template.innerHTML = `    
@@ -32,7 +32,7 @@ class TaskItem extends HTMLElement {
             this.complete ? " checked" : ""
           }></custom-checkbox>
           <input type="text" class="task-name" value="${this.name}"/>
-          <a class="details-link" href = "../task-details">
+          <a class="details-link" href = "./${this.id}">
             <div class="chip task-data">
               <span class="material-icons notif-indicator">
                 notifications_active
@@ -83,8 +83,10 @@ class TaskItem extends HTMLElement {
     };
   }
 
+  // Data that isn't loaded in when the component first loads
   connectedCallback() {
     this.showSubtasks = this.showSubtasks;
+    this.shadowRoot.querySelector(".details-link").href = "./" + this.id;
     if (this.children.length === 0) {
       this.shadowRoot
         .querySelector(".subtasks-toggle")

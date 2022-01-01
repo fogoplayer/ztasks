@@ -63,12 +63,16 @@ class TaskItem extends HTMLElement {
     this.shadowRoot.querySelector(".task-name").onchange = (e) => {
       this.setAttribute("name", e.target.value);
     };
+    this.shadowRoot.querySelector(".task-name").onblur = (e) => {
+      updateTask(this.id, { name: e.target.value });
+    };
 
     this.shadowRoot.querySelector("custom-checkbox").onclick = () =>
       this.toggleAttribute("complete");
 
     if (this.shadowRoot.querySelector(".subtasks-toggle")) {
       this.shadowRoot.querySelector(".subtasks-toggle").onclick = (e) => {
+        updateTask(this.id, { showSubtasks: !this.showSubtasks });
         this.setAttribute("show-subtasks", !this.showSubtasks);
       };
     }

@@ -147,8 +147,12 @@
   transition: transform var(--anim-time) linear;
 }
 
-.task>.task-preview>.subtasks-toggle.hide {
+.task>.task-preview>.subtasks-toggle.hide-subtasks {
   transform: scaleY(-1);
+}
+
+.task>.task-preview>.subtasks-toggle.hide-btn {
+  display: none;
 }
 
 .subtasks {

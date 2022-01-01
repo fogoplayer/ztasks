@@ -44,7 +44,7 @@ class TaskItem extends HTMLElement {
             <span class="task-more material-icons">more_vert</span>
           </a >
           <button class="subtasks-toggle material-icons ${
-            this.showSubtasks ? "" : "hide"
+            this.showSubtasks ? "" : "hide-subtasks"
           }">
             expand_less
           </button>
@@ -85,6 +85,11 @@ class TaskItem extends HTMLElement {
 
   connectedCallback() {
     this.showSubtasks = this.showSubtasks;
+    if (this.children.length === 0) {
+      this.shadowRoot
+        .querySelector(".subtasks-toggle")
+        .classList.add("hide-btn");
+    }
   }
 
   // Attributes
@@ -276,14 +281,16 @@ class TaskItem extends HTMLElement {
     } else if (JSON.parse(newValue)) {
       this.shadowRoot
         .querySelector(".subtasks-toggle")
-        .classList.remove("hide");
+        .classList.remove("hide-subtasks");
       this.shadowRoot.querySelector(".subtasks").classList.remove("hide");
       subtasks.style.maxHeight = subtasks.scrollHeight + "px";
       setTimeout(() => {
         subtasks.style.removeProperty("max-height");
       }, animTime);
     } else {
-      this.shadowRoot.querySelector(".subtasks-toggle").classList.add("hide");
+      this.shadowRoot
+        .querySelector(".subtasks-toggle")
+        .classList.add("hide-subtasks");
       this.shadowRoot.querySelector(".subtasks").classList.add("hide");
       subtasks.style.removeProperty("max-height");
     }

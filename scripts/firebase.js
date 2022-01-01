@@ -17,7 +17,6 @@ import {
   signInWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import firebaseConfig from "/firebase/firebase_config.mjs";
-import Task from "./TaskSchema.mjs";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

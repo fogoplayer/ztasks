@@ -1,7 +1,6 @@
 import "../components/CustomCheckbox.mjs";
 import { createSubtask } from "../scripts/firebase.js";
 import { renderTasks } from "../scripts/task-list.mjs";
-import Task from "../scripts/TaskSchema.mjs";
 
 /**
  * @param complete whether the task is completed or not
@@ -11,7 +10,7 @@ import Task from "../scripts/TaskSchema.mjs";
  * @param is-recurring whether or not the task is recurring
  * @param has-description whether or not the task has a description
  * @param show-subtasks a boolean for whether or not to show the subtasks
-*/
+ */
 
 class App extends HTMLElement {
   constructor() {
@@ -51,28 +50,32 @@ class App extends HTMLElement {
     `;
 
     // Create
-    this.attachShadow({ mode: "open" })
+    this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     // Data binding
-    this.shadowRoot.querySelector(".nav-toggle").onclick = () => { this.toggleNav(this.shadowRoot) }
-    this.shadowRoot.querySelector(".nav-scrim").onclick = () => { this.toggleNav(this.shadowRoot) }
+    this.shadowRoot.querySelector(".nav-toggle").onclick = () => {
+      this.toggleNav(this.shadowRoot);
+    };
+    this.shadowRoot.querySelector(".nav-scrim").onclick = () => {
+      this.toggleNav(this.shadowRoot);
+    };
     this.shadowRoot.querySelector(".fab").onclick = () => {
       const path = window.location.pathname.split("/");
-      const taskId = path[path.length - 1]
+      const taskId = path[path.length - 1];
       console.log(taskId);
       createSubtask(taskId);
       // window.location.reload();
-    }
+    };
   }
 
   toggleNav(shadowRoot) {
     this.closed = !this.closed;
-    console.log(this.closed)
+    console.log(this.closed);
     if (this.closed) {
-      shadowRoot.querySelector("#side-menu").classList.remove("open")
+      shadowRoot.querySelector("#side-menu").classList.remove("open");
     } else {
-      shadowRoot.querySelector("#side-menu").classList.add("open")
+      shadowRoot.querySelector("#side-menu").classList.add("open");
     }
   }
 }

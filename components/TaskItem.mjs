@@ -1,4 +1,5 @@
 import "../components/CustomCheckbox.mjs";
+import { updateTask } from "../scripts/firebase.js";
 
 /**
  * @param name the name of the task
@@ -62,6 +63,9 @@ class TaskItem extends HTMLElement {
     this.shadowRoot.querySelector(".task-name").onchange = (e) => {
       this.setAttribute("name", e.target.value);
     };
+
+    this.shadowRoot.querySelector("custom-checkbox").onclick = () =>
+      this.toggleAttribute("complete");
 
     if (this.shadowRoot.querySelector(".subtasks-toggle")) {
       this.shadowRoot.querySelector(".subtasks-toggle").onclick = (e) => {
@@ -138,10 +142,12 @@ class TaskItem extends HTMLElement {
       this.shadowRoot
         .querySelector("custom-checkbox")
         .setAttribute("checked", "");
+      updateTask(this.id, { complete: true });
     } else {
       this.shadowRoot
         .querySelector("custom-checkbox")
         .removeAttribute("checked");
+      updateTask(this.id, { complete: false });
     }
   }
 

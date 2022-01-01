@@ -15,7 +15,7 @@ import {
   getAuth,
   signInWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import firebaseConfig from "/firebase/firebase_config.mjs";
+import firebaseConfig from "../firebase/firebase_config.mjs";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -70,6 +70,11 @@ export async function createSubtask(id) {
   await updateDoc(parentRef, {
     subtasks: arrayUnion(subtaskRef.id),
   });
+}
+
+export function updateTask(id, data) {
+  updateDoc(doc(tasksRef, id), data);
+  console.log(`Updated ${id} with ${JSON.stringify(data)}`);
 }
 
 export default app;

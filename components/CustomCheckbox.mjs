@@ -34,13 +34,6 @@ class CustomCheckbox extends HTMLElement {
 
     this.shadowRoot.appendChild(template.content.cloneNode(true));
     this.appendChild(checkbox);
-
-    this.addEventListener("click", (e) => {
-      e.preventDefault();
-      // console.log(!this.checked);
-      // this.checked = !this.checked;
-      this.toggleAttribute("checked");
-    });
   }
 
   // Attributes
@@ -60,6 +53,18 @@ class CustomCheckbox extends HTMLElement {
   }
 
   // Checked
+  get checked() {
+    return this.hasAttribute("checked");
+  }
+
+  set checked(val) {
+    if (val) {
+      this.setAttribute("checked", "");
+    } else {
+      this.removeAttribute("checked");
+    }
+  }
+
   checkedChanged(oldValue, newValue) {
     // Displayed checkbox
     if (newValue !== null) {

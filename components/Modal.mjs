@@ -1,7 +1,6 @@
-
 /**
  * @param show a boolean for whether or not to show the modal
-  */
+ */
 class Modal extends HTMLElement {
   constructor() {
     super();
@@ -26,8 +25,10 @@ class Modal extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     // Close modal
-    this.shadowRoot.querySelector(".scrim").onclick = this.toggleShow.bind(this);
-    this.shadowRoot.querySelector("#close").onclick = this.toggleShow.bind(this);
+    this.shadowRoot.querySelector(".scrim").onclick =
+      this.toggleShow.bind(this);
+    this.shadowRoot.querySelector("#close").onclick =
+      this.toggleShow.bind(this);
   }
 
   // Attributes
@@ -37,21 +38,22 @@ class Modal extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case "show": this.showChanged(oldValue, newValue); break;
-      default: break;
+      case "show":
+        this.showChanged(oldValue, newValue);
+        break;
+      default:
+        break;
     }
   }
 
   // Show Subtasks
   get show() {
-    return this.hasAttribute("show")
+    return this.hasAttribute("show");
   }
 
   set show(val) {
-    if (newValue === null)
-      this.removeAttribute("show")
-    else
-      this.setAttribute("show", "");
+    if (newValue === null) this.removeAttribute("show");
+    else this.setAttribute("show", "");
   }
 
   showChanged(oldValue, newValue) {
@@ -66,7 +68,7 @@ class Modal extends HTMLElement {
 
   toggleShow() {
     console.log("show");
-    this.toggleAttribute("show")
+    this.toggleAttribute("show");
   }
 }
 

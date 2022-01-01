@@ -11,7 +11,6 @@ import {
   arrayUnion,
   connectFirestoreEmulator,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -21,16 +20,13 @@ import firebaseConfig from "/firebase/firebase_config.mjs";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const firestore = getFirestore();
+const db = getFirestore();
 const auth = getAuth();
 
 // Other vars
 export let user = undefined;
-const usersRef = collection(firestore, "users");
-const tasksRef = collection(firestore, "tasks");
-
-// Emulator
-connectFirestoreEmulator(firestore, "localhost", 8080);
+const usersRef = collection(db, "users");
+const tasksRef = collection(db, "tasks");
 
 export function getTask(id) {
   return fetch("/task/" + id).then((res) => res.json());
@@ -55,7 +51,7 @@ export function login(email, password) {
 
 export async function createSubtask(id) {
   const parentRef = await doc(tasksRef, id);
-  const subtaskRef = await addDoc(collection(firestore, "tasks"), {
+  const subtaskRef = await addDoc(collection(db, "tasks"), {
     name: "",
     complete: false,
     description: "",

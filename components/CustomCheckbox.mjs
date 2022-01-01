@@ -22,7 +22,6 @@ class CustomCheckbox extends HTMLElement {
         </label>
       `;
 
-
     // Exposed, hidden checkbox for compatibility
     const checkbox = document.createElement("input");
     checkbox.hidden = true;
@@ -38,7 +37,9 @@ class CustomCheckbox extends HTMLElement {
 
     this.addEventListener("click", (e) => {
       e.preventDefault();
-      this.checked = !this.checked;
+      // console.log(!this.checked);
+      // this.checked = !this.checked;
+      this.toggleAttribute("checked");
     });
   }
 
@@ -59,18 +60,6 @@ class CustomCheckbox extends HTMLElement {
   }
 
   // Checked
-  get checked() {
-    return this.hasAttribute("checked");
-  }
-
-  set checked(val) {
-    if (val) {
-      this.setAttribute("checked", "");
-    } else {
-      this.removeAttribute("checked");
-    }
-  }
-
   checkedChanged(oldValue, newValue) {
     // Displayed checkbox
     if (newValue !== null) {
@@ -82,7 +71,7 @@ class CustomCheckbox extends HTMLElement {
     }
 
     // Hidden Checkbox
-    this.querySelector("input").checked = (newValue !== null);
+    this.querySelector("input").checked = newValue !== null;
   }
 }
 

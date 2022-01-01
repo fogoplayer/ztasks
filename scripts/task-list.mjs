@@ -7,7 +7,7 @@ export function loadTaskList(tasks) {
 }
 
 export async function loadTaskDetails(context) {
-  const task = await getTask(context.params.id)
+  const task = await getTask(context.params.id);
 
   if (task.complete === undefined) {
     document.querySelector("app-shell").innerHTML = `
@@ -26,7 +26,7 @@ export async function loadTaskDetails(context) {
           <placeholder-task></placeholder-task>
         </ul>
       </main>
-    `
+    `;
   } else {
     document.querySelector("app-shell").innerHTML = `
       <span slot="app-header">
@@ -39,7 +39,7 @@ export async function loadTaskDetails(context) {
       <main slot="app-content">
         <task-details></task-details>
       </main>
-    `
+    `;
   }
   renderTasks(task.subtasks, ".task-list", false);
 }
@@ -51,7 +51,7 @@ export async function loadTaskDetails(context) {
  */
 function generateSortedTaskTree(taskArray) {
   const sortedTasks = sortTasks(taskArray);
-  return generateTaskTree(sortedTasks)
+  return generateTaskTree(sortedTasks);
 }
 
 /**
@@ -63,18 +63,24 @@ function generateTaskTree(taskArray) {
   if (!taskArray || taskArray.length === 0) return [];
 
   const taskElArray = taskArray.map((task) => {
-    const taskEl = document.createElement(task.complete === undefined ? "title-task" : "task-item");
-    taskEl.setAttribute("name", task.name)
-    taskEl.setAttribute("slot", "task")
-    taskEl.setAttribute("show-subtasks", !!task.showSubtasks)
-    if (task.complete) taskEl.setAttribute("complete", "")
-    if (task.description) taskEl.setAttribute("has-description", "")
-    if (!!task.dueDate) taskEl.setAttribute("due-date", task.dueDate)
+    const taskEl = document.createElement(
+      task.complete === undefined ? "title-task" : "task-item"
+    );
+    taskEl.setAttribute("slot", "task");
+    taskEl.setAttribute("id", task.id);
+    taskEl.setAttribute("name", task.name);
+    if (task.complete) taskEl.setAttribute("complete", "");
+    if (!!task.dueDate) taskEl.setAttribute("due-date", new Date(task.dueDate));
+    if (task.reminders && task.reminders.length > 0)
+      taskEl.setAttribute("has-reminder", "");
+    if (task.recurring) taskEl.setAttribute("is-recurring", "");
+    if (task.description) taskEl.setAttribute("has-description", "");
+    taskEl.setAttribute("show-subtasks", !!task.showSubtasks);
 
-    generateTaskTree(task.subtasks).forEach(subtask => {
-      taskEl.appendChild(subtask)
+    generateTaskTree(task.subtasks).forEach((subtask) => {
+      taskEl.appendChild(subtask);
     });
-    return taskEl
+    return taskEl;
   });
   return taskElArray;
 }
@@ -87,9 +93,13 @@ function generateTaskTree(taskArray) {
  */
 export function renderTasks(taskArray, target, sorted = false) {
   if (sorted) {
-    generateSortedTaskTree(taskArray).forEach(task => document.querySelector(target).appendChild(task));
+    generateSortedTaskTree(taskArray).forEach((task) =>
+      document.querySelector(target).appendChild(task)
+    );
   } else {
-    generateTaskTree(taskArray).forEach(task => document.querySelector(target).appendChild(task));
+    generateTaskTree(taskArray).forEach((task) =>
+      document.querySelector(target).appendChild(task)
+    );
   }
 }
 
@@ -100,14 +110,13 @@ export function renderTasks(taskArray, target, sorted = false) {
 function sortTasks(taskArray) {
   if (!taskArray || taskArray.length === 0) return [];
 
+  const taskArraySorted = [...taskArray];
+  taskArraySorted.sort((first, second) => first.dueDate - second.dueDate);
 
-  const taskArraySorted = [...taskArray]
-  taskArraySorted.sort((first, second) => first.dueDate - second.dueDate)
-
-  taskArraySorted.map(task => {
+  taskArraySorted.map((task) => {
     task.subtasks = sortTasks(task.subtasks);
     return task;
-  })
+  });
 
   return taskArraySorted;
 }

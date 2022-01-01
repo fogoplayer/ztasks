@@ -1,15 +1,14 @@
 import "../components/CustomCheckbox.mjs";
 
 /**
- * @param complete whether the task is completed or not
  * @param name the name of the task
+ * @param complete whether the task is completed or not
  * @param due-date the due date of the task
  * @param has-reminder if the user has opted into reminder notifications
  * @param is-recurring whether or not the task is recurring
  * @param has-description whether or not the task has a description
  * @param show-subtasks a boolean for whether or not to show the subtasks
-  */
-
+ */
 
 class TaskItem extends HTMLElement {
   constructor() {
@@ -20,15 +19,17 @@ class TaskItem extends HTMLElement {
     template.innerHTML = `    
       <link rel="stylesheet" href="/styles/components/TaskItem.css" />
       <link rel="stylesheet" href="/styles/icon-font.css" />  
-      <li class="task${this.hasDueDate ? " has-due-date" : ""
-      }${this.hasReminder ? " has-reminder" : ""
-      }${this.isRecurring ? " is-recurring" : ""
-      }${this.hasDescription ? " has-description" : ""
-      }"
+      <li class="task${this.hasDueDate ? " has-due-date" : ""}${
+      this.hasReminder ? " has-reminder" : ""
+    }${this.isRecurring ? " is-recurring" : ""}${
+      this.hasDescription ? " has-description" : ""
+    }"
       >
         <div class="task-preview">
           <span class="material-icons task-drag-handle"> drag_handle </span>
-          <custom-checkbox class="task-check" ${this.complete ? " checked" : ""}></custom-checkbox>
+          <custom-checkbox class="task-check" ${
+            this.complete ? " checked" : ""
+          }></custom-checkbox>
           <input type="text" class="task-name" value="${this.name}"/>
           <a class="details-link" href = "../task-details">
             <div class="chip task-data">
@@ -41,7 +42,9 @@ class TaskItem extends HTMLElement {
             </div>
             <span class="task-more material-icons">more_vert</span>
           </a >
-          <button class="subtasks-toggle material-icons ${this.showSubtasks ? "" : "hide"}">
+          <button class="subtasks-toggle material-icons ${
+            this.showSubtasks ? "" : "hide"
+          }">
             expand_less
           </button>
         </div >
@@ -67,31 +70,53 @@ class TaskItem extends HTMLElement {
     }
 
     this.shadowRoot.querySelector("link").onload = () => {
-      document.querySelector(".task-list").style.removeProperty("display")
+      document.querySelector(".task-list").style.removeProperty("display");
       document.querySelector(".task-list.placeholder").style.display = "none";
     };
   }
 
-
   connectedCallback() {
-    this.showSubtasks = this.showSubtasks
+    this.showSubtasks = this.showSubtasks;
   }
 
   // Attributes
   static get observedAttributes() {
-    return ["complete", "name", "due-date", "has-reminder", "is-recurring", "show-subtasks"];
+    return [
+      "complete",
+      "name",
+      "due-date",
+      "has-reminder",
+      "is-recurring",
+      "has-description",
+      "show-subtasks",
+    ];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case "complete": this.completeChanged(oldValue, newValue); break;
-      case "name": this.parentChangedName(oldValue, newValue); break;
-      case "due-date": this.dueDateChanged(oldValue, newValue); break;
-      case "has-reminder": this.hasReminderChanged(oldValue, newValue); break;
-      case "is-recurring": this.isRecurringChanged(oldValue, newValue); break;
-      case "has-description": this.hasDescriptionChanged(oldValue, newValue); break;
-      case "show-subtasks": this.showSubtasksChanged(oldValue, newValue); break;
-      default: break;
+      case "complete":
+        this.completeChanged(oldValue, newValue);
+        break;
+      case "name":
+        this.parentChangedName(oldValue, newValue);
+        break;
+      case "due-date":
+        this.dueDateChanged(oldValue, newValue);
+        break;
+      case "has-reminder":
+        this.hasReminderChanged(oldValue, newValue);
+        break;
+      case "is-recurring":
+        this.isRecurringChanged(oldValue, newValue);
+        break;
+      case "has-description":
+        this.hasDescriptionChanged(oldValue, newValue);
+        break;
+      case "show-subtasks":
+        this.showSubtasksChanged(oldValue, newValue);
+        break;
+      default:
+        break;
     }
   }
 
@@ -110,9 +135,13 @@ class TaskItem extends HTMLElement {
 
   completeChanged(oldValue, newValue) {
     if (newValue !== null) {
-      this.shadowRoot.querySelector("custom-checkbox").checked = true;
+      this.shadowRoot
+        .querySelector("custom-checkbox")
+        .setAttribute("checked", "");
     } else {
-      this.shadowRoot.querySelector("custom-checkbox").checked = false;
+      this.shadowRoot
+        .querySelector("custom-checkbox")
+        .removeAttribute("checked");
     }
   }
 
@@ -135,26 +164,31 @@ class TaskItem extends HTMLElement {
   }
 
   get dueDate() {
-    const dueDate = new Date(this.getAttribute("due-date"))
+    const dueDate = new Date(this.getAttribute("due-date"));
     const today = new Date(Date());
     const ONE_DAY_MS = 1000 * 60 * 60 * 24;
     const daysLeft = Math.round((dueDate - today) / ONE_DAY_MS);
     let options;
 
-    if (daysLeft < 0) {               // Due date has passed
+    if (daysLeft < 0) {
+      // Due date has passed
       return `${-daysLeft} ${daysLeft === -1 ? "day" : "days"} ago`;
-    } else if (daysLeft === 0) {      // Today
+    } else if (daysLeft === 0) {
+      // Today
       return "Today";
-    } else if (daysLeft === 1) {      // Tomorrow
+    } else if (daysLeft === 1) {
+      // Tomorrow
       return "Tomorrow";
-    } else if (daysLeft < 7) {        // Day of the week if less than a week away
-      options = { weekday: 'long' }
-    } else if (daysLeft < 365) {      // Month and day if less than a year away
-      options = { month: 'short', day: 'numeric' };
+    } else if (daysLeft < 7) {
+      // Day of the week if less than a week away
+      options = { weekday: "long" };
+    } else if (daysLeft < 365) {
+      // Month and day if less than a year away
+      options = { month: "short", day: "numeric" };
     } else {
-      options = { year: "numeric", month: 'short', day: 'numeric' };
+      options = { year: "numeric", month: "short", day: "numeric" };
     }
-    return dueDate.toLocaleDateString(undefined, options)
+    return dueDate.toLocaleDateString(undefined, options);
   }
 
   dueDateChanged(oldValue, newValue) {
@@ -201,7 +235,9 @@ class TaskItem extends HTMLElement {
     if (newValue !== null) {
       this.shadowRoot.querySelector(".task").classList.add("has-description");
     } else {
-      this.shadowRoot.querySelector(".task").classList.remove("has-description");
+      this.shadowRoot
+        .querySelector(".task")
+        .classList.remove("has-description");
     }
   }
 
@@ -215,23 +251,27 @@ class TaskItem extends HTMLElement {
   }
 
   showSubtasksChanged(oldValue, newValue) {
-    let subtasks = this.shadowRoot.querySelector(".subtasks")
-    const animTime = getComputedStyle(this).getPropertyValue("--anim-time").slice(0, -1) * 1000;
+    let subtasks = this.shadowRoot.querySelector(".subtasks");
+    const animTime =
+      getComputedStyle(this).getPropertyValue("--anim-time").slice(0, -1) *
+      1000;
 
     // If there aren't any subtasks, just leave
     if (!this.firstChild) {
-      return
+      return;
     }
 
     if (newValue === null) {
       this.removeAttribute("show-subtasks");
     } else if (JSON.parse(newValue)) {
-      this.shadowRoot.querySelector(".subtasks-toggle").classList.remove("hide");
+      this.shadowRoot
+        .querySelector(".subtasks-toggle")
+        .classList.remove("hide");
       this.shadowRoot.querySelector(".subtasks").classList.remove("hide");
       subtasks.style.maxHeight = subtasks.scrollHeight + "px";
       setTimeout(() => {
         subtasks.style.removeProperty("max-height");
-      }, animTime)
+      }, animTime);
     } else {
       this.shadowRoot.querySelector(".subtasks-toggle").classList.add("hide");
       this.shadowRoot.querySelector(".subtasks").classList.add("hide");

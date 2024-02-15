@@ -7,11 +7,11 @@ export default class Task {
   /**
    * Creates a new Task object.
    *
-   * @param {PropertiesOnly<Task>} taskData - The task data.
+   * @param {Partial<PropertiesOnly<Task>>} taskData - The task data.
    */
   constructor({
-    id,
-    title,
+    id = "",
+    title = "",
     description = "",
     complete = false,
     dueDate = null,
@@ -31,7 +31,8 @@ export default class Task {
     this.description = description;
     /** @type {boolean} */
     this.complete = complete;
-    if (dueDate) /** @type {Date?} */ (this.dueDate = dueDate);
+    /** @type {Date?} */
+    this.dueDate = dueDate;
     /** @type {Date[]} */
     this.reminders = reminders;
     /** @type {Task[]} */

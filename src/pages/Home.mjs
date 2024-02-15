@@ -19,7 +19,7 @@ export default class Home extends LitElement {
   render() {
     return html`<header><h1>%project-name%</h1></header>
       <main>Welcome to my app!
-        <list-item title="title" checked="${true}"><list-item>
+        <list-item .task=${this.task}><list-item>
       </main>`;
   }
 
@@ -38,7 +38,7 @@ function makeTask() {
   return new Task({
     id: (++tasksMade).toString(),
     title: tasksMade.toString(),
-    description: oneIn(10) ? "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, quas." : undefined,
+    description: oneIn(10) ? "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, quas." : null,
     complete: oneIn(2),
     dueDate: new Date(Date.now() + randomInt(-10, 10) * 24 * 60 * 60 * 1000),
     subtasks: oneIn(tasksMade) ? new Array(randomInt(1, 10)).fill(0).map(makeTask) : [],

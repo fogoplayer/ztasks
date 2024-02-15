@@ -1,39 +1,42 @@
-
+/**
+ * @template T
+ * @typedef {{ [K in keyof T as T[K] extends Function ? never : K]: T[K]}} PropertiesOnly
+ */
 
 export default class Task {
-    /**
-     * Creates a new Task object.
-     *
-     * @param {{ id: string,
-     *  title: string,
-     *  description?: string,
-     *  complete?: boolean,
-     *  dueDate?: Date,
-     *  reminders?: Date[],
-     *  subtasks?: Task[],
-     *  owners?: string[] 
-     * }} taskData - The task data.
-     */
-    constructor({ id,
-        title,
-        description = "",
-        complete = false,
-        dueDate = undefined,
-        reminders = [],
-        /* 
+  /**
+   * Creates a new Task object.
+   *
+   * @param {PropertiesOnly<Task>} taskData - The task data.
+   */
+  constructor({
+    id,
+    title,
+    description = "",
+    complete = false,
+    dueDate = null,
+    reminders = [],
+    /* 
         labels,
         attachments,
         */
-        subtasks = [],
-        owners = ["current user"]
-    }) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.complete = complete;
-        this.dueDate = dueDate;
-        this.reminders = reminders;
-        this.subtasks = subtasks;
-        this.owners = owners;
-    }
+    subtasks = [],
+    owners = ["current user"],
+  }) {
+    /** @type {string} */
+    this.id = id;
+    /** @type {string} */
+    this.title = title;
+    /** @type {string?} */
+    this.description = description;
+    /** @type {boolean} */
+    this.complete = complete;
+    if (dueDate) /** @type {Date?} */ (this.dueDate = dueDate);
+    /** @type {Date[]} */
+    this.reminders = reminders;
+    /** @type {Task[]} */
+    this.subtasks = subtasks;
+    /** @type {string[]} */
+    this.owners = owners;
+  }
 }

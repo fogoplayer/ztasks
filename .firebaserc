@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "%project-name%",
+    "default": "ztasks-d48a3",
     "prod": "%project-name%"
   }
 }

@@ -11,6 +11,10 @@ export const Draggable = (superclass) =>
       this.draggable = true;
     }
 
+    get header() {
+      return this.renderRoot?.querySelector("header");
+    }
+
     firstUpdated() {
       this.header?.addEventListener("dragstart", this.onDragStart);
       this.header?.addEventListener("dragenter", this.onDragOver);

@@ -1,7 +1,7 @@
 import { LitElement, html, css } from "lit";
 import Task from "../models/Task.mjs";
 import globalCss from "../global-styles/global.css.mjs";
-import "./Collapsible.mjs"
+import "./Collapsible.mjs";
 import { Draggable } from "./mixins/Draggable.mjs";
 
 export class ListItem extends Draggable(LitElement) {
@@ -13,29 +13,29 @@ export class ListItem extends Draggable(LitElement) {
     open: { state: true, type: Boolean },
   };
 
-  get header(){
-    return this.renderRoot?.querySelector("header");
-  }
-
   constructor() {
     super();
     this.open = true;
   }
 
   render() {
-    return html`
-      <header>
+    return html` <header>
         ${this.task?.subtasks.length ? "" : html`<span></span>`}
         <span class="drag-handle material-symbols">drag_handle</span>
-        ${this.task?.subtasks.length ? html`<button class="toggle-subtasks ${this.open ? "open" : ""}" @click=${() => (this.open = !this.open)}>
-          <span class="material-symbols"> chevron_right </span>
-        </button>` : null}
+        ${this.task?.subtasks.length
+          ? html`<button class="toggle-subtasks ${this.open ? "open" : ""}" @click=${() => (this.open = !this.open)}>
+              <span class="material-symbols"> chevron_right </span>
+            </button>`
+          : null}
         <input type="checkbox" ?checked=${this.task?.complete} />
 
         <input type="text" class="task-title" value="${this.task?.title}" />
-        
+
         <a href="" class="details-link">
-          ${this.task?.description || this.task?.dueDate || this.task?.reminders.length || (this.task?.owners.length && this.task.owners.length > 1) 
+          ${this.task?.description ||
+          this.task?.dueDate ||
+          this.task?.reminders.length ||
+          (this.task?.owners.length && this.task.owners.length > 1)
             ? html`<span class="chip">
                 ${this.task?.dueDate ? html`<span>${this.task?.dueDate.toLocaleDateString()}</span>` : ""}
                 ${this.task?.reminders.length ? html`<span class="material-symbols">notifications</span>` : ""}
@@ -43,9 +43,7 @@ export class ListItem extends Draggable(LitElement) {
                 ${this.task?.description ? html`<span class="material-symbols">notes</span>` : ""}
                 ${this.task?.owners.length > 1 ? html`<span class="material-symbols">group</span>` : ""}
               </span> `
-            : html`<span class="material-symbols">more_vert</span>`
-
-          }
+            : html`<span class="material-symbols">more_vert</span>`}
         </a>
       </header>
       <collapsible- class="subtasks" ?open="${this.open}">
@@ -82,8 +80,6 @@ export class ListItem extends Draggable(LitElement) {
             rotate: 90deg;
           }
         }
-
-
       }
 
       .subtasks {

@@ -2,8 +2,9 @@ import { LitElement, html, css } from "lit";
 import Task from "../models/Task.mjs";
 import globalCss from "../global-styles/global.css.mjs";
 import "./Collapsible.mjs"
+import { Draggable } from "./mixins/Draggable.mjs";
 
-export class ListItem extends LitElement {
+export class ListItem extends Draggable(LitElement) {
   /** @type {Task?} */
   task = null;
 

@@ -54,6 +54,11 @@ export class ListItem extends LitElement {
 
         .toggle-subtasks {
           cursor: pointer;
+          transition: rotate var(--collapsible-timing) ease-in-out;
+
+          .open & {
+            rotate: 90deg;
+          }
         }
       }
 

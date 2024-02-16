@@ -20,7 +20,7 @@ export class Collapsible extends LitElement {
       .outer {
         display: grid;
         grid-template-rows: 0fr;
-        transition: grid-template-rows 0.3s ease-in-out;
+        transition: grid-template-rows var(--collapsible-timing) ease-in-out;
       
         &.open {
           display: grid;

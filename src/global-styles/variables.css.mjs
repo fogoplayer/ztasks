@@ -16,5 +16,7 @@ export default css`
 
     /* Units */
     --limited-width: 40rem;
+
+    --collapsible-timing: 0.3s;
   }
 `;

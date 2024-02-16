@@ -2,6 +2,7 @@ import { LitElement, html, css } from "lit";
 import Task from "../models/Task.mjs";
 import globalCss from "../global-styles/global.css.mjs";
 import "./Collapsible.mjs";
+import "./CustomCheckbox.mjs";
 import { Draggable } from "./mixins/Draggable.mjs";
 
 export class ListItem extends Draggable(LitElement) {
@@ -27,7 +28,8 @@ export class ListItem extends Draggable(LitElement) {
               <span class="material-symbols"> chevron_right </span>
             </button>`
           : null}
-        <input type="checkbox" ?checked=${this.task?.complete} />
+        <!-- <input type="checkbox" ?checked=${this.task?.complete} /> -->
+        <custom-checkbox ?checked=${this.task?.complete}></custom-checkbox>
 
         <input type="text" class="task-title" value="${this.task?.title}" />
 

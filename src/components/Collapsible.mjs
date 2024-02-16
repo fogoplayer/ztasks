@@ -29,13 +29,8 @@ export class Collapsible extends LitElement {
       }
 
       .inner {
-        display: none;
         min-height:0;
         overflow: hidden;
-
-        .open & {
-          display: block;
-        }
       }
     `
   ];

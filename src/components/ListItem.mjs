@@ -20,9 +20,9 @@ export class ListItem extends LitElement {
   render() {
     return html`<section class="${this.open? "open" : ""}">
       <header>
-        <button class="toggle-subtasks" @click=${() => (this.open = !this.open)}>
+        ${this.task?.subtasks.length ? html`<button class="toggle-subtasks" @click=${() => (this.open = !this.open)}>
           <span class="material-symbols"> chevron_right </span>
-        </button>
+        </button>` : html`<span></span>`}
         <span class="drag-handle"></span>
         <input type="checkbox" ?checked=${this.task?.complete} />
         <input type="text" class="task-title" value="${this.task?.title}" />

@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit";
 import Task from "../models/Task.mjs";
 import globalCss from "../global-styles/global.css.mjs";
+import "./Collapsible.mjs"
 
 export class ListItem extends LitElement {
   /** @type {Task?} */
@@ -17,7 +18,7 @@ export class ListItem extends LitElement {
   }
 
   render() {
-    return html`<section ?open="${this.open}">
+    return html`<section class="${this.open? "open" : ""}">
       <header>
         <button class="toggle-subtasks" @click=${() => (this.open = !this.open)}>
           <span class="material-symbols"> chevron_right </span>
@@ -27,9 +28,11 @@ export class ListItem extends LitElement {
         <input type="text" class="task-title" value="${this.task?.title}" />
         <a href="" class="details-link"></a>
       </header>
-      <ul class="subtasks unstyled-ul">
-        ${this.task?.subtasks.map((subtask) => html`<list-item .task=${subtask}></list-item>`)}
-      </ul>
+      <collapsible- class="subtasks" ?open="${this.open}">
+        <ul class="subtasks unstyled-ul">
+          ${this.task?.subtasks.map((subtask) => html`<list-item .task=${subtask}></list-item>`)}
+        </ul>
+      </collapsible->
     </section>`;
   }
 
@@ -48,11 +51,6 @@ export class ListItem extends LitElement {
         grid-template-columns: subgrid;
 
         list-style: none;
-
-        &::-webkit-section-marker,
-        &::marker {
-          display: none;
-        }
 
         .toggle-subtasks {
           cursor: pointer;

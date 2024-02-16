@@ -9,12 +9,15 @@ export const Draggable = (superclass) =>
     constructor() {
       super();
       this.draggable = true;
-      this.addEventListener("dragstart", this.onDragStart);
-      this.addEventListener("dragenter", this.onDragOver);
-      this.addEventListener("dragover", this.onDragOver);
-      this.addEventListener("dragleave", this.onDragLeave);
-      this.addEventListener("dragend", this.onDragEnd);
-      this.addEventListener("drop", this.onDrop);
+    }
+
+    firstUpdated() {
+      this.header?.addEventListener("dragstart", this.onDragStart);
+      this.header?.addEventListener("dragenter", this.onDragOver);
+      this.header?.addEventListener("dragover", this.onDragOver);
+      this.header?.addEventListener("dragleave", this.onDragLeave);
+      this.header?.addEventListener("dragend", this.onDragEnd);
+      this.header?.addEventListener("drop", this.onDrop);
     }
 
     /**
@@ -35,7 +38,9 @@ export const Draggable = (superclass) =>
     onDragOver(e) {
       e.preventDefault();
       e.stopPropagation();
-      const headerBounds = this.header.getBoundingClientRect();
+
+      // add padding to top or bottom
+      const headerBounds = this.getBoundingClientRect();
       if (e.y < headerBounds.top + headerBounds.height / 2) {
         this.style.paddingTop = "2em";
         this.style.removeProperty("padding-bottom");
@@ -77,8 +82,10 @@ export const Draggable = (superclass) =>
     onDrop(e) {
       e.preventDefault();
       e.stopPropagation();
+      this.style.removeProperty("padding-top");
+      this.style.removeProperty("padding-bottom");
+
       this.style.backgroundColor = "lightblue";
       setTimeout(() => this.style.removeProperty("background-color"), 3000);
-      this.onDragLeave(e);
     }
   };

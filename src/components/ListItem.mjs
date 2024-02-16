@@ -19,10 +19,10 @@ export class ListItem extends Draggable(LitElement) {
   }
 
   render() {
-    return html`<section class="${this.open? "open" : ""}">
+    return html`
       <header>
         <span class="drag-handle material-symbols">drag_handle</span>
-        ${this.task?.subtasks.length ? html`<button class="toggle-subtasks" @click=${() => (this.open = !this.open)}>
+        ${this.task?.subtasks.length ? html`<button class="toggle-subtasks ${this.open ? "open" : ""}" @click=${() => (this.open = !this.open)}>
           <span class="material-symbols"> chevron_right </span>
         </button>` : html`<span></span>`}
         <input type="checkbox" ?checked=${this.task?.complete} />
@@ -47,14 +47,13 @@ export class ListItem extends Draggable(LitElement) {
         <ul class="subtasks unstyled-ul">
           ${this.task?.subtasks.map((subtask) => html`<list-item .task=${subtask}></list-item>`)}
         </ul>
-      </collapsible->
-    </section>`;
+      </collapsible->`;
   }
 
   static styles = [
     globalCss,
     css`
-      section {
+      :host {
         display: grid;
         grid-template-columns: repeat(3, 1em) 1fr auto;
         grid-template-rows: auto auto;
@@ -74,7 +73,7 @@ export class ListItem extends Draggable(LitElement) {
           cursor: pointer;
           transition: rotate var(--collapsible-timing) ease-in-out;
 
-          .open & {
+          &.open {
             rotate: 90deg;
           }
         }

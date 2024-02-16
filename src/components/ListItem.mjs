@@ -20,12 +20,14 @@ export class ListItem extends LitElement {
   render() {
     return html`<section class="${this.open? "open" : ""}">
       <header>
-        <span class="drag-handle"></span>
+        <span class="drag-handle material-symbols">drag_handle</span>
         ${this.task?.subtasks.length ? html`<button class="toggle-subtasks" @click=${() => (this.open = !this.open)}>
           <span class="material-symbols"> chevron_right </span>
         </button>` : html`<span></span>`}
         <input type="checkbox" ?checked=${this.task?.complete} />
+
         <input type="text" class="task-title" value="${this.task?.title}" />
+        
         <a href="" class="details-link"></a>
       </header>
       <collapsible- class="subtasks" ?open="${this.open}">

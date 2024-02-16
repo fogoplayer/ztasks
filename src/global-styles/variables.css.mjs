@@ -18,5 +18,6 @@ export default css`
     --limited-width: 40rem;
 
     --collapsible-timing: 0.3s;
+    --task-spacing: 0.5em;
   }
 `;

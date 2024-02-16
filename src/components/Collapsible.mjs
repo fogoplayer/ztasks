@@ -8,8 +8,8 @@ export class Collapsible extends LitElement {
   }
 
   render() {
-    return html`<div class="${this.open ? "open" : ""}">
-      <div>
+    return html`<div class="outer ${this.open ? "open" : ""}">
+      <div class="inner">
         <slot></slot>
       </div>
     </div>`;
@@ -17,20 +17,25 @@ export class Collapsible extends LitElement {
 
   static styles = [
     css`
-      :host > div {
+      .outer {
         display: grid;
         grid-template-rows: 0fr;
         transition: grid-template-rows 0.3s ease-in-out;
+      
+        &.open {
+          display: grid;
+          grid-template-rows: 1fr;
+        }
       }
 
-      :host > div.open {
-        display: grid;
-        grid-template-rows: 1fr;
-      }
-
-      div div {
+      .inner {
+        display: none;
         min-height:0;
         overflow: hidden;
+
+        .open & {
+          display: block;
+        }
       }
     `
   ];

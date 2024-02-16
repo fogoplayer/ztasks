@@ -28,7 +28,19 @@ export class ListItem extends LitElement {
 
         <input type="text" class="task-title" value="${this.task?.title}" />
         
-        <a href="" class="details-link"></a>
+        <a href="" class="details-link">
+          ${this.task?.description || this.task?.dueDate || this.task?.reminders.length || (this.task?.owners.length && this.task.owners.length > 1) 
+            ? html`<span class="chip">
+                ${this.task?.dueDate ? html`<span>${this.task?.dueDate.toLocaleDateString()}</span>` : ""}
+                ${this.task?.reminders.length ? html`<span class="material-symbols">notifications</span>` : ""}
+                ${this.task?.recurring ? html`<span class="material-symbols">cached</span>` : ""}
+                ${this.task?.description ? html`<span class="material-symbols">notes</span>` : ""}
+                ${this.task?.owners.length > 1 ? html`<span class="material-symbols">group</span>` : ""}
+              </span> `
+            : html`<span class="material-symbols">more_vert</span>`
+
+          }
+        </a>
       </header>
       <collapsible- class="subtasks" ?open="${this.open}">
         <ul class="subtasks unstyled-ul">

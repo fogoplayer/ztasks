@@ -15,6 +15,7 @@ export default class Task {
     description = "",
     complete = false,
     dueDate = null,
+    recurring = "",
     reminders = [],
     /* 
         labels,
@@ -33,6 +34,8 @@ export default class Task {
     this.complete = complete;
     /** @type {Date?} */
     this.dueDate = dueDate;
+    /** @type {string} */
+    this.recurring = recurring;
     /** @type {Date[]} */
     this.reminders = reminders;
     /** @type {Task[]} */

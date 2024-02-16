@@ -38,10 +38,13 @@ function makeTask() {
   return new Task({
     id: (++tasksMade).toString(),
     title: tasksMade.toString(),
-    description: oneIn(10) ? "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, quas." : null,
+    description: oneIn(3) ? "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, quas." : null,
     complete: oneIn(2),
     dueDate: new Date(Date.now() + randomInt(-10, 10) * 24 * 60 * 60 * 1000),
+    recurring: oneIn(3) ? "daily" : "",
+    reminders: oneIn(4) ? new Array(randomInt(1, 5)).fill(0).map(() => new Date(Date.now() + randomInt(1, 10) * 24 * 60 * 60 * 1000)) : [],
     subtasks: oneIn(tasksMade) ? new Array(randomInt(1, 10)).fill(0).map(makeTask) : [],
+    owners: oneIn(4) ? ["Alice", "Bob", "Charlie"] : undefined,
   });
 }
 

@@ -13,6 +13,10 @@ export class ListItem extends Draggable(LitElement) {
     open: { state: true, type: Boolean },
   };
 
+  get header(){
+    return this.renderRoot?.querySelector("header");
+  }
+
   constructor() {
     super();
     this.open = true;

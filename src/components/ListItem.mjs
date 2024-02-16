@@ -21,10 +21,11 @@ export class ListItem extends Draggable(LitElement) {
   render() {
     return html`
       <header>
+        ${this.task?.subtasks.length ? "" : html`<span></span>`}
         <span class="drag-handle material-symbols">drag_handle</span>
         ${this.task?.subtasks.length ? html`<button class="toggle-subtasks ${this.open ? "open" : ""}" @click=${() => (this.open = !this.open)}>
           <span class="material-symbols"> chevron_right </span>
-        </button>` : html`<span></span>`}
+        </button>` : null}
         <input type="checkbox" ?checked=${this.task?.complete} />
 
         <input type="text" class="task-title" value="${this.task?.title}" />
@@ -77,6 +78,8 @@ export class ListItem extends Draggable(LitElement) {
             rotate: 90deg;
           }
         }
+
+
       }
 
       .subtasks {

@@ -87,7 +87,7 @@ describe("Lexing Base Data Types", () => {
 });
 
 describe("Lexing Date Qualifiers", () => {
-  it("lexes a single date with a frequency", () => {
+  it("lexes basic recurring events", () => {
     expect(lexDateString("every day")).toEqual([
       new LexemeValue(Lexeme.FREQUENCY, "every"),
       new LexemeValue(Lexeme.DAY_SPECIFIER, "day"),

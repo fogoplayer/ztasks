@@ -8,20 +8,18 @@ export const Draggable = (superclass) =>
   class extends superclass {
     constructor() {
       super();
-      this.draggable = true;
-    }
-
-    get header() {
-      return this.renderRoot?.querySelector("header");
     }
 
     firstUpdated() {
-      this.header?.addEventListener("dragstart", this.onDragStart);
-      this.header?.addEventListener("dragenter", this.onDragOver);
-      this.header?.addEventListener("dragover", this.onDragOver);
-      this.header?.addEventListener("dragleave", this.onDragLeave);
-      this.header?.addEventListener("dragend", this.onDragEnd);
-      this.header?.addEventListener("drop", this.onDrop);
+      /** @type {HTMLDivElement} */
+      const header = this.renderRoot.querySelector("header");
+      header.draggable = true;
+      header.addEventListener("dragstart", this.onDragStart);
+      header.addEventListener("dragenter", this.onDragOver);
+      header.addEventListener("dragover", this.onDragOver);
+      header.addEventListener("dragleave", this.onDragLeave);
+      header.addEventListener("dragend", this.onDragEnd);
+      header.addEventListener("drop", this.onDrop);
     }
 
     /**

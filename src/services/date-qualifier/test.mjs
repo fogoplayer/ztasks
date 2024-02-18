@@ -8,7 +8,7 @@ OFFSET = in | Ɛ
 FREQUENCY = every | next | previous
 # other = 2, a = 1
 DURATION_MULT = other | ${intRange(1, 10)} | a\\an | Ɛ
-TIME = DAYSPECIFIER | TIMEDURATIONSPECIFIER | DAYSPECIFIER AT TIMESPECIFIER
+TIME = DAYSPECIFIER | TIMEDURATIONSPECIFIER AGO | DAYSPECIFIER AT TIMESPECIFIER
   DAYSPECIFIER =  WEEKDAY | DATE | day(s)\\week(s)\\month(s)\\year(s)
       DATE = MONTHSTRING DAY | MONTHNUM / DAY | DAY
         # union the two months?
@@ -36,6 +36,7 @@ BOUNDS = STARTBOUNDS_WITH_TIME ENDBOUNDS_WITH_TIME
   ENDBOUNDS_WITH_TIME = ENDBOUNDS <time> | Ɛ
     ENDBOUNDS = until\\ending\\before\\ago\\to
   EXCEPTIONS = except <time> | Ɛ
+  AGO = ago | Ɛ
 
 # Reminders
 `;

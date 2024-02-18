@@ -13,7 +13,7 @@ DURATION_MULT = other | NUMBER | a | an | Ɛ   # watch out--could be a number
   NUMBER = <number> | NUMBER number # tens ones, etc
 TIME = DAYSPECIFIER | TIMEDURATIONSPECIFIER | DAYSPECIFIER AT TIMESPECIFIER
   DAYSPECIFIER =  WEEKDAY | DATE | day(s) | week(s) | month(s) | year(s)
-    DATE = MONTHSTRING DAY | MONTHNUM / DAY | DAY
+    DATE = MONTHSTRING DAY | MONTHNUM / DAY | DAY   # I don't think we need the slash
       # union the two months?
       MONTHSTRING = jan | mar | may | jun | july | aug | nov | dec | february | april | sept | october
       MONTHNUM = NUMBER
@@ -36,7 +36,7 @@ BOUNDS = STARTBOUNDS_WITH_TIME ENDBOUNDS_WITH_TIME
   STARTBOUNDS_WITH_TIME = STARTBOUNDS TIME | Ɛ
     STARTBOUNDS = after | starting | from
   ENDBOUNDS_WITH_TIME = ENDBOUNDS TIME | Ɛ
-    ENDBOUNDS = until | ending | before | ago | except | to
+    ENDBOUNDS = until | ending | before | ago  | to
   EXCEPTIONS =  except TIME | except TIME OR TIME | Ɛ
 
 # Reminders

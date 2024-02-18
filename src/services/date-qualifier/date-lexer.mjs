@@ -162,7 +162,7 @@ export function lexDateString(token) {
         lexemes.push(lexeme);
         break;
 
-      case "at":
+      case "at": // is this really necessary?
         lexeme = new LexemeValue(Lexeme.AT);
         lexemes.push(lexeme);
         break;
@@ -177,6 +177,7 @@ export function lexDateString(token) {
       case "until":
       case "ending":
       case "before":
+      case "ago":
       case "to":
         lexeme = new LexemeValue(Lexeme.END_BOUNDS);
         lexemes.push(lexeme);

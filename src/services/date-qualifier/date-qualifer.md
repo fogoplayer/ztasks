@@ -40,6 +40,11 @@ BOUNDS = STARTBOUNDS_WITH_TIME ENDBOUNDS_WITH_TIME
   EXCEPTIONS =  except TIME | except TIME OR TIME | Ɛ
 
 # Reminders
+# this (this Friday)
+# each (every)
+# last
+# first
+
 ```
 
 <!--
@@ -47,15 +52,6 @@ BOUNDS = STARTBOUNDS_WITH_TIME ENDBOUNDS_WITH_TIME
 -->
 
 ## Due Dates
-
-after
-starting
-until
-ending
-before
-ago
-from_now
-dateObj
 
 ```mermaid
 flowchart TD

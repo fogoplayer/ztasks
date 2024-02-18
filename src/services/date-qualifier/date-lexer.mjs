@@ -37,7 +37,7 @@ BOUNDS = STARTBOUNDS_WITH_TIME ENDBOUNDS_WITH_TIME
   AGO = ago | Ɛ
 */
 
-/** @typedef {(token: string) => string} LexemeProcessor */
+/** @typedef {(token: string) => string | number} LexemeProcessor */
 /** @typedef {(token: string) => LexemeValue | null} DefaultHelper */
 
 export const Lexeme = {
@@ -78,7 +78,7 @@ export class LexemeValue {
  * @returns {LexemeValue[]}
  */
 export function lexDateString(token) {
-  const tokens = token.toLowerCase().split(/\s/g);
+  const tokens = token.toLowerCase().trim().split(/\s/g);
   let lexemes = [];
 
   for (const token of tokens) {
@@ -148,6 +148,12 @@ export function lexDateString(token) {
         lexemes.push(lexeme);
         break;
 
+      case "or":
+      case ",":
+        lexeme = new LexemeValue(Lexeme.OR);
+        lexemes.push(lexeme);
+        break;
+
       case "minute":
       case "minutes":
       case "hour":
@@ -196,10 +202,10 @@ export function lexDurationMult(token) {
   switch (token) {
     case "a":
     case "an":
-      return "1";
+      return 1;
 
     case "other":
-      return "2";
+      return 2;
 
     default:
       return token;
@@ -259,7 +265,7 @@ export function lexWeekday(token) {
 export function lexDefault(token) {
   const lexeme = lexNumber(token) || lexMonth(token);
   if (lexeme) return lexeme;
-  throw new Error();
+  throw new Error(`Lexer Error: ${token}`);
 }
 
 /** @type {DefaultHelper} */

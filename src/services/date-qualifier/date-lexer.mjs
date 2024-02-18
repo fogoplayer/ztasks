@@ -93,7 +93,7 @@ export function lexDateString(token) {
         break;
 
       case "in":
-        lexeme = new LexemeValue(Lexeme.OFFSET);
+        lexeme = new LexemeValue(Lexeme.OFFSET, token);
         lexemes.push(lexeme);
         break;
 
@@ -182,14 +182,10 @@ export function lexDateString(token) {
         break;
 
       default:
-        // numbers
         lexeme = lexDefault(token);
-        // months
-        // numbers
+        lexemes.push(lexeme);
         break;
     }
-
-    lexemes.push(lexeme);
   }
 
   return lexemes;

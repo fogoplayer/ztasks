@@ -34,12 +34,10 @@ BOUNDS = STARTBOUNDS_WITH_TIME ENDBOUNDS_WITH_TIME
   STARTBOUNDS_WITH_TIME = STARTBOUNDS <time> | Ɛ
     STARTBOUNDS = after\\starting\\from
   ENDBOUNDS_WITH_TIME = ENDBOUNDS <time> | Ɛ
-    ENDBOUNDS = until\\ending\\before\\ago\\except\\to
-  
+    ENDBOUNDS = until\\ending\\before\\ago\\to
+  EXCEPTIONS = except <time> | Ɛ
 
 # Reminders
-# before
-# after
 `;
 
 function intRange(start, end, step = 1) {

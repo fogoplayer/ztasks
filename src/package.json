@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "firebase serve",
     "test": "clear && jest tests/app.test.js && npm run lint",
@@ -13,6 +14,7 @@
   "author": "Zarin Loosli",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "eslint": "^8.20.0",
     "firebase": "^10.1.0",
     "firebase-tools": "^11.18.0",

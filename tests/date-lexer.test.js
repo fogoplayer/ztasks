@@ -1,7 +1,7 @@
 /* global describe, it, expect */
 import { Lexeme, LexemeValue, lexDateString } from "../src/services/date-qualifier/date-lexer.mjs";
 
-describe("Linting Base Data Types", () => {
+describe("Lexing Base Data Types", () => {
   it("lexes singles", () => {
     expect(lexDateString("today")).toEqual([new LexemeValue(Lexeme.SINGLE, "today")]);
     expect(lexDateString("tomorrow")).toEqual([new LexemeValue(Lexeme.SINGLE, "tomorrow")]);
@@ -61,5 +61,51 @@ describe("Linting Base Data Types", () => {
     expect(lexDateString("minutes")).toEqual([new LexemeValue(Lexeme.TIME_DURATION_SPECIFIER, "minute")]);
     expect(lexDateString("hour")).toEqual([new LexemeValue(Lexeme.TIME_DURATION_SPECIFIER, "hour")]);
     expect(lexDateString("hours")).toEqual([new LexemeValue(Lexeme.TIME_DURATION_SPECIFIER, "hour")]);
+  });
+
+  it("lexes at's", () => {
+    expect(lexDateString("at")).toEqual([new LexemeValue(Lexeme.AT)]);
+  });
+
+  it("lexes start bounds", () => {
+    expect(lexDateString("after")).toEqual([new LexemeValue(Lexeme.START_BOUNDS)]);
+    expect(lexDateString("starting")).toEqual([new LexemeValue(Lexeme.START_BOUNDS)]);
+    expect(lexDateString("from")).toEqual([new LexemeValue(Lexeme.START_BOUNDS)]);
+  });
+
+  it("lexes end bounds", () => {
+    expect(lexDateString("until")).toEqual([new LexemeValue(Lexeme.END_BOUNDS)]);
+    expect(lexDateString("ending")).toEqual([new LexemeValue(Lexeme.END_BOUNDS)]);
+    expect(lexDateString("before")).toEqual([new LexemeValue(Lexeme.END_BOUNDS)]);
+    expect(lexDateString("ago")).toEqual([new LexemeValue(Lexeme.END_BOUNDS)]);
+    expect(lexDateString("to")).toEqual([new LexemeValue(Lexeme.END_BOUNDS)]);
+  });
+
+  it("lexes exceptions", () => {
+    expect(lexDateString("except")).toEqual([new LexemeValue(Lexeme.EXCEPT)]);
+  });
+});
+
+describe("Lexing Date Qualifiers", () => {
+  it("lexes a single date with a frequency", () => {
+    expect(lexDateString("every day")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.DAY_SPECIFIER, "day"),
+    ]);
+    expect(lexDateString("every other day")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.NUMBER, 2),
+      new LexemeValue(Lexeme.DAY_SPECIFIER, "day"),
+    ]);
+    expect(lexDateString("every 2 days")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.NUMBER, 2),
+      new LexemeValue(Lexeme.DAY_SPECIFIER, "day"),
+    ]);
+    expect(lexDateString("every 3 months")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.NUMBER, 3),
+      new LexemeValue(Lexeme.DAY_SPECIFIER, "month"),
+    ]);
   });
 });

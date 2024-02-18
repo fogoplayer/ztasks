@@ -23,7 +23,7 @@ export const Draggable = (superclass) =>
     }
 
     /**
-     * @this {ListItem}
+     * @this {HTMLDivElement}
      * @param {DragEvent} e
      */
     onDragStart(e) {
@@ -34,7 +34,7 @@ export const Draggable = (superclass) =>
     }
 
     /**
-     * @this {ListItem}
+     * @this {HTMLDivElement}
      * @param {DragEvent} e
      */
     onDragOver(e) {
@@ -55,7 +55,7 @@ export const Draggable = (superclass) =>
     }
 
     /**
-     * @this {ListItem}
+     * @this {HTMLDivElement}
      * @param {DragEvent} e
      */
     onDragLeave(e) {
@@ -68,7 +68,7 @@ export const Draggable = (superclass) =>
     }
 
     /**
-     * @this {ListItem}
+     * @this {HTMLDivElement}
      * @param {DragEvent} e
      */
     onDragEnd(e) {
@@ -78,7 +78,7 @@ export const Draggable = (superclass) =>
     }
 
     /**
-     * @this {ListItem}
+     * @this {HTMLDivElement}
      * @param {DragEvent} e
      */
     onDrop(e) {

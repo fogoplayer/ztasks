@@ -1,7 +1,8 @@
 /** @typedef {{ [key: string]: string[] }} GrammarDict */
 
 const GRAMMAR = `
-D = SINGLE | OFFSET DURATION_MULT TIME | FREQUENCY DURATION_MULT TIME BOUNDS Jan 4
+# 
+D = SINGLE | OFFSET DURATION_MULT TIME | FREQUENCY DURATION_MULT TIME BOUNDS
 SINGLE = today | tomorrow | yesterday
 OFFSET = in | Ɛ
 FREQUENCY = every | next | previous
@@ -13,7 +14,7 @@ TIME = DAYSPECIFIER | TIMEDURATIONSPECIFIER | DAYSPECIFIER AT TIMESPECIFIER
         # union the two months?
         MONTHSTRING = jan\\mar\\may\\jun\\july\\aug\\nov\\dec | february\\april\\sept\\october
         MONTHNUM = ${intRange(1, 12)}
-        DAY = ${intRange(1, 28)} | two\\five\\\\eight\\fourteen | third\\sixth\\ninth\\fifteenth
+        DAY = ${intRange(1, 28)} | two\\five\\eight\\fourteen | third\\sixth\\ninth\\fifteenth
     WEEKDAY = SUN\\MON\\TUE\\WED\\THU\\FRI\\SAT 
               # | WEEKDAY OR WEEKDAY
       SUN = sunday\\sun\\s
@@ -29,7 +30,11 @@ TIME = DAYSPECIFIER | TIMEDURATIONSPECIFIER | DAYSPECIFIER AT TIMESPECIFIER
   TIMESPECIFIER = HOUR | HOUR : MIN
     HOUR = ${intRange(0, 23)}
     MIN = ${intRange(0, 59)}
-BOUNDS = after | starting | until | ending | before | ago | Ɛ
+BOUNDS = STARTBOUNDS_WITH_TIME ENDBOUNDS_WITH_TIME
+  STARTBOUNDS_WITH_TIME = STARTBOUNDS <time> | Ɛ
+    STARTBOUNDS = after\\starting\\from
+  ENDBOUNDS_WITH_TIME = ENDBOUNDS <time> | Ɛ
+    ENDBOUNDS = until\\ending\\before\\ago\\except\\to
   
 
 # Reminders
@@ -44,6 +49,12 @@ function intRange(start, end, step = 1) {
 }
 
 console.log(GRAMMAR);
+// justDates();
+// export function justDates() {
+//   const grammar = parseGrammar(GRAMMAR);
+//   substitute("DATE", grammar);
+// }
+
 generateDueDateStrings();
 
 export function generateDueDateStrings() {
@@ -97,6 +108,7 @@ function substitute(toParse, grammar, accumulator = "") {
       for (const option of options) {
         substitute([option, ...tokens.slice(i + 1)].join(" "), grammar, accumulator);
       }
+      break; // we'll process the rest of the string in the recursive call
     } else {
       if (token === "Ɛ") continue;
 

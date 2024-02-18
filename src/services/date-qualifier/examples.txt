@@ -1,0 +1,2316 @@
+
+# 
+D = SINGLE | OFFSET DURATION_MULT TIME | FREQUENCY DURATION_MULT TIME BOUNDS
+SINGLE = today | tomorrow | yesterday
+OFFSET = in | Ɛ
+FREQUENCY = every | next | previous
+# other = 2, a = 1
+DURATION_MULT = other | 1\2\3\4\5\6\7\8\9\10 | a\an | Ɛ
+TIME = DAYSPECIFIER | TIMEDURATIONSPECIFIER | DAYSPECIFIER AT TIMESPECIFIER
+  DAYSPECIFIER =  WEEKDAY | DATE | day(s)\week(s)\month(s)\year(s)
+      DATE = MONTHSTRING DAY | MONTHNUM / DAY | DAY
+        # union the two months?
+        MONTHSTRING = jan\mar\may\jun\july\aug\nov\dec | february\april\sept\october
+        MONTHNUM = 1\2\3\4\5\6\7\8\9\10\11\12
+        DAY = 1\2\3\4\5\6\7\8\9\10\11\12\13\14\15\16\17\18\19\20\21\22\23\24\25\26\27\28 | two\five\eight\fourteen | third\sixth\ninth\fifteenth
+    WEEKDAY = SUN\MON\TUE\WED\THU\FRI\SAT 
+              # | WEEKDAY OR WEEKDAY
+      SUN = sunday\sun\s
+      MON = monday\mon\m
+      TUE = tuesday\tue\tu
+      WED = wednesday\wed\w
+      THU = thursday\thu\th
+      FRI = friday\fri\f
+      SAT = saturday\sat\s
+      OR = , | ", " | or
+  TIMEDURATIONSPECIFIER =  minute(s)\hour(s) 
+  AT = at | Ɛ
+  TIMESPECIFIER = HOUR | HOUR : MIN
+    HOUR = 0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15\16\17\18\19\20\21\22\23
+    MIN = 0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15\16\17\18\19\20\21\22\23\24\25\26\27\28\29\30\31\32\33\34\35\36\37\38\39\40\41\42\43\44\45\46\47\48\49\50\51\52\53\54\55\56\57\58\59
+BOUNDS = STARTBOUNDS_WITH_TIME ENDBOUNDS_WITH_TIME
+  STARTBOUNDS_WITH_TIME = STARTBOUNDS <time> | Ɛ
+    STARTBOUNDS = after\starting\from
+  ENDBOUNDS_WITH_TIME = ENDBOUNDS <time> | Ɛ
+    ENDBOUNDS = until\ending\before\ago\except\to
+  
+
+# Reminders
+# before
+# after
+
+today 
+tomorrow 
+yesterday 
+in other s 
+in other mar 27 
+in other mar two 
+in other mar sixth 
+in other october 11 
+in other october eight 
+in other october sixth 
+in other 12 / 28 
+in other 12 / two 
+in other 12 / fifteenth 
+in other 23 
+in other two 
+in other sixth 
+in other year(s) 
+in other minute(s) 
+in other sun at 0 
+in other sun at 15 : 59 
+in other sun 7 
+in other sun 23 : 50 
+in other dec 12 at 23 
+in other dec 12 at 14 : 5 
+in other dec 12 10 
+in other dec 12 4 : 59 
+in other dec two at 5 
+in other dec two at 7 : 10 
+in other dec two 2 
+in other dec two 0 : 59 
+in other dec sixth at 7 
+in other dec sixth at 23 : 53 
+in other dec sixth 23 
+in other dec sixth 23 : 59 
+in other october 28 at 16 
+in other october 28 at 7 : 10 
+in other october 28 4 
+in other october 28 23 : 30 
+in other october fourteen at 10 
+in other october fourteen at 23 : 27 
+in other october fourteen 1 
+in other october fourteen 0 : 2 
+in other october third at 16 
+in other october third at 5 : 34 
+in other october third 3 
+in other october third 23 : 35 
+in other 1 / 9 at 5 
+in other 1 / 9 at 23 : 59 
+in other 1 / 9 5 
+in other 1 / 9 23 : 33 
+in other 1 / two at 23 
+in other 1 / two at 2 : 38 
+in other 1 / two 3 
+in other 1 / two 23 : 1 
+in other 1 / third at 23 
+in other 1 / third at 9 : 41 
+in other 1 / third 11 
+in other 1 / third 13 : 37 
+in other 9 at 5 
+in other 9 at 10 : 0 
+in other 9 2 
+in other 9 10 : 59 
+in other five at 5 
+in other five at 4 : 39 
+in other five 3 
+in other five 19 : 28 
+in other sixth at 5 
+in other sixth at 1 : 31 
+in other sixth 9 
+in other sixth 23 : 10 
+in other week(s) at 15 
+in other week(s) at 4 : 59 
+in other week(s) 19 
+in other week(s) 1 : 7 
+in 3 tuesday 
+in 3 dec 6 
+in 3 dec eight 
+in 3 dec fifteenth 
+in 3 february 28 
+in 3 february fourteen 
+in 3 february ninth 
+in 3 12 / 2 
+in 3 12 / two 
+in 3 12 / fifteenth 
+in 3 28 
+in 3 fourteen 
+in 3 fifteenth 
+in 3 day(s) 
+in 3 minute(s) 
+in 3 saturday at 9 
+in 3 saturday at 23 : 30 
+in 3 saturday 10 
+in 3 saturday 23 : 59 
+in 3 dec 28 at 0 
+in 3 dec 28 at 2 : 6 
+in 3 dec 28 20 
+in 3 dec 28 23 : 59 
+in 3 dec fourteen at 23 
+in 3 dec fourteen at 10 : 26 
+in 3 dec fourteen 0 
+in 3 dec fourteen 23 : 59 
+in 3 dec fifteenth at 8 
+in 3 dec fifteenth at 23 : 38 
+in 3 dec fifteenth 23 
+in 3 dec fifteenth 4 : 59 
+in 3 april 7 at 23 
+in 3 april 7 at 22 : 8 
+in 3 april 7 23 
+in 3 april 7 18 : 59 
+in 3 april fourteen at 23 
+in 3 april fourteen at 3 : 15 
+in 3 april fourteen 18 
+in 3 april fourteen 23 : 10 
+in 3 april fifteenth at 23 
+in 3 april fifteenth at 13 : 5 
+in 3 april fifteenth 23 
+in 3 april fifteenth 9 : 59 
+in 3 4 / 10 at 23 
+in 3 4 / 10 at 1 : 59 
+in 3 4 / 10 23 
+in 3 4 / 10 3 : 24 
+in 3 4 / two at 23 
+in 3 4 / two at 1 : 31 
+in 3 4 / two 23 
+in 3 4 / two 6 : 5 
+in 3 4 / fifteenth at 9 
+in 3 4 / fifteenth at 23 : 11 
+in 3 4 / fifteenth 9 
+in 3 4 / fifteenth 5 : 19 
+in 3 11 at 11 
+in 3 11 at 6 : 59 
+in 3 11 23 
+in 3 11 13 : 59 
+in 3 two at 23 
+in 3 two at 0 : 42 
+in 3 two 4 
+in 3 two 12 : 59 
+in 3 ninth at 23 
+in 3 ninth at 17 : 59 
+in 3 ninth 4 
+in 3 ninth 23 : 43 
+in 3 month(s) at 2 
+in 3 month(s) at 23 : 59 
+in 3 month(s) 12 
+in 3 month(s) 19 : 59 
+in an sat 
+in an aug 14 
+in an aug two 
+in an aug ninth 
+in an february 6 
+in an february five 
+in an february fifteenth 
+in an 6 / 28 
+in an 6 / five 
+in an 6 / sixth 
+in an 26 
+in an fourteen 
+in an sixth 
+in an year(s) 
+in an minute(s) 
+in an s at 23 
+in an s at 23 : 53 
+in an s 2 
+in an s 8 : 21 
+in an dec 8 at 14 
+in an dec 8 at 23 : 59 
+in an dec 8 23 
+in an dec 8 16 : 22 
+in an dec five at 23 
+in an dec five at 7 : 26 
+in an dec five 23 
+in an dec five 23 : 59 
+in an dec fifteenth at 8 
+in an dec fifteenth at 11 : 59 
+in an dec fifteenth 23 
+in an dec fifteenth 0 : 24 
+in an october 28 at 3 
+in an october 28 at 23 : 59 
+in an october 28 13 
+in an october 28 20 : 59 
+in an october two at 23 
+in an october two at 23 : 54 
+in an october two 23 
+in an october two 22 : 39 
+in an october third at 6 
+in an october third at 13 : 2 
+in an october third 4 
+in an october third 23 : 32 
+in an 12 / 28 at 23 
+in an 12 / 28 at 17 : 10 
+in an 12 / 28 15 
+in an 12 / 28 6 : 59 
+in an 12 / fourteen at 21 
+in an 12 / fourteen at 9 : 59 
+in an 12 / fourteen 23 
+in an 12 / fourteen 16 : 32 
+in an 12 / fifteenth at 23 
+in an 12 / fifteenth at 4 : 5 
+in an 12 / fifteenth 3 
+in an 12 / fifteenth 23 : 22 
+in an 16 at 23 
+in an 16 at 23 : 59 
+in an 16 4 
+in an 16 21 : 2 
+in an fourteen at 3 
+in an fourteen at 23 : 59 
+in an fourteen 15 
+in an fourteen 2 : 16 
+in an fifteenth at 23 
+in an fifteenth at 23 : 59 
+in an fifteenth 13 
+in an fifteenth 23 : 59 
+in an year(s) at 4 
+in an year(s) at 6 : 29 
+in an year(s) 23 
+in an year(s) 16 : 59 
+in s 
+in dec 5 
+in dec two 
+in dec ninth 
+in october 1 
+in october five 
+in october fifteenth 
+in 4 / 3 
+in 4 / fourteen 
+in 4 / third 
+in 28 
+in fourteen 
+in third 
+in year(s) 
+in minute(s) 
+in sat at 1 
+in sat at 23 : 1 
+in sat 23 
+in sat 23 : 26 
+in mar 28 at 23 
+in mar 28 at 23 : 15 
+in mar 28 20 
+in mar 28 23 : 59 
+in mar fourteen at 10 
+in mar fourteen at 23 : 29 
+in mar fourteen 18 
+in mar fourteen 19 : 59 
+in mar sixth at 18 
+in mar sixth at 0 : 4 
+in mar sixth 19 
+in mar sixth 23 : 30 
+in october 9 at 9 
+in october 9 at 23 : 33 
+in october 9 0 
+in october 9 4 : 59 
+in october five at 23 
+in october five at 23 : 58 
+in october five 16 
+in october five 8 : 11 
+in october fifteenth at 5 
+in october fifteenth at 23 : 49 
+in october fifteenth 16 
+in october fifteenth 23 : 38 
+in 5 / 28 at 22 
+in 5 / 28 at 8 : 1 
+in 5 / 28 23 
+in 5 / 28 23 : 8 
+in 5 / two at 23 
+in 5 / two at 0 : 12 
+in 5 / two 23 
+in 5 / two 23 : 1 
+in 5 / fifteenth at 23 
+in 5 / fifteenth at 23 : 23 
+in 5 / fifteenth 7 
+in 5 / fifteenth 18 : 42 
+in 1 at 7 
+in 1 at 23 : 7 
+in 1 23 
+in 1 23 : 59 
+in two at 23 
+in two at 5 : 59 
+in two 23 
+in two 0 : 39 
+in ninth at 2 
+in ninth at 23 : 59 
+in ninth 0 
+in ninth 12 : 48 
+in month(s) at 23 
+in month(s) at 1 : 59 
+in month(s) 23 
+in month(s) 23 : 15 
+other sat 
+other dec 19 
+other dec eight 
+other dec sixth 
+other february 23 
+other february two 
+other february sixth 
+other 2 / 19 
+other 2 / two 
+other 2 / fifteenth 
+other 28 
+other two 
+other fifteenth 
+other month(s) 
+other hour(s) 
+other tu at 23 
+other tu at 4 : 10 
+other tu 23 
+other tu 11 : 7 
+other mar 15 at 18 
+other mar 15 at 5 : 24 
+other mar 15 2 
+other mar 15 23 : 59 
+other mar eight at 23 
+other mar eight at 6 : 59 
+other mar eight 23 
+other mar eight 18 : 59 
+other mar third at 12 
+other mar third at 21 : 36 
+other mar third 6 
+other mar third 16 : 8 
+other april 28 at 23 
+other april 28 at 5 : 28 
+other april 28 14 
+other april 28 23 : 53 
+other april fourteen at 14 
+other april fourteen at 11 : 7 
+other april fourteen 13 
+other april fourteen 23 : 7 
+other april sixth at 6 
+other april sixth at 3 : 5 
+other april sixth 11 
+other april sixth 10 : 2 
+other 12 / 28 at 6 
+other 12 / 28 at 15 : 59 
+other 12 / 28 23 
+other 12 / 28 1 : 18 
+other 12 / eight at 23 
+other 12 / eight at 23 : 59 
+other 12 / eight 15 
+other 12 / eight 23 : 29 
+other 12 / third at 4 
+other 12 / third at 6 : 59 
+other 12 / third 2 
+other 12 / third 10 : 13 
+other 28 at 2 
+other 28 at 23 : 59 
+other 28 5 
+other 28 15 : 46 
+other two at 7 
+other two at 23 : 59 
+other two 23 
+other two 12 : 59 
+other third at 23 
+other third at 17 : 13 
+other third 9 
+other third 15 : 30 
+other year(s) at 4 
+other year(s) at 17 : 51 
+other year(s) 11 
+other year(s) 5 : 53 
+10 thursday 
+10 dec 14 
+10 dec fourteen 
+10 dec fifteenth 
+10 october 4 
+10 october eight 
+10 october third 
+10 4 / 28 
+10 4 / fourteen 
+10 4 / fifteenth 
+10 27 
+10 eight 
+10 third 
+10 week(s) 
+10 minute(s) 
+10 th at 23 
+10 th at 23 : 26 
+10 th 3 
+10 th 1 : 59 
+10 nov 23 at 23 
+10 nov 23 at 16 : 59 
+10 nov 23 23 
+10 nov 23 17 : 8 
+10 nov five at 10 
+10 nov five at 19 : 59 
+10 nov five 20 
+10 nov five 7 : 13 
+10 nov fifteenth at 23 
+10 nov fifteenth at 19 : 13 
+10 nov fifteenth 17 
+10 nov fifteenth 16 : 59 
+10 february 28 at 23 
+10 february 28 at 1 : 59 
+10 february 28 14 
+10 february 28 10 : 59 
+10 february eight at 12 
+10 february eight at 17 : 9 
+10 february eight 23 
+10 february eight 23 : 0 
+10 february third at 3 
+10 february third at 2 : 25 
+10 february third 23 
+10 february third 20 : 6 
+10 6 / 6 at 15 
+10 6 / 6 at 23 : 14 
+10 6 / 6 23 
+10 6 / 6 23 : 28 
+10 6 / fourteen at 6 
+10 6 / fourteen at 23 : 59 
+10 6 / fourteen 23 
+10 6 / fourteen 23 : 59 
+10 6 / fifteenth at 16 
+10 6 / fifteenth at 23 : 59 
+10 6 / fifteenth 23 
+10 6 / fifteenth 23 : 7 
+10 3 at 5 
+10 3 at 23 : 59 
+10 3 20 
+10 3 9 : 19 
+10 fourteen at 23 
+10 fourteen at 23 : 48 
+10 fourteen 9 
+10 fourteen 7 : 2 
+10 fifteenth at 5 
+10 fifteenth at 17 : 24 
+10 fifteenth 0 
+10 fifteenth 17 : 59 
+10 week(s) at 23 
+10 week(s) at 22 : 18 
+10 week(s) 13 
+10 week(s) 23 : 14 
+a sunday 
+a nov 4 
+a nov two 
+a nov ninth 
+a october 17 
+a october five 
+a october sixth 
+a 11 / 28 
+a 11 / fourteen 
+a 11 / sixth 
+a 4 
+a eight 
+a fifteenth 
+a day(s) 
+a hour(s) 
+a w at 19 
+a w at 4 : 12 
+a w 4 
+a w 23 : 52 
+a mar 28 at 23 
+a mar 28 at 23 : 9 
+a mar 28 0 
+a mar 28 1 : 17 
+a mar eight at 2 
+a mar eight at 9 : 45 
+a mar eight 23 
+a mar eight 1 : 32 
+a mar third at 23 
+a mar third at 15 : 59 
+a mar third 13 
+a mar third 19 : 39 
+a october 24 at 8 
+a october 24 at 23 : 32 
+a october 24 16 
+a october 24 5 : 59 
+a october fourteen at 19 
+a october fourteen at 23 : 16 
+a october fourteen 8 
+a october fourteen 1 : 59 
+a october third at 8 
+a october third at 23 : 55 
+a october third 23 
+a october third 23 : 59 
+a 12 / 28 at 7 
+a 12 / 28 at 23 : 17 
+a 12 / 28 22 
+a 12 / 28 5 : 59 
+a 12 / fourteen at 21 
+a 12 / fourteen at 23 : 59 
+a 12 / fourteen 20 
+a 12 / fourteen 23 : 11 
+a 12 / fifteenth at 2 
+a 12 / fifteenth at 17 : 27 
+a 12 / fifteenth 23 
+a 12 / fifteenth 23 : 54 
+a 5 at 23 
+a 5 at 23 : 59 
+a 5 0 
+a 5 10 : 29 
+a fourteen at 23 
+a fourteen at 23 : 59 
+a fourteen 0 
+a fourteen 23 : 22 
+a fifteenth at 11 
+a fifteenth at 22 : 59 
+a fifteenth 23 
+a fifteenth 12 : 22 
+a month(s) at 23 
+a month(s) at 23 : 1 
+a month(s) 13 
+a month(s) 23 : 1 
+s 
+mar 22 
+mar two 
+mar third 
+october 11 
+october two 
+october sixth 
+5 / 7 
+5 / eight 
+5 / fifteenth 
+6 
+eight 
+ninth 
+month(s) 
+hour(s) 
+sat at 15 
+sat at 23 : 31 
+sat 23 
+sat 9 : 10 
+jan 9 at 13 
+jan 9 at 4 : 25 
+jan 9 17 
+jan 9 23 : 9 
+jan fourteen at 23 
+jan fourteen at 23 : 59 
+jan fourteen 18 
+jan fourteen 14 : 14 
+jan third at 17 
+jan third at 0 : 59 
+jan third 23 
+jan third 23 : 15 
+april 13 at 10 
+april 13 at 23 : 57 
+april 13 11 
+april 13 2 : 4 
+april fourteen at 4 
+april fourteen at 4 : 35 
+april fourteen 2 
+april fourteen 23 : 13 
+april fifteenth at 23 
+april fifteenth at 8 : 59 
+april fifteenth 8 
+april fifteenth 11 : 59 
+12 / 26 at 18 
+12 / 26 at 3 : 29 
+12 / 26 23 
+12 / 26 23 : 30 
+12 / five at 15 
+12 / five at 8 : 7 
+12 / five 8 
+12 / five 2 : 59 
+12 / third at 23 
+12 / third at 1 : 0 
+12 / third 23 
+12 / third 7 : 41 
+12 at 14 
+12 at 15 : 3 
+12 23 
+12 6 : 59 
+fourteen at 8 
+fourteen at 1 : 46 
+fourteen 0 
+fourteen 23 : 59 
+fifteenth at 7 
+fifteenth at 21 : 25 
+fifteenth 1 
+fifteenth 23 : 59 
+week(s) at 15 
+week(s) at 23 : 35 
+week(s) 23 
+week(s) 5 : 33 
+every other s from <time> until <time> 
+every other s ending <time> 
+every other dec 1 after <time> until <time> 
+every other dec 1 before <time> 
+every other dec fourteen from <time> to <time> 
+every other dec fourteen before <time> 
+every other dec third from <time> until <time> 
+every other dec third to <time> 
+every other february 28 from <time> ago <time> 
+every other february 28 ago <time> 
+every other february fourteen after <time> to <time> 
+every other february fourteen to <time> 
+every other february sixth starting <time> before <time> 
+every other february sixth before <time> 
+every other 2 / 12 from <time> ending <time> 
+every other 2 / 12 to <time> 
+every other 2 / fourteen starting <time> to <time> 
+every other 2 / fourteen to <time> 
+every other 2 / third starting <time> to <time> 
+every other 2 / third until <time> 
+every other 28 after <time> to <time> 
+every other 28 to <time> 
+every other fourteen starting <time> until <time> 
+every other fourteen to <time> 
+every other fifteenth after <time> ago <time> 
+every other fifteenth ending <time> 
+every other year(s) after <time> to <time> 
+every other year(s) before <time> 
+every other minute(s) after <time> before <time> 
+every other minute(s) ago <time> 
+every other th at 8 from <time> before <time> 
+every other th at 8 to <time> 
+every other th at 2 : 59 from <time> ending <time> 
+every other th at 2 : 59 except <time> 
+every other th 1 from <time> to <time> 
+every other th 1 ago <time> 
+every other th 5 : 59 after <time> ending <time> 
+every other th 5 : 59 ending <time> 
+every other july 3 at 11 starting <time> to <time> 
+every other july 3 at 11 ago <time> 
+every other july 3 at 12 : 6 from <time> ago <time> 
+every other july 3 at 12 : 6 before <time> 
+every other july 3 10 starting <time> before <time> 
+every other july 3 10 ago <time> 
+every other july 3 23 : 59 after <time> to <time> 
+every other july 3 23 : 59 ending <time> 
+every other july fourteen at 3 from <time> ago <time> 
+every other july fourteen at 3 except <time> 
+every other july fourteen at 23 : 8 starting <time> to <time> 
+every other july fourteen at 23 : 8 until <time> 
+every other july fourteen 23 after <time> to <time> 
+every other july fourteen 23 ending <time> 
+every other july fourteen 3 : 18 after <time> to <time> 
+every other july fourteen 3 : 18 ending <time> 
+every other july fifteenth at 19 from <time> to <time> 
+every other july fifteenth at 19 until <time> 
+every other july fifteenth at 23 : 6 from <time> ago <time> 
+every other july fifteenth at 23 : 6 until <time> 
+every other july fifteenth 23 from <time> before <time> 
+every other july fifteenth 23 to <time> 
+every other july fifteenth 6 : 16 after <time> ending <time> 
+every other july fifteenth 6 : 16 except <time> 
+every other april 28 at 6 from <time> to <time> 
+every other april 28 at 6 until <time> 
+every other april 28 at 18 : 38 from <time> to <time> 
+every other april 28 at 18 : 38 until <time> 
+every other april 28 4 after <time> ending <time> 
+every other april 28 4 before <time> 
+every other april 28 23 : 45 from <time> to <time> 
+every other april 28 23 : 45 ago <time> 
+every other april two at 23 after <time> until <time> 
+every other april two at 23 ago <time> 
+every other april two at 23 : 42 from <time> ago <time> 
+every other april two at 23 : 42 to <time> 
+every other april two 16 from <time> ending <time> 
+every other april two 16 ago <time> 
+every other april two 23 : 53 from <time> ending <time> 
+every other april two 23 : 53 except <time> 
+every other april ninth at 11 after <time> before <time> 
+every other april ninth at 11 to <time> 
+every other april ninth at 14 : 59 starting <time> ago <time> 
+every other april ninth at 14 : 59 ending <time> 
+every other april ninth 11 starting <time> to <time> 
+every other april ninth 11 except <time> 
+every other april ninth 23 : 59 after <time> ending <time> 
+every other april ninth 23 : 59 to <time> 
+every other 12 / 11 at 0 from <time> to <time> 
+every other 12 / 11 at 0 before <time> 
+every other 12 / 11 at 23 : 19 after <time> before <time> 
+every other 12 / 11 at 23 : 19 to <time> 
+every other 12 / 11 3 after <time> ago <time> 
+every other 12 / 11 3 to <time> 
+every other 12 / 11 23 : 59 from <time> except <time> 
+every other 12 / 11 23 : 59 to <time> 
+every other 12 / five at 6 starting <time> to <time> 
+every other 12 / five at 6 ending <time> 
+every other 12 / five at 23 : 59 after <time> ago <time> 
+every other 12 / five at 23 : 59 to <time> 
+every other 12 / five 7 from <time> except <time> 
+every other 12 / five 7 to <time> 
+every other 12 / five 23 : 59 starting <time> before <time> 
+every other 12 / five 23 : 59 until <time> 
+every other 12 / ninth at 2 starting <time> ago <time> 
+every other 12 / ninth at 2 except <time> 
+every other 12 / ninth at 23 : 13 from <time> ago <time> 
+every other 12 / ninth at 23 : 13 to <time> 
+every other 12 / ninth 8 after <time> until <time> 
+every other 12 / ninth 8 ending <time> 
+every other 12 / ninth 0 : 59 from <time> before <time> 
+every other 12 / ninth 0 : 59 to <time> 
+every other 26 at 2 from <time> to <time> 
+every other 26 at 2 to <time> 
+every other 26 at 8 : 0 after <time> until <time> 
+every other 26 at 8 : 0 ending <time> 
+every other 26 13 from <time> to <time> 
+every other 26 13 ago <time> 
+every other 26 16 : 3 from <time> to <time> 
+every other 26 16 : 3 until <time> 
+every other fourteen at 5 from <time> to <time> 
+every other fourteen at 5 to <time> 
+every other fourteen at 17 : 46 after <time> ending <time> 
+every other fourteen at 17 : 46 ago <time> 
+every other fourteen 21 starting <time> ending <time> 
+every other fourteen 21 to <time> 
+every other fourteen 6 : 59 from <time> to <time> 
+every other fourteen 6 : 59 to <time> 
+every other sixth at 0 from <time> to <time> 
+every other sixth at 0 before <time> 
+every other sixth at 23 : 36 from <time> ago <time> 
+every other sixth at 23 : 36 except <time> 
+every other sixth 22 from <time> to <time> 
+every other sixth 22 to <time> 
+every other sixth 23 : 52 from <time> to <time> 
+every other sixth 23 : 52 except <time> 
+every other week(s) at 23 after <time> before <time> 
+every other week(s) at 23 ending <time> 
+every other week(s) at 4 : 8 starting <time> before <time> 
+every other week(s) at 4 : 8 except <time> 
+every other week(s) 23 from <time> until <time> 
+every other week(s) 23 to <time> 
+every other week(s) 23 : 22 from <time> to <time> 
+every other week(s) 23 : 22 until <time> 
+every 10 monday from <time> before <time> 
+every 10 monday to <time> 
+every 10 jan 8 after <time> until <time> 
+every 10 jan 8 to <time> 
+every 10 jan fourteen from <time> ending <time> 
+every 10 jan fourteen ending <time> 
+every 10 jan fifteenth from <time> to <time> 
+every 10 jan fifteenth before <time> 
+every 10 february 10 from <time> to <time> 
+every 10 february 10 before <time> 
+every 10 february five from <time> except <time> 
+every 10 february five to <time> 
+every 10 february third from <time> except <time> 
+every 10 february third to <time> 
+every 10 12 / 19 from <time> until <time> 
+every 10 12 / 19 to <time> 
+every 10 12 / five after <time> to <time> 
+every 10 12 / five until <time> 
+every 10 12 / third after <time> to <time> 
+every 10 12 / third to <time> 
+every 10 23 starting <time> before <time> 
+every 10 23 to <time> 
+every 10 fourteen from <time> ending <time> 
+every 10 fourteen to <time> 
+every 10 sixth from <time> except <time> 
+every 10 sixth to <time> 
+every 10 year(s) after <time> until <time> 
+every 10 year(s) except <time> 
+every 10 hour(s) from <time> to <time> 
+every 10 hour(s) to <time> 
+every 10 s at 4 from <time> to <time> 
+every 10 s at 4 until <time> 
+every 10 s at 23 : 59 starting <time> ending <time> 
+every 10 s at 23 : 59 ago <time> 
+every 10 s 0 after <time> until <time> 
+every 10 s 0 to <time> 
+every 10 s 11 : 53 after <time> ago <time> 
+every 10 s 11 : 53 ending <time> 
+every 10 jun 28 at 13 from <time> to <time> 
+every 10 jun 28 at 13 until <time> 
+every 10 jun 28 at 23 : 59 after <time> ending <time> 
+every 10 jun 28 at 23 : 59 until <time> 
+every 10 jun 28 14 from <time> until <time> 
+every 10 jun 28 14 to <time> 
+every 10 jun 28 23 : 20 starting <time> ending <time> 
+every 10 jun 28 23 : 20 to <time> 
+every 10 jun fourteen at 23 after <time> ago <time> 
+every 10 jun fourteen at 23 until <time> 
+every 10 jun fourteen at 23 : 59 starting <time> before <time> 
+every 10 jun fourteen at 23 : 59 except <time> 
+every 10 jun fourteen 23 starting <time> to <time> 
+every 10 jun fourteen 23 before <time> 
+every 10 jun fourteen 23 : 59 from <time> to <time> 
+every 10 jun fourteen 23 : 59 before <time> 
+every 10 jun fifteenth at 20 from <time> before <time> 
+every 10 jun fifteenth at 20 ago <time> 
+every 10 jun fifteenth at 23 : 44 from <time> to <time> 
+every 10 jun fifteenth at 23 : 44 ago <time> 
+every 10 jun fifteenth 23 from <time> to <time> 
+every 10 jun fifteenth 23 except <time> 
+every 10 jun fifteenth 0 : 45 from <time> to <time> 
+every 10 jun fifteenth 0 : 45 to <time> 
+every 10 february 12 at 11 from <time> except <time> 
+every 10 february 12 at 11 before <time> 
+every 10 february 12 at 21 : 45 from <time> until <time> 
+every 10 february 12 at 21 : 45 until <time> 
+every 10 february 12 18 starting <time> ending <time> 
+every 10 february 12 18 to <time> 
+every 10 february 12 5 : 59 starting <time> until <time> 
+every 10 february 12 5 : 59 to <time> 
+every 10 february fourteen at 23 after <time> to <time> 
+every 10 february fourteen at 23 ending <time> 
+every 10 february fourteen at 17 : 16 after <time> except <time> 
+every 10 february fourteen at 17 : 16 before <time> 
+every 10 february fourteen 23 from <time> to <time> 
+every 10 february fourteen 23 to <time> 
+every 10 february fourteen 23 : 59 after <time> until <time> 
+every 10 february fourteen 23 : 59 to <time> 
+every 10 february fifteenth at 23 after <time> ending <time> 
+every 10 february fifteenth at 23 to <time> 
+every 10 february fifteenth at 10 : 22 after <time> except <time> 
+every 10 february fifteenth at 10 : 22 to <time> 
+every 10 february fifteenth 1 from <time> to <time> 
+every 10 february fifteenth 1 to <time> 
+every 10 february fifteenth 23 : 30 after <time> before <time> 
+every 10 february fifteenth 23 : 30 ending <time> 
+every 10 12 / 8 at 23 after <time> before <time> 
+every 10 12 / 8 at 23 ending <time> 
+every 10 12 / 8 at 23 : 26 starting <time> to <time> 
+every 10 12 / 8 at 23 : 26 ago <time> 
+every 10 12 / 8 23 after <time> to <time> 
+every 10 12 / 8 23 until <time> 
+every 10 12 / 8 5 : 59 from <time> to <time> 
+every 10 12 / 8 5 : 59 ago <time> 
+every 10 12 / five at 23 after <time> except <time> 
+every 10 12 / five at 23 ending <time> 
+every 10 12 / five at 23 : 0 from <time> to <time> 
+every 10 12 / five at 23 : 0 until <time> 
+every 10 12 / five 23 from <time> to <time> 
+every 10 12 / five 23 ago <time> 
+every 10 12 / five 23 : 14 from <time> to <time> 
+every 10 12 / five 23 : 14 ending <time> 
+every 10 12 / third at 13 after <time> before <time> 
+every 10 12 / third at 13 ending <time> 
+every 10 12 / third at 18 : 45 starting <time> ending <time> 
+every 10 12 / third at 18 : 45 except <time> 
+every 10 12 / third 23 from <time> to <time> 
+every 10 12 / third 23 ago <time> 
+every 10 12 / third 4 : 15 after <time> ending <time> 
+every 10 12 / third 4 : 15 ending <time> 
+every 10 2 at 23 from <time> except <time> 
+every 10 2 at 23 except <time> 
+every 10 2 at 9 : 19 from <time> until <time> 
+every 10 2 at 9 : 19 except <time> 
+every 10 2 23 after <time> ago <time> 
+every 10 2 23 except <time> 
+every 10 2 20 : 59 from <time> to <time> 
+every 10 2 20 : 59 to <time> 
+every 10 two at 20 after <time> to <time> 
+every 10 two at 20 ending <time> 
+every 10 two at 15 : 37 from <time> to <time> 
+every 10 two at 15 : 37 ending <time> 
+every 10 two 2 after <time> except <time> 
+every 10 two 2 to <time> 
+every 10 two 19 : 59 starting <time> to <time> 
+every 10 two 19 : 59 to <time> 
+every 10 ninth at 15 from <time> ending <time> 
+every 10 ninth at 15 until <time> 
+every 10 ninth at 18 : 59 from <time> before <time> 
+every 10 ninth at 18 : 59 to <time> 
+every 10 ninth 23 after <time> ago <time> 
+every 10 ninth 23 ending <time> 
+every 10 ninth 8 : 59 from <time> except <time> 
+every 10 ninth 8 : 59 before <time> 
+every 10 week(s) at 0 from <time> to <time> 
+every 10 week(s) at 0 ago <time> 
+every 10 week(s) at 10 : 11 from <time> until <time> 
+every 10 week(s) at 10 : 11 until <time> 
+every 10 week(s) 23 starting <time> to <time> 
+every 10 week(s) 23 to <time> 
+every 10 week(s) 23 : 36 after <time> to <time> 
+every 10 week(s) 23 : 36 to <time> 
+every an mon from <time> ending <time> 
+every an mon ending <time> 
+every an dec 28 from <time> before <time> 
+every an dec 28 to <time> 
+every an dec five after <time> to <time> 
+every an dec five before <time> 
+every an dec fifteenth starting <time> until <time> 
+every an dec fifteenth except <time> 
+every an october 28 starting <time> to <time> 
+every an october 28 ago <time> 
+every an october five starting <time> to <time> 
+every an october five until <time> 
+every an october sixth from <time> ago <time> 
+every an october sixth ago <time> 
+every an 7 / 3 starting <time> before <time> 
+every an 7 / 3 to <time> 
+every an 7 / fourteen starting <time> before <time> 
+every an 7 / fourteen until <time> 
+every an 7 / third after <time> ago <time> 
+every an 7 / third until <time> 
+every an 28 from <time> to <time> 
+every an 28 ending <time> 
+every an fourteen from <time> before <time> 
+every an fourteen until <time> 
+every an third from <time> to <time> 
+every an third to <time> 
+every an week(s) after <time> to <time> 
+every an week(s) to <time> 
+every an hour(s) starting <time> except <time> 
+every an hour(s) ending <time> 
+every an tuesday at 20 after <time> until <time> 
+every an tuesday at 20 until <time> 
+every an tuesday at 1 : 17 after <time> ending <time> 
+every an tuesday at 1 : 17 ago <time> 
+every an tuesday 23 after <time> to <time> 
+every an tuesday 23 to <time> 
+every an tuesday 16 : 0 from <time> before <time> 
+every an tuesday 16 : 0 except <time> 
+every an jun 11 at 7 starting <time> ago <time> 
+every an jun 11 at 7 to <time> 
+every an jun 11 at 23 : 59 after <time> until <time> 
+every an jun 11 at 23 : 59 before <time> 
+every an jun 11 23 after <time> except <time> 
+every an jun 11 23 before <time> 
+every an jun 11 5 : 13 after <time> to <time> 
+every an jun 11 5 : 13 to <time> 
+every an jun fourteen at 23 from <time> ago <time> 
+every an jun fourteen at 23 before <time> 
+every an jun fourteen at 0 : 48 after <time> before <time> 
+every an jun fourteen at 0 : 48 to <time> 
+every an jun fourteen 23 starting <time> ago <time> 
+every an jun fourteen 23 ago <time> 
+every an jun fourteen 23 : 58 starting <time> ending <time> 
+every an jun fourteen 23 : 58 until <time> 
+every an jun third at 4 starting <time> to <time> 
+every an jun third at 4 before <time> 
+every an jun third at 7 : 25 from <time> to <time> 
+every an jun third at 7 : 25 ending <time> 
+every an jun third 20 from <time> to <time> 
+every an jun third 20 to <time> 
+every an jun third 3 : 2 from <time> to <time> 
+every an jun third 3 : 2 to <time> 
+every an october 4 at 5 from <time> except <time> 
+every an october 4 at 5 until <time> 
+every an october 4 at 10 : 24 after <time> before <time> 
+every an october 4 at 10 : 24 to <time> 
+every an october 4 22 from <time> to <time> 
+every an october 4 22 until <time> 
+every an october 4 20 : 59 from <time> ending <time> 
+every an october 4 20 : 59 ago <time> 
+every an october two at 4 from <time> to <time> 
+every an october two at 4 to <time> 
+every an october two at 3 : 59 after <time> to <time> 
+every an october two at 3 : 59 ago <time> 
+every an october two 17 after <time> until <time> 
+every an october two 17 ending <time> 
+every an october two 2 : 48 from <time> to <time> 
+every an october two 2 : 48 ago <time> 
+every an october sixth at 23 starting <time> until <time> 
+every an october sixth at 23 to <time> 
+every an october sixth at 23 : 6 after <time> except <time> 
+every an october sixth at 23 : 6 ending <time> 
+every an october sixth 12 from <time> except <time> 
+every an october sixth 12 to <time> 
+every an october sixth 2 : 33 after <time> ago <time> 
+every an october sixth 2 : 33 to <time> 
+every an 3 / 1 at 13 from <time> to <time> 
+every an 3 / 1 at 13 to <time> 
+every an 3 / 1 at 15 : 59 starting <time> before <time> 
+every an 3 / 1 at 15 : 59 until <time> 
+every an 3 / 1 23 after <time> ending <time> 
+every an 3 / 1 23 to <time> 
+every an 3 / 1 23 : 15 after <time> before <time> 
+every an 3 / 1 23 : 15 ago <time> 
+every an 3 / fourteen at 5 after <time> ago <time> 
+every an 3 / fourteen at 5 to <time> 
+every an 3 / fourteen at 3 : 59 after <time> before <time> 
+every an 3 / fourteen at 3 : 59 ago <time> 
+every an 3 / fourteen 23 from <time> until <time> 
+every an 3 / fourteen 23 to <time> 
+every an 3 / fourteen 4 : 2 after <time> to <time> 
+every an 3 / fourteen 4 : 2 ending <time> 
+every an 3 / fifteenth at 11 starting <time> to <time> 
+every an 3 / fifteenth at 11 before <time> 
+every an 3 / fifteenth at 23 : 59 starting <time> to <time> 
+every an 3 / fifteenth at 23 : 59 ago <time> 
+every an 3 / fifteenth 23 from <time> ending <time> 
+every an 3 / fifteenth 23 to <time> 
+every an 3 / fifteenth 23 : 22 from <time> ending <time> 
+every an 3 / fifteenth 23 : 22 to <time> 
+every an 5 at 21 after <time> to <time> 
+every an 5 at 21 to <time> 
+every an 5 at 23 : 16 after <time> to <time> 
+every an 5 at 23 : 16 to <time> 
+every an 5 23 from <time> to <time> 
+every an 5 23 until <time> 
+every an 5 23 : 17 after <time> until <time> 
+every an 5 23 : 17 until <time> 
+every an five at 7 from <time> until <time> 
+every an five at 7 ago <time> 
+every an five at 11 : 43 from <time> before <time> 
+every an five at 11 : 43 to <time> 
+every an five 12 after <time> ago <time> 
+every an five 12 to <time> 
+every an five 1 : 24 after <time> except <time> 
+every an five 1 : 24 to <time> 
+every an fifteenth at 11 from <time> to <time> 
+every an fifteenth at 11 before <time> 
+every an fifteenth at 7 : 59 after <time> until <time> 
+every an fifteenth at 7 : 59 to <time> 
+every an fifteenth 10 starting <time> to <time> 
+every an fifteenth 10 ago <time> 
+every an fifteenth 0 : 59 after <time> to <time> 
+every an fifteenth 0 : 59 to <time> 
+every an day(s) at 14 starting <time> until <time> 
+every an day(s) at 14 to <time> 
+every an day(s) at 4 : 59 after <time> until <time> 
+every an day(s) at 4 : 59 except <time> 
+every an day(s) 3 from <time> ago <time> 
+every an day(s) 3 ending <time> 
+every an day(s) 21 : 59 after <time> until <time> 
+every an day(s) 21 : 59 to <time> 
+every s after <time> before <time> 
+every s to <time> 
+every mar 5 starting <time> ago <time> 
+every mar 5 to <time> 
+every mar eight after <time> before <time> 
+every mar eight ago <time> 
+every mar fifteenth starting <time> ending <time> 
+every mar fifteenth to <time> 
+every february 12 after <time> to <time> 
+every february 12 to <time> 
+every february fourteen from <time> until <time> 
+every february fourteen except <time> 
+every february third after <time> except <time> 
+every february third to <time> 
+every 6 / 9 from <time> to <time> 
+every 6 / 9 before <time> 
+every 6 / fourteen starting <time> to <time> 
+every 6 / fourteen before <time> 
+every 6 / third from <time> to <time> 
+every 6 / third until <time> 
+every 4 from <time> before <time> 
+every 4 to <time> 
+every fourteen starting <time> to <time> 
+every fourteen except <time> 
+every ninth from <time> until <time> 
+every ninth except <time> 
+every year(s) after <time> before <time> 
+every year(s) except <time> 
+every minute(s) starting <time> to <time> 
+every minute(s) ending <time> 
+every saturday at 6 from <time> until <time> 
+every saturday at 6 to <time> 
+every saturday at 23 : 59 from <time> to <time> 
+every saturday at 23 : 59 ending <time> 
+every saturday 2 from <time> except <time> 
+every saturday 2 before <time> 
+every saturday 16 : 59 after <time> ago <time> 
+every saturday 16 : 59 to <time> 
+every jan 19 at 7 after <time> before <time> 
+every jan 19 at 7 to <time> 
+every jan 19 at 12 : 54 after <time> ago <time> 
+every jan 19 at 12 : 54 to <time> 
+every jan 19 23 from <time> to <time> 
+every jan 19 23 except <time> 
+every jan 19 1 : 38 from <time> until <time> 
+every jan 19 1 : 38 before <time> 
+every jan fourteen at 23 from <time> until <time> 
+every jan fourteen at 23 to <time> 
+every jan fourteen at 10 : 13 from <time> until <time> 
+every jan fourteen at 10 : 13 until <time> 
+every jan fourteen 19 after <time> to <time> 
+every jan fourteen 19 to <time> 
+every jan fourteen 2 : 10 from <time> until <time> 
+every jan fourteen 2 : 10 except <time> 
+every jan third at 1 from <time> before <time> 
+every jan third at 1 to <time> 
+every jan third at 23 : 59 starting <time> ending <time> 
+every jan third at 23 : 59 ending <time> 
+every jan third 23 from <time> until <time> 
+every jan third 23 before <time> 
+every jan third 14 : 46 from <time> before <time> 
+every jan third 14 : 46 to <time> 
+every sept 20 at 23 after <time> before <time> 
+every sept 20 at 23 ending <time> 
+every sept 20 at 23 : 59 after <time> before <time> 
+every sept 20 at 23 : 59 before <time> 
+every sept 20 23 from <time> except <time> 
+every sept 20 23 ending <time> 
+every sept 20 23 : 26 starting <time> ending <time> 
+every sept 20 23 : 26 to <time> 
+every sept five at 23 from <time> until <time> 
+every sept five at 23 ending <time> 
+every sept five at 5 : 42 after <time> ago <time> 
+every sept five at 5 : 42 ending <time> 
+every sept five 6 from <time> until <time> 
+every sept five 6 before <time> 
+every sept five 3 : 59 from <time> until <time> 
+every sept five 3 : 59 before <time> 
+every sept fifteenth at 3 from <time> to <time> 
+every sept fifteenth at 3 except <time> 
+every sept fifteenth at 23 : 59 from <time> until <time> 
+every sept fifteenth at 23 : 59 until <time> 
+every sept fifteenth 7 after <time> until <time> 
+every sept fifteenth 7 except <time> 
+every sept fifteenth 3 : 59 starting <time> before <time> 
+every sept fifteenth 3 : 59 ending <time> 
+every 2 / 15 at 5 starting <time> before <time> 
+every 2 / 15 at 5 ending <time> 
+every 2 / 15 at 23 : 19 starting <time> ago <time> 
+every 2 / 15 at 23 : 19 to <time> 
+every 2 / 15 6 after <time> except <time> 
+every 2 / 15 6 ending <time> 
+every 2 / 15 13 : 38 after <time> to <time> 
+every 2 / 15 13 : 38 to <time> 
+every 2 / two at 0 from <time> until <time> 
+every 2 / two at 0 to <time> 
+every 2 / two at 16 : 14 starting <time> to <time> 
+every 2 / two at 16 : 14 except <time> 
+every 2 / two 23 from <time> ending <time> 
+every 2 / two 23 ago <time> 
+every 2 / two 23 : 30 from <time> except <time> 
+every 2 / two 23 : 30 to <time> 
+every 2 / ninth at 7 after <time> to <time> 
+every 2 / ninth at 7 ending <time> 
+every 2 / ninth at 23 : 59 starting <time> ago <time> 
+every 2 / ninth at 23 : 59 to <time> 
+every 2 / ninth 8 starting <time> except <time> 
+every 2 / ninth 8 ago <time> 
+every 2 / ninth 20 : 59 after <time> ago <time> 
+every 2 / ninth 20 : 59 ago <time> 
+every 10 at 11 after <time> to <time> 
+every 10 at 11 to <time> 
+every 10 at 23 : 53 after <time> before <time> 
+every 10 at 23 : 53 to <time> 
+every 10 7 from <time> until <time> 
+every 10 7 to <time> 
+every 10 23 : 59 from <time> to <time> 
+every 10 23 : 59 until <time> 
+every two at 2 after <time> to <time> 
+every two at 2 to <time> 
+every two at 12 : 41 after <time> to <time> 
+every two at 12 : 41 except <time> 
+every two 11 starting <time> to <time> 
+every two 11 ending <time> 
+every two 3 : 23 from <time> until <time> 
+every two 3 : 23 until <time> 
+every fifteenth at 12 from <time> before <time> 
+every fifteenth at 12 ago <time> 
+every fifteenth at 18 : 47 from <time> ago <time> 
+every fifteenth at 18 : 47 ago <time> 
+every fifteenth 21 from <time> to <time> 
+every fifteenth 21 to <time> 
+every fifteenth 9 : 13 from <time> ago <time> 
+every fifteenth 9 : 13 until <time> 
+every month(s) at 19 from <time> to <time> 
+every month(s) at 19 to <time> 
+every month(s) at 16 : 59 starting <time> except <time> 
+every month(s) at 16 : 59 ending <time> 
+every month(s) 6 after <time> ending <time> 
+every month(s) 6 ending <time> 
+every month(s) 17 : 16 from <time> to <time> 
+every month(s) 17 : 16 except <time> 
+next other s after <time> ending <time> 
+next other s ending <time> 
+next other dec 18 from <time> except <time> 
+next other dec 18 ago <time> 
+next other dec two starting <time> to <time> 
+next other dec two to <time> 
+next other dec fifteenth after <time> ending <time> 
+next other dec fifteenth ago <time> 
+next other sept 16 from <time> to <time> 
+next other sept 16 before <time> 
+next other sept fourteen starting <time> to <time> 
+next other sept fourteen ago <time> 
+next other sept fifteenth after <time> until <time> 
+next other sept fifteenth before <time> 
+next other 12 / 20 after <time> to <time> 
+next other 12 / 20 to <time> 
+next other 12 / fourteen starting <time> to <time> 
+next other 12 / fourteen to <time> 
+next other 12 / fifteenth starting <time> until <time> 
+next other 12 / fifteenth to <time> 
+next other 21 from <time> before <time> 
+next other 21 to <time> 
+next other two after <time> to <time> 
+next other two to <time> 
+next other sixth from <time> except <time> 
+next other sixth to <time> 
+next other day(s) starting <time> before <time> 
+next other day(s) ending <time> 
+next other hour(s) after <time> until <time> 
+next other hour(s) to <time> 
+next other m at 5 from <time> to <time> 
+next other m at 5 ending <time> 
+next other m at 11 : 37 starting <time> until <time> 
+next other m at 11 : 37 to <time> 
+next other m 11 after <time> except <time> 
+next other m 11 before <time> 
+next other m 12 : 12 from <time> until <time> 
+next other m 12 : 12 to <time> 
+next other dec 6 at 7 from <time> to <time> 
+next other dec 6 at 7 ago <time> 
+next other dec 6 at 4 : 45 starting <time> to <time> 
+next other dec 6 at 4 : 45 ending <time> 
+next other dec 6 18 starting <time> to <time> 
+next other dec 6 18 ago <time> 
+next other dec 6 13 : 18 from <time> before <time> 
+next other dec 6 13 : 18 until <time> 
+next other dec five at 23 after <time> to <time> 
+next other dec five at 23 to <time> 
+next other dec five at 1 : 59 after <time> ago <time> 
+next other dec five at 1 : 59 to <time> 
+next other dec five 23 from <time> except <time> 
+next other dec five 23 ending <time> 
+next other dec five 23 : 25 from <time> to <time> 
+next other dec five 23 : 25 before <time> 
+next other dec fifteenth at 15 from <time> to <time> 
+next other dec fifteenth at 15 before <time> 
+next other dec fifteenth at 17 : 4 starting <time> to <time> 
+next other dec fifteenth at 17 : 4 before <time> 
+next other dec fifteenth 23 after <time> to <time> 
+next other dec fifteenth 23 to <time> 
+next other dec fifteenth 23 : 25 after <time> to <time> 
+next other dec fifteenth 23 : 25 before <time> 
+next other sept 28 at 4 from <time> until <time> 
+next other sept 28 at 4 until <time> 
+next other sept 28 at 23 : 14 after <time> ago <time> 
+next other sept 28 at 23 : 14 ago <time> 
+next other sept 28 23 after <time> ago <time> 
+next other sept 28 23 until <time> 
+next other sept 28 13 : 8 after <time> until <time> 
+next other sept 28 13 : 8 ending <time> 
+next other sept eight at 15 after <time> to <time> 
+next other sept eight at 15 ending <time> 
+next other sept eight at 2 : 59 after <time> to <time> 
+next other sept eight at 2 : 59 until <time> 
+next other sept eight 23 starting <time> before <time> 
+next other sept eight 23 ago <time> 
+next other sept eight 11 : 59 starting <time> ago <time> 
+next other sept eight 11 : 59 ending <time> 
+next other sept fifteenth at 23 from <time> ago <time> 
+next other sept fifteenth at 23 until <time> 
+next other sept fifteenth at 15 : 59 from <time> until <time> 
+next other sept fifteenth at 15 : 59 until <time> 
+next other sept fifteenth 1 from <time> to <time> 
+next other sept fifteenth 1 to <time> 
+next other sept fifteenth 23 : 0 from <time> until <time> 
+next other sept fifteenth 23 : 0 to <time> 
+next other 12 / 28 at 2 starting <time> to <time> 
+next other 12 / 28 at 2 to <time> 
+next other 12 / 28 at 23 : 59 from <time> to <time> 
+next other 12 / 28 at 23 : 59 ago <time> 
+next other 12 / 28 23 from <time> to <time> 
+next other 12 / 28 23 to <time> 
+next other 12 / 28 23 : 29 from <time> to <time> 
+next other 12 / 28 23 : 29 until <time> 
+next other 12 / five at 12 from <time> to <time> 
+next other 12 / five at 12 ending <time> 
+next other 12 / five at 10 : 0 starting <time> ago <time> 
+next other 12 / five at 10 : 0 before <time> 
+next other 12 / five 10 after <time> to <time> 
+next other 12 / five 10 to <time> 
+next other 12 / five 4 : 59 from <time> until <time> 
+next other 12 / five 4 : 59 to <time> 
+next other 12 / fifteenth at 23 from <time> to <time> 
+next other 12 / fifteenth at 23 until <time> 
+next other 12 / fifteenth at 5 : 8 from <time> before <time> 
+next other 12 / fifteenth at 5 : 8 to <time> 
+next other 12 / fifteenth 22 from <time> except <time> 
+next other 12 / fifteenth 22 until <time> 
+next other 12 / fifteenth 20 : 4 from <time> ago <time> 
+next other 12 / fifteenth 20 : 4 to <time> 
+next other 16 at 3 from <time> to <time> 
+next other 16 at 3 until <time> 
+next other 16 at 23 : 59 from <time> ending <time> 
+next other 16 at 23 : 59 to <time> 
+next other 16 17 starting <time> to <time> 
+next other 16 17 ending <time> 
+next other 16 14 : 27 starting <time> to <time> 
+next other 16 14 : 27 ending <time> 
+next other fourteen at 23 from <time> ending <time> 
+next other fourteen at 23 except <time> 
+next other fourteen at 23 : 2 from <time> ago <time> 
+next other fourteen at 23 : 2 to <time> 
+next other fourteen 23 after <time> before <time> 
+next other fourteen 23 to <time> 
+next other fourteen 23 : 12 after <time> until <time> 
+next other fourteen 23 : 12 ending <time> 
+next other sixth at 23 after <time> until <time> 
+next other sixth at 23 before <time> 
+next other sixth at 19 : 1 after <time> until <time> 
+next other sixth at 19 : 1 to <time> 
+next other sixth 7 starting <time> until <time> 
+next other sixth 7 before <time> 
+next other sixth 8 : 59 after <time> to <time> 
+next other sixth 8 : 59 ending <time> 
+next other month(s) at 9 from <time> ending <time> 
+next other month(s) at 9 until <time> 
+next other month(s) at 17 : 14 starting <time> to <time> 
+next other month(s) at 17 : 14 to <time> 
+next other month(s) 23 from <time> until <time> 
+next other month(s) 23 to <time> 
+next other month(s) 23 : 20 from <time> until <time> 
+next other month(s) 23 : 20 except <time> 
+next 10 monday after <time> to <time> 
+next 10 monday to <time> 
+next 10 jan 1 after <time> to <time> 
+next 10 jan 1 until <time> 
+next 10 jan fourteen from <time> to <time> 
+next 10 jan fourteen until <time> 
+next 10 jan third from <time> to <time> 
+next 10 jan third to <time> 
+next 10 october 2 starting <time> to <time> 
+next 10 october 2 until <time> 
+next 10 october fourteen starting <time> until <time> 
+next 10 october fourteen to <time> 
+next 10 october third after <time> to <time> 
+next 10 october third to <time> 
+next 10 6 / 5 after <time> to <time> 
+next 10 6 / 5 ago <time> 
+next 10 6 / fourteen from <time> until <time> 
+next 10 6 / fourteen to <time> 
+next 10 6 / fifteenth starting <time> ending <time> 
+next 10 6 / fifteenth ago <time> 
+next 10 3 after <time> until <time> 
+next 10 3 to <time> 
+next 10 eight from <time> ending <time> 
+next 10 eight until <time> 
+next 10 sixth after <time> to <time> 
+next 10 sixth to <time> 
+next 10 year(s) from <time> to <time> 
+next 10 year(s) to <time> 
+next 10 hour(s) from <time> to <time> 
+next 10 hour(s) to <time> 
+next 10 s at 23 starting <time> before <time> 
+next 10 s at 23 until <time> 
+next 10 s at 23 : 2 after <time> to <time> 
+next 10 s at 23 : 2 to <time> 
+next 10 s 23 starting <time> except <time> 
+next 10 s 23 ending <time> 
+next 10 s 7 : 43 from <time> ending <time> 
+next 10 s 7 : 43 except <time> 
+next 10 jan 11 at 23 after <time> ago <time> 
+next 10 jan 11 at 23 to <time> 
+next 10 jan 11 at 20 : 59 from <time> until <time> 
+next 10 jan 11 at 20 : 59 ending <time> 
+next 10 jan 11 4 after <time> ago <time> 
+next 10 jan 11 4 ago <time> 
+next 10 jan 11 6 : 19 from <time> to <time> 
+next 10 jan 11 6 : 19 ending <time> 
+next 10 jan fourteen at 6 from <time> to <time> 
+next 10 jan fourteen at 6 except <time> 
+next 10 jan fourteen at 23 : 59 from <time> except <time> 
+next 10 jan fourteen at 23 : 59 to <time> 
+next 10 jan fourteen 15 from <time> to <time> 
+next 10 jan fourteen 15 to <time> 
+next 10 jan fourteen 20 : 48 from <time> ending <time> 
+next 10 jan fourteen 20 : 48 to <time> 
+next 10 jan sixth at 23 after <time> ago <time> 
+next 10 jan sixth at 23 until <time> 
+next 10 jan sixth at 1 : 27 from <time> to <time> 
+next 10 jan sixth at 1 : 27 before <time> 
+next 10 jan sixth 10 after <time> before <time> 
+next 10 jan sixth 10 ending <time> 
+next 10 jan sixth 23 : 25 starting <time> to <time> 
+next 10 jan sixth 23 : 25 until <time> 
+next 10 october 28 at 11 after <time> except <time> 
+next 10 october 28 at 11 to <time> 
+next 10 october 28 at 20 : 4 starting <time> to <time> 
+next 10 october 28 at 20 : 4 ago <time> 
+next 10 october 28 23 starting <time> to <time> 
+next 10 october 28 23 until <time> 
+next 10 october 28 23 : 12 from <time> to <time> 
+next 10 october 28 23 : 12 ending <time> 
+next 10 october fourteen at 23 starting <time> to <time> 
+next 10 october fourteen at 23 before <time> 
+next 10 october fourteen at 23 : 14 from <time> to <time> 
+next 10 october fourteen at 23 : 14 to <time> 
+next 10 october fourteen 5 after <time> except <time> 
+next 10 october fourteen 5 except <time> 
+next 10 october fourteen 0 : 48 from <time> to <time> 
+next 10 october fourteen 0 : 48 before <time> 
+next 10 october fifteenth at 6 starting <time> before <time> 
+next 10 october fifteenth at 6 until <time> 
+next 10 october fifteenth at 5 : 27 from <time> before <time> 
+next 10 october fifteenth at 5 : 27 to <time> 
+next 10 october fifteenth 23 from <time> to <time> 
+next 10 october fifteenth 23 ending <time> 
+next 10 october fifteenth 19 : 52 after <time> to <time> 
+next 10 october fifteenth 19 : 52 ending <time> 
+next 10 8 / 26 at 4 after <time> except <time> 
+next 10 8 / 26 at 4 except <time> 
+next 10 8 / 26 at 23 : 3 from <time> ending <time> 
+next 10 8 / 26 at 23 : 3 to <time> 
+next 10 8 / 26 8 starting <time> to <time> 
+next 10 8 / 26 8 ending <time> 
+next 10 8 / 26 23 : 17 starting <time> ending <time> 
+next 10 8 / 26 23 : 17 to <time> 
+next 10 8 / two at 23 starting <time> ago <time> 
+next 10 8 / two at 23 ago <time> 
+next 10 8 / two at 23 : 59 after <time> until <time> 
+next 10 8 / two at 23 : 59 to <time> 
+next 10 8 / two 23 after <time> to <time> 
+next 10 8 / two 23 ago <time> 
+next 10 8 / two 16 : 59 starting <time> to <time> 
+next 10 8 / two 16 : 59 until <time> 
+next 10 8 / ninth at 4 after <time> to <time> 
+next 10 8 / ninth at 4 ago <time> 
+next 10 8 / ninth at 8 : 1 after <time> until <time> 
+next 10 8 / ninth at 8 : 1 except <time> 
+next 10 8 / ninth 15 after <time> ending <time> 
+next 10 8 / ninth 15 to <time> 
+next 10 8 / ninth 9 : 59 from <time> to <time> 
+next 10 8 / ninth 9 : 59 ago <time> 
+next 10 28 at 13 from <time> to <time> 
+next 10 28 at 13 to <time> 
+next 10 28 at 7 : 59 from <time> except <time> 
+next 10 28 at 7 : 59 to <time> 
+next 10 28 10 after <time> ending <time> 
+next 10 28 10 to <time> 
+next 10 28 23 : 30 starting <time> to <time> 
+next 10 28 23 : 30 before <time> 
+next 10 fourteen at 2 starting <time> until <time> 
+next 10 fourteen at 2 ending <time> 
+next 10 fourteen at 22 : 40 from <time> to <time> 
+next 10 fourteen at 22 : 40 to <time> 
+next 10 fourteen 18 starting <time> to <time> 
+next 10 fourteen 18 to <time> 
+next 10 fourteen 5 : 11 from <time> until <time> 
+next 10 fourteen 5 : 11 to <time> 
+next 10 third at 7 after <time> until <time> 
+next 10 third at 7 ending <time> 
+next 10 third at 23 : 15 from <time> ago <time> 
+next 10 third at 23 : 15 to <time> 
+next 10 third 10 starting <time> ending <time> 
+next 10 third 10 to <time> 
+next 10 third 23 : 36 from <time> ago <time> 
+next 10 third 23 : 36 to <time> 
+next 10 day(s) at 17 from <time> to <time> 
+next 10 day(s) at 17 to <time> 
+next 10 day(s) at 13 : 47 after <time> before <time> 
+next 10 day(s) at 13 : 47 to <time> 
+next 10 day(s) 11 from <time> ending <time> 
+next 10 day(s) 11 except <time> 
+next 10 day(s) 23 : 55 from <time> to <time> 
+next 10 day(s) 23 : 55 to <time> 
+next an saturday after <time> ago <time> 
+next an saturday to <time> 
+next an dec 1 from <time> to <time> 
+next an dec 1 before <time> 
+next an dec fourteen from <time> to <time> 
+next an dec fourteen to <time> 
+next an dec third from <time> to <time> 
+next an dec third until <time> 
+next an february 9 from <time> to <time> 
+next an february 9 except <time> 
+next an february five from <time> to <time> 
+next an february five ending <time> 
+next an february fifteenth from <time> to <time> 
+next an february fifteenth to <time> 
+next an 12 / 2 after <time> to <time> 
+next an 12 / 2 before <time> 
+next an 12 / fourteen after <time> to <time> 
+next an 12 / fourteen to <time> 
+next an 12 / fifteenth from <time> to <time> 
+next an 12 / fifteenth to <time> 
+next an 3 starting <time> except <time> 
+next an 3 to <time> 
+next an fourteen starting <time> before <time> 
+next an fourteen ending <time> 
+next an fifteenth from <time> to <time> 
+next an fifteenth to <time> 
+next an year(s) starting <time> ago <time> 
+next an year(s) until <time> 
+next an minute(s) starting <time> except <time> 
+next an minute(s) to <time> 
+next an sunday at 23 starting <time> ending <time> 
+next an sunday at 23 before <time> 
+next an sunday at 23 : 5 from <time> except <time> 
+next an sunday at 23 : 5 to <time> 
+next an sunday 8 from <time> ago <time> 
+next an sunday 8 to <time> 
+next an sunday 23 : 59 starting <time> to <time> 
+next an sunday 23 : 59 to <time> 
+next an may 28 at 12 starting <time> to <time> 
+next an may 28 at 12 before <time> 
+next an may 28 at 5 : 21 from <time> until <time> 
+next an may 28 at 5 : 21 until <time> 
+next an may 28 3 after <time> except <time> 
+next an may 28 3 except <time> 
+next an may 28 23 : 59 after <time> to <time> 
+next an may 28 23 : 59 to <time> 
+next an may fourteen at 1 from <time> to <time> 
+next an may fourteen at 1 until <time> 
+next an may fourteen at 8 : 25 after <time> until <time> 
+next an may fourteen at 8 : 25 ago <time> 
+next an may fourteen 23 after <time> ending <time> 
+next an may fourteen 23 before <time> 
+next an may fourteen 2 : 59 after <time> to <time> 
+next an may fourteen 2 : 59 to <time> 
+next an may third at 0 starting <time> to <time> 
+next an may third at 0 to <time> 
+next an may third at 23 : 59 after <time> to <time> 
+next an may third at 23 : 59 ending <time> 
+next an may third 23 after <time> ending <time> 
+next an may third 23 to <time> 
+next an may third 16 : 26 from <time> to <time> 
+next an may third 16 : 26 ago <time> 
+next an october 19 at 11 from <time> until <time> 
+next an october 19 at 11 until <time> 
+next an october 19 at 2 : 36 from <time> to <time> 
+next an october 19 at 2 : 36 to <time> 
+next an october 19 11 after <time> ending <time> 
+next an october 19 11 to <time> 
+next an october 19 23 : 59 starting <time> ending <time> 
+next an october 19 23 : 59 ago <time> 
+next an october five at 17 from <time> to <time> 
+next an october five at 17 to <time> 
+next an october five at 5 : 59 starting <time> except <time> 
+next an october five at 5 : 59 before <time> 
+next an october five 19 from <time> to <time> 
+next an october five 19 before <time> 
+next an october five 23 : 59 after <time> ago <time> 
+next an october five 23 : 59 before <time> 
+next an october ninth at 0 after <time> until <time> 
+next an october ninth at 0 until <time> 
+next an october ninth at 15 : 29 after <time> until <time> 
+next an october ninth at 15 : 29 until <time> 
+next an october ninth 6 after <time> until <time> 
+next an october ninth 6 ending <time> 
+next an october ninth 3 : 0 starting <time> to <time> 
+next an october ninth 3 : 0 ago <time> 
+next an 4 / 28 at 6 starting <time> before <time> 
+next an 4 / 28 at 6 to <time> 
+next an 4 / 28 at 21 : 59 after <time> to <time> 
+next an 4 / 28 at 21 : 59 ago <time> 
+next an 4 / 28 23 after <time> except <time> 
+next an 4 / 28 23 except <time> 
+next an 4 / 28 0 : 59 from <time> except <time> 
+next an 4 / 28 0 : 59 to <time> 
+next an 4 / two at 23 after <time> before <time> 
+next an 4 / two at 23 until <time> 
+next an 4 / two at 16 : 42 after <time> ago <time> 
+next an 4 / two at 16 : 42 to <time> 
+next an 4 / two 23 after <time> except <time> 
+next an 4 / two 23 until <time> 
+next an 4 / two 23 : 39 after <time> until <time> 
+next an 4 / two 23 : 39 to <time> 
+next an 4 / third at 14 after <time> ending <time> 
+next an 4 / third at 14 before <time> 
+next an 4 / third at 23 : 8 from <time> until <time> 
+next an 4 / third at 23 : 8 ending <time> 
+next an 4 / third 23 after <time> to <time> 
+next an 4 / third 23 until <time> 
+next an 4 / third 23 : 59 after <time> to <time> 
+next an 4 / third 23 : 59 to <time> 
+next an 9 at 23 from <time> except <time> 
+next an 9 at 23 ending <time> 
+next an 9 at 23 : 59 from <time> to <time> 
+next an 9 at 23 : 59 to <time> 
+next an 9 23 from <time> to <time> 
+next an 9 23 before <time> 
+next an 9 23 : 54 after <time> until <time> 
+next an 9 23 : 54 ending <time> 
+next an two at 23 from <time> to <time> 
+next an two at 23 to <time> 
+next an two at 23 : 59 from <time> to <time> 
+next an two at 23 : 59 to <time> 
+next an two 9 after <time> to <time> 
+next an two 9 ago <time> 
+next an two 15 : 33 starting <time> to <time> 
+next an two 15 : 33 ending <time> 
+next an ninth at 12 from <time> ago <time> 
+next an ninth at 12 until <time> 
+next an ninth at 5 : 7 starting <time> to <time> 
+next an ninth at 5 : 7 ago <time> 
+next an ninth 3 from <time> ending <time> 
+next an ninth 3 ending <time> 
+next an ninth 14 : 30 from <time> until <time> 
+next an ninth 14 : 30 to <time> 
+next an year(s) at 23 from <time> until <time> 
+next an year(s) at 23 to <time> 
+next an year(s) at 23 : 59 from <time> until <time> 
+next an year(s) at 23 : 59 ending <time> 
+next an year(s) 23 from <time> ending <time> 
+next an year(s) 23 to <time> 
+next an year(s) 23 : 53 from <time> except <time> 
+next an year(s) 23 : 53 except <time> 
+next s after <time> to <time> 
+next s ago <time> 
+next dec 28 from <time> to <time> 
+next dec 28 to <time> 
+next dec fourteen after <time> to <time> 
+next dec fourteen ending <time> 
+next dec fifteenth starting <time> until <time> 
+next dec fifteenth to <time> 
+next february 28 from <time> to <time> 
+next february 28 until <time> 
+next february fourteen after <time> ending <time> 
+next february fourteen ago <time> 
+next february fifteenth from <time> until <time> 
+next february fifteenth before <time> 
+next 12 / 14 from <time> ending <time> 
+next 12 / 14 to <time> 
+next 12 / five starting <time> ending <time> 
+next 12 / five to <time> 
+next 12 / sixth starting <time> to <time> 
+next 12 / sixth until <time> 
+next 4 from <time> ago <time> 
+next 4 ending <time> 
+next fourteen after <time> to <time> 
+next fourteen before <time> 
+next fifteenth from <time> until <time> 
+next fifteenth until <time> 
+next year(s) from <time> to <time> 
+next year(s) until <time> 
+next minute(s) from <time> except <time> 
+next minute(s) ending <time> 
+next th at 0 after <time> before <time> 
+next th at 0 except <time> 
+next th at 23 : 51 after <time> to <time> 
+next th at 23 : 51 except <time> 
+next th 14 from <time> until <time> 
+next th 14 except <time> 
+next th 22 : 59 after <time> to <time> 
+next th 22 : 59 to <time> 
+next dec 28 at 6 after <time> to <time> 
+next dec 28 at 6 until <time> 
+next dec 28 at 4 : 59 after <time> before <time> 
+next dec 28 at 4 : 59 to <time> 
+next dec 28 13 after <time> to <time> 
+next dec 28 13 to <time> 
+next dec 28 13 : 59 starting <time> before <time> 
+next dec 28 13 : 59 to <time> 
+next dec five at 23 after <time> until <time> 
+next dec five at 23 until <time> 
+next dec five at 23 : 40 after <time> before <time> 
+next dec five at 23 : 40 to <time> 
+next dec five 1 after <time> to <time> 
+next dec five 1 except <time> 
+next dec five 23 : 59 from <time> ending <time> 
+next dec five 23 : 59 ending <time> 
+next dec sixth at 23 after <time> before <time> 
+next dec sixth at 23 to <time> 
+next dec sixth at 12 : 37 starting <time> to <time> 
+next dec sixth at 12 : 37 to <time> 
+next dec sixth 3 from <time> to <time> 
+next dec sixth 3 until <time> 
+next dec sixth 23 : 30 after <time> ending <time> 
+next dec sixth 23 : 30 to <time> 
+next october 5 at 10 from <time> until <time> 
+next october 5 at 10 except <time> 
+next october 5 at 23 : 5 after <time> before <time> 
+next october 5 at 23 : 5 to <time> 
+next october 5 21 after <time> before <time> 
+next october 5 21 except <time> 
+next october 5 23 : 55 starting <time> before <time> 
+next october 5 23 : 55 until <time> 
+next october two at 23 from <time> except <time> 
+next october two at 23 except <time> 
+next october two at 7 : 34 starting <time> to <time> 
+next october two at 7 : 34 ending <time> 
+next october two 2 from <time> to <time> 
+next october two 2 to <time> 
+next october two 0 : 59 after <time> until <time> 
+next october two 0 : 59 to <time> 
+next october ninth at 23 starting <time> to <time> 
+next october ninth at 23 to <time> 
+next october ninth at 3 : 59 after <time> to <time> 
+next october ninth at 3 : 59 until <time> 
+next october ninth 23 after <time> to <time> 
+next october ninth 23 ago <time> 
+next october ninth 23 : 0 starting <time> to <time> 
+next october ninth 23 : 0 before <time> 
+next 8 / 28 at 23 from <time> to <time> 
+next 8 / 28 at 23 ago <time> 
+next 8 / 28 at 17 : 23 starting <time> ending <time> 
+next 8 / 28 at 17 : 23 to <time> 
+next 8 / 28 23 from <time> until <time> 
+next 8 / 28 23 to <time> 
+next 8 / 28 21 : 59 from <time> to <time> 
+next 8 / 28 21 : 59 until <time> 
+next 8 / five at 23 from <time> to <time> 
+next 8 / five at 23 ending <time> 
+next 8 / five at 21 : 32 after <time> except <time> 
+next 8 / five at 21 : 32 ending <time> 
+next 8 / five 23 after <time> until <time> 
+next 8 / five 23 to <time> 
+next 8 / five 23 : 59 from <time> ending <time> 
+next 8 / five 23 : 59 before <time> 
+next 8 / third at 23 from <time> to <time> 
+next 8 / third at 23 before <time> 
+next 8 / third at 5 : 59 after <time> until <time> 
+next 8 / third at 5 : 59 to <time> 
+next 8 / third 23 starting <time> until <time> 
+next 8 / third 23 ago <time> 
+next 8 / third 23 : 59 starting <time> until <time> 
+next 8 / third 23 : 59 until <time> 
+next 28 at 13 starting <time> before <time> 
+next 28 at 13 to <time> 
+next 28 at 17 : 3 after <time> until <time> 
+next 28 at 17 : 3 to <time> 
+next 28 1 from <time> until <time> 
+next 28 1 to <time> 
+next 28 23 : 13 after <time> to <time> 
+next 28 23 : 13 to <time> 
+next five at 23 starting <time> to <time> 
+next five at 23 ago <time> 
+next five at 15 : 2 from <time> ending <time> 
+next five at 15 : 2 to <time> 
+next five 23 starting <time> ending <time> 
+next five 23 to <time> 
+next five 7 : 13 from <time> to <time> 
+next five 7 : 13 until <time> 
+next sixth at 23 starting <time> to <time> 
+next sixth at 23 to <time> 
+next sixth at 13 : 17 after <time> to <time> 
+next sixth at 13 : 17 to <time> 
+next sixth 23 after <time> to <time> 
+next sixth 23 to <time> 
+next sixth 23 : 33 starting <time> to <time> 
+next sixth 23 : 33 to <time> 
+next year(s) at 6 from <time> to <time> 
+next year(s) at 6 to <time> 
+next year(s) at 21 : 59 after <time> ending <time> 
+next year(s) at 21 : 59 ending <time> 
+next year(s) 20 starting <time> ago <time> 
+next year(s) 20 to <time> 
+next year(s) 0 : 50 from <time> to <time> 
+next year(s) 0 : 50 ago <time> 
+previous other saturday after <time> to <time> 
+previous other saturday before <time> 
+previous other mar 28 starting <time> until <time> 
+previous other mar 28 to <time> 
+previous other mar two starting <time> until <time> 
+previous other mar two ago <time> 
+previous other mar fifteenth from <time> to <time> 
+previous other mar fifteenth ending <time> 
+previous other february 28 from <time> until <time> 
+previous other february 28 before <time> 
+previous other february five after <time> to <time> 
+previous other february five to <time> 
+previous other february sixth from <time> ending <time> 
+previous other february sixth to <time> 
+previous other 12 / 28 from <time> to <time> 
+previous other 12 / 28 except <time> 
+previous other 12 / two after <time> before <time> 
+previous other 12 / two to <time> 
+previous other 12 / ninth from <time> before <time> 
+previous other 12 / ninth ending <time> 
+previous other 28 from <time> to <time> 
+previous other 28 to <time> 
+previous other fourteen from <time> ago <time> 
+previous other fourteen until <time> 
+previous other third from <time> except <time> 
+previous other third until <time> 
+previous other day(s) after <time> except <time> 
+previous other day(s) before <time> 
+previous other hour(s) from <time> to <time> 
+previous other hour(s) ago <time> 
+previous other saturday at 9 from <time> except <time> 
+previous other saturday at 9 ago <time> 
+previous other saturday at 23 : 59 after <time> except <time> 
+previous other saturday at 23 : 59 to <time> 
+previous other saturday 19 from <time> before <time> 
+previous other saturday 19 until <time> 
+previous other saturday 19 : 35 from <time> ending <time> 
+previous other saturday 19 : 35 ending <time> 
+previous other mar 3 at 12 from <time> to <time> 
+previous other mar 3 at 12 to <time> 
+previous other mar 3 at 23 : 59 from <time> to <time> 
+previous other mar 3 at 23 : 59 ending <time> 
+previous other mar 3 3 from <time> to <time> 
+previous other mar 3 3 ago <time> 
+previous other mar 3 2 : 40 from <time> ending <time> 
+previous other mar 3 2 : 40 ending <time> 
+previous other mar fourteen at 11 starting <time> to <time> 
+previous other mar fourteen at 11 to <time> 
+previous other mar fourteen at 23 : 59 from <time> to <time> 
+previous other mar fourteen at 23 : 59 until <time> 
+previous other mar fourteen 23 after <time> until <time> 
+previous other mar fourteen 23 ending <time> 
+previous other mar fourteen 13 : 59 from <time> to <time> 
+previous other mar fourteen 13 : 59 to <time> 
+previous other mar fifteenth at 19 after <time> to <time> 
+previous other mar fifteenth at 19 until <time> 
+previous other mar fifteenth at 0 : 59 after <time> to <time> 
+previous other mar fifteenth at 0 : 59 until <time> 
+previous other mar fifteenth 4 starting <time> until <time> 
+previous other mar fifteenth 4 ending <time> 
+previous other mar fifteenth 23 : 59 after <time> to <time> 
+previous other mar fifteenth 23 : 59 to <time> 
+previous other april 15 at 19 after <time> ago <time> 
+previous other april 15 at 19 until <time> 
+previous other april 15 at 23 : 22 after <time> to <time> 
+previous other april 15 at 23 : 22 before <time> 
+previous other april 15 4 from <time> except <time> 
+previous other april 15 4 to <time> 
+previous other april 15 21 : 59 from <time> to <time> 
+previous other april 15 21 : 59 until <time> 
+previous other april fourteen at 11 after <time> except <time> 
+previous other april fourteen at 11 ago <time> 
+previous other april fourteen at 6 : 59 from <time> until <time> 
+previous other april fourteen at 6 : 59 to <time> 
+previous other april fourteen 23 from <time> to <time> 
+previous other april fourteen 23 until <time> 
+previous other april fourteen 6 : 29 from <time> to <time> 
+previous other april fourteen 6 : 29 ending <time> 
+previous other april fifteenth at 5 after <time> to <time> 
+previous other april fifteenth at 5 to <time> 
+previous other april fifteenth at 2 : 59 from <time> except <time> 
+previous other april fifteenth at 2 : 59 to <time> 
+previous other april fifteenth 1 from <time> until <time> 
+previous other april fifteenth 1 to <time> 
+previous other april fifteenth 23 : 45 after <time> ago <time> 
+previous other april fifteenth 23 : 45 ending <time> 
+previous other 11 / 28 at 8 starting <time> except <time> 
+previous other 11 / 28 at 8 until <time> 
+previous other 11 / 28 at 23 : 38 after <time> to <time> 
+previous other 11 / 28 at 23 : 38 to <time> 
+previous other 11 / 28 19 starting <time> to <time> 
+previous other 11 / 28 19 except <time> 
+previous other 11 / 28 1 : 12 from <time> until <time> 
+previous other 11 / 28 1 : 12 except <time> 
+previous other 11 / fourteen at 1 from <time> ending <time> 
+previous other 11 / fourteen at 1 to <time> 
+previous other 11 / fourteen at 23 : 27 starting <time> until <time> 
+previous other 11 / fourteen at 23 : 27 ago <time> 
+previous other 11 / fourteen 22 from <time> until <time> 
+previous other 11 / fourteen 22 to <time> 
+previous other 11 / fourteen 2 : 57 starting <time> before <time> 
+previous other 11 / fourteen 2 : 57 to <time> 
+previous other 11 / sixth at 9 from <time> to <time> 
+previous other 11 / sixth at 9 before <time> 
+previous other 11 / sixth at 9 : 59 from <time> before <time> 
+previous other 11 / sixth at 9 : 59 except <time> 
+previous other 11 / sixth 23 starting <time> ending <time> 
+previous other 11 / sixth 23 ago <time> 
+previous other 11 / sixth 23 : 55 after <time> to <time> 
+previous other 11 / sixth 23 : 55 ending <time> 
+previous other 16 at 1 starting <time> until <time> 
+previous other 16 at 1 to <time> 
+previous other 16 at 4 : 59 from <time> to <time> 
+previous other 16 at 4 : 59 to <time> 
+previous other 16 14 starting <time> ending <time> 
+previous other 16 14 to <time> 
+previous other 16 11 : 0 from <time> until <time> 
+previous other 16 11 : 0 to <time> 
+previous other fourteen at 7 starting <time> ago <time> 
+previous other fourteen at 7 ending <time> 
+previous other fourteen at 23 : 59 after <time> except <time> 
+previous other fourteen at 23 : 59 to <time> 
+previous other fourteen 18 from <time> until <time> 
+previous other fourteen 18 to <time> 
+previous other fourteen 23 : 48 from <time> before <time> 
+previous other fourteen 23 : 48 until <time> 
+previous other fifteenth at 23 from <time> ending <time> 
+previous other fifteenth at 23 to <time> 
+previous other fifteenth at 23 : 47 from <time> ago <time> 
+previous other fifteenth at 23 : 47 before <time> 
+previous other fifteenth 23 after <time> before <time> 
+previous other fifteenth 23 to <time> 
+previous other fifteenth 22 : 13 from <time> before <time> 
+previous other fifteenth 22 : 13 ending <time> 
+previous other year(s) at 22 starting <time> except <time> 
+previous other year(s) at 22 ending <time> 
+previous other year(s) at 11 : 17 from <time> to <time> 
+previous other year(s) at 11 : 17 ago <time> 
+previous other year(s) 23 after <time> to <time> 
+previous other year(s) 23 until <time> 
+previous other year(s) 22 : 42 after <time> ending <time> 
+previous other year(s) 22 : 42 until <time> 
+previous 7 friday from <time> ending <time> 
+previous 7 friday ago <time> 
+previous 7 jan 14 from <time> to <time> 
+previous 7 jan 14 until <time> 
+previous 7 jan fourteen starting <time> until <time> 
+previous 7 jan fourteen until <time> 
+previous 7 jan fifteenth from <time> to <time> 
+previous 7 jan fifteenth before <time> 
+previous 7 sept 28 from <time> until <time> 
+previous 7 sept 28 ending <time> 
+previous 7 sept two starting <time> to <time> 
+previous 7 sept two to <time> 
+previous 7 sept third starting <time> to <time> 
+previous 7 sept third to <time> 
+previous 7 2 / 28 from <time> ago <time> 
+previous 7 2 / 28 before <time> 
+previous 7 2 / eight after <time> until <time> 
+previous 7 2 / eight except <time> 
+previous 7 2 / fifteenth from <time> until <time> 
+previous 7 2 / fifteenth except <time> 
+previous 7 28 from <time> until <time> 
+previous 7 28 ago <time> 
+previous 7 eight after <time> before <time> 
+previous 7 eight to <time> 
+previous 7 fifteenth after <time> before <time> 
+previous 7 fifteenth before <time> 
+previous 7 week(s) after <time> until <time> 
+previous 7 week(s) to <time> 
+previous 7 hour(s) from <time> ago <time> 
+previous 7 hour(s) to <time> 
+previous 7 sat at 5 starting <time> before <time> 
+previous 7 sat at 5 ending <time> 
+previous 7 sat at 11 : 59 from <time> to <time> 
+previous 7 sat at 11 : 59 to <time> 
+previous 7 sat 23 after <time> until <time> 
+previous 7 sat 23 to <time> 
+previous 7 sat 8 : 22 after <time> except <time> 
+previous 7 sat 8 : 22 until <time> 
+previous 7 dec 21 at 3 from <time> to <time> 
+previous 7 dec 21 at 3 to <time> 
+previous 7 dec 21 at 6 : 19 from <time> except <time> 
+previous 7 dec 21 at 6 : 19 to <time> 
+previous 7 dec 21 10 starting <time> ago <time> 
+previous 7 dec 21 10 to <time> 
+previous 7 dec 21 23 : 6 after <time> to <time> 
+previous 7 dec 21 23 : 6 ending <time> 
+previous 7 dec five at 23 after <time> to <time> 
+previous 7 dec five at 23 to <time> 
+previous 7 dec five at 23 : 34 from <time> ending <time> 
+previous 7 dec five at 23 : 34 ago <time> 
+previous 7 dec five 17 from <time> ending <time> 
+previous 7 dec five 17 to <time> 
+previous 7 dec five 23 : 42 starting <time> before <time> 
+previous 7 dec five 23 : 42 to <time> 
+previous 7 dec sixth at 1 from <time> to <time> 
+previous 7 dec sixth at 1 to <time> 
+previous 7 dec sixth at 23 : 21 from <time> to <time> 
+previous 7 dec sixth at 23 : 21 to <time> 
+previous 7 dec sixth 23 after <time> to <time> 
+previous 7 dec sixth 23 before <time> 
+previous 7 dec sixth 4 : 3 from <time> before <time> 
+previous 7 dec sixth 4 : 3 ending <time> 
+previous 7 february 25 at 23 starting <time> ending <time> 
+previous 7 february 25 at 23 to <time> 
+previous 7 february 25 at 21 : 59 starting <time> before <time> 
+previous 7 february 25 at 21 : 59 before <time> 
+previous 7 february 25 7 after <time> before <time> 
+previous 7 february 25 7 ending <time> 
+previous 7 february 25 0 : 59 from <time> to <time> 
+previous 7 february 25 0 : 59 to <time> 
+previous 7 february eight at 23 starting <time> until <time> 
+previous 7 february eight at 23 to <time> 
+previous 7 february eight at 21 : 21 after <time> except <time> 
+previous 7 february eight at 21 : 21 until <time> 
+previous 7 february eight 2 from <time> to <time> 
+previous 7 february eight 2 to <time> 
+previous 7 february eight 1 : 24 after <time> before <time> 
+previous 7 february eight 1 : 24 ago <time> 
+previous 7 february fifteenth at 4 from <time> to <time> 
+previous 7 february fifteenth at 4 to <time> 
+previous 7 february fifteenth at 23 : 59 starting <time> until <time> 
+previous 7 february fifteenth at 23 : 59 to <time> 
+previous 7 february fifteenth 7 after <time> to <time> 
+previous 7 february fifteenth 7 to <time> 
+previous 7 february fifteenth 0 : 59 after <time> except <time> 
+previous 7 february fifteenth 0 : 59 to <time> 
+previous 7 2 / 16 at 1 after <time> ago <time> 
+previous 7 2 / 16 at 1 until <time> 
+previous 7 2 / 16 at 3 : 59 from <time> before <time> 
+previous 7 2 / 16 at 3 : 59 ago <time> 
+previous 7 2 / 16 4 from <time> ago <time> 
+previous 7 2 / 16 4 until <time> 
+previous 7 2 / 16 23 : 3 from <time> to <time> 
+previous 7 2 / 16 23 : 3 ending <time> 
+previous 7 2 / fourteen at 3 from <time> to <time> 
+previous 7 2 / fourteen at 3 except <time> 
+previous 7 2 / fourteen at 2 : 13 from <time> except <time> 
+previous 7 2 / fourteen at 2 : 13 before <time> 
+previous 7 2 / fourteen 19 starting <time> ago <time> 
+previous 7 2 / fourteen 19 ending <time> 
+previous 7 2 / fourteen 2 : 34 from <time> to <time> 
+previous 7 2 / fourteen 2 : 34 to <time> 
+previous 7 2 / third at 17 from <time> to <time> 
+previous 7 2 / third at 17 to <time> 
+previous 7 2 / third at 5 : 59 from <time> until <time> 
+previous 7 2 / third at 5 : 59 to <time> 
+previous 7 2 / third 19 starting <time> to <time> 
+previous 7 2 / third 19 to <time> 
+previous 7 2 / third 23 : 4 from <time> to <time> 
+previous 7 2 / third 23 : 4 to <time> 
+previous 7 28 at 23 from <time> to <time> 
+previous 7 28 at 23 to <time> 
+previous 7 28 at 22 : 59 after <time> before <time> 
+previous 7 28 at 22 : 59 to <time> 
+previous 7 28 14 from <time> ago <time> 
+previous 7 28 14 to <time> 
+previous 7 28 23 : 48 after <time> to <time> 
+previous 7 28 23 : 48 until <time> 
+previous 7 fourteen at 23 after <time> before <time> 
+previous 7 fourteen at 23 before <time> 
+previous 7 fourteen at 14 : 3 after <time> to <time> 
+previous 7 fourteen at 14 : 3 ending <time> 
+previous 7 fourteen 10 from <time> to <time> 
+previous 7 fourteen 10 until <time> 
+previous 7 fourteen 23 : 59 starting <time> except <time> 
+previous 7 fourteen 23 : 59 to <time> 
+previous 7 fifteenth at 12 after <time> ending <time> 
+previous 7 fifteenth at 12 ago <time> 
+previous 7 fifteenth at 23 : 59 from <time> ago <time> 
+previous 7 fifteenth at 23 : 59 until <time> 
+previous 7 fifteenth 23 from <time> ago <time> 
+previous 7 fifteenth 23 ending <time> 
+previous 7 fifteenth 5 : 59 starting <time> before <time> 
+previous 7 fifteenth 5 : 59 to <time> 
+previous 7 week(s) at 12 after <time> except <time> 
+previous 7 week(s) at 12 to <time> 
+previous 7 week(s) at 23 : 56 from <time> to <time> 
+previous 7 week(s) at 23 : 56 to <time> 
+previous 7 week(s) 23 after <time> until <time> 
+previous 7 week(s) 23 until <time> 
+previous 7 week(s) 22 : 59 after <time> except <time> 
+previous 7 week(s) 22 : 59 until <time> 
+previous a tu from <time> except <time> 
+previous a tu before <time> 
+previous a mar 20 after <time> ending <time> 
+previous a mar 20 to <time> 
+previous a mar five after <time> before <time> 
+previous a mar five to <time> 
+previous a mar sixth after <time> ending <time> 
+previous a mar sixth except <time> 
+previous a sept 2 from <time> ending <time> 
+previous a sept 2 to <time> 
+previous a sept five from <time> ending <time> 
+previous a sept five until <time> 
+previous a sept third from <time> until <time> 
+previous a sept third to <time> 
+previous a 2 / 28 from <time> ago <time> 
+previous a 2 / 28 before <time> 
+previous a 2 / fourteen starting <time> ending <time> 
+previous a 2 / fourteen except <time> 
+previous a 2 / third from <time> ending <time> 
+previous a 2 / third ending <time> 
+previous a 7 starting <time> except <time> 
+previous a 7 to <time> 
+previous a two starting <time> before <time> 
+previous a two ago <time> 
+previous a fifteenth after <time> until <time> 
+previous a fifteenth ago <time> 
+previous a day(s) after <time> until <time> 
+previous a day(s) ago <time> 
+previous a hour(s) starting <time> to <time> 
+previous a hour(s) except <time> 
+previous a s at 23 from <time> ending <time> 
+previous a s at 23 ago <time> 
+previous a s at 23 : 16 starting <time> to <time> 
+previous a s at 23 : 16 ending <time> 
+previous a s 16 from <time> before <time> 
+previous a s 16 ending <time> 
+previous a s 21 : 11 from <time> until <time> 
+previous a s 21 : 11 to <time> 
+previous a july 18 at 21 after <time> except <time> 
+previous a july 18 at 21 until <time> 
+previous a july 18 at 0 : 17 after <time> ending <time> 
+previous a july 18 at 0 : 17 to <time> 
+previous a july 18 5 after <time> except <time> 
+previous a july 18 5 until <time> 
+previous a july 18 23 : 0 from <time> before <time> 
+previous a july 18 23 : 0 ending <time> 
+previous a july fourteen at 2 from <time> until <time> 
+previous a july fourteen at 2 to <time> 
+previous a july fourteen at 23 : 59 from <time> until <time> 
+previous a july fourteen at 23 : 59 until <time> 
+previous a july fourteen 3 from <time> to <time> 
+previous a july fourteen 3 ending <time> 
+previous a july fourteen 0 : 59 after <time> until <time> 
+previous a july fourteen 0 : 59 to <time> 
+previous a july third at 10 from <time> ending <time> 
+previous a july third at 10 to <time> 
+previous a july third at 4 : 59 from <time> except <time> 
+previous a july third at 4 : 59 until <time> 
+previous a july third 23 from <time> to <time> 
+previous a july third 23 to <time> 
+previous a july third 23 : 20 after <time> ago <time> 
+previous a july third 23 : 20 until <time> 
+previous a october 19 at 23 from <time> until <time> 
+previous a october 19 at 23 ending <time> 
+previous a october 19 at 23 : 59 starting <time> ago <time> 
+previous a october 19 at 23 : 59 until <time> 
+previous a october 19 9 after <time> ago <time> 
+previous a october 19 9 to <time> 
+previous a october 19 11 : 59 from <time> until <time> 
+previous a october 19 11 : 59 ending <time> 
+previous a october fourteen at 20 after <time> until <time> 
+previous a october fourteen at 20 except <time> 
+previous a october fourteen at 23 : 16 starting <time> to <time> 
+previous a october fourteen at 23 : 16 to <time> 
+previous a october fourteen 9 after <time> before <time> 
+previous a october fourteen 9 before <time> 
+previous a october fourteen 2 : 23 after <time> to <time> 
+previous a october fourteen 2 : 23 until <time> 
+previous a october third at 11 from <time> to <time> 
+previous a october third at 11 until <time> 
+previous a october third at 11 : 36 from <time> to <time> 
+previous a october third at 11 : 36 before <time> 
+previous a october third 12 after <time> until <time> 
+previous a october third 12 until <time> 
+previous a october third 19 : 59 after <time> before <time> 
+previous a october third 19 : 59 except <time> 
+previous a 11 / 28 at 23 starting <time> ending <time> 
+previous a 11 / 28 at 23 to <time> 
+previous a 11 / 28 at 19 : 59 after <time> to <time> 
+previous a 11 / 28 at 19 : 59 ago <time> 
+previous a 11 / 28 7 after <time> to <time> 
+previous a 11 / 28 7 to <time> 
+previous a 11 / 28 1 : 43 after <time> before <time> 
+previous a 11 / 28 1 : 43 before <time> 
+previous a 11 / fourteen at 23 after <time> to <time> 
+previous a 11 / fourteen at 23 ending <time> 
+previous a 11 / fourteen at 7 : 59 from <time> ago <time> 
+previous a 11 / fourteen at 7 : 59 until <time> 
+previous a 11 / fourteen 10 from <time> to <time> 
+previous a 11 / fourteen 10 until <time> 
+previous a 11 / fourteen 20 : 14 from <time> ending <time> 
+previous a 11 / fourteen 20 : 14 to <time> 
+previous a 11 / sixth at 23 after <time> before <time> 
+previous a 11 / sixth at 23 to <time> 
+previous a 11 / sixth at 13 : 59 from <time> to <time> 
+previous a 11 / sixth at 13 : 59 to <time> 
+previous a 11 / sixth 23 after <time> before <time> 
+previous a 11 / sixth 23 to <time> 
+previous a 11 / sixth 23 : 59 from <time> ending <time> 
+previous a 11 / sixth 23 : 59 to <time> 
+previous a 7 at 22 starting <time> to <time> 
+previous a 7 at 22 to <time> 
+previous a 7 at 4 : 55 starting <time> except <time> 
+previous a 7 at 4 : 55 ago <time> 
+previous a 7 3 starting <time> ending <time> 
+previous a 7 3 to <time> 
+previous a 7 23 : 3 after <time> to <time> 
+previous a 7 23 : 3 except <time> 
+previous a eight at 21 from <time> except <time> 
+previous a eight at 21 before <time> 
+previous a eight at 23 : 1 after <time> before <time> 
+previous a eight at 23 : 1 except <time> 
+previous a eight 15 from <time> except <time> 
+previous a eight 15 to <time> 
+previous a eight 21 : 1 starting <time> until <time> 
+previous a eight 21 : 1 until <time> 
+previous a fifteenth at 16 starting <time> to <time> 
+previous a fifteenth at 16 ago <time> 
+previous a fifteenth at 23 : 14 after <time> until <time> 
+previous a fifteenth at 23 : 14 to <time> 
+previous a fifteenth 23 from <time> before <time> 
+previous a fifteenth 23 to <time> 
+previous a fifteenth 23 : 59 from <time> ending <time> 
+previous a fifteenth 23 : 59 to <time> 
+previous a year(s) at 23 after <time> ago <time> 
+previous a year(s) at 23 to <time> 
+previous a year(s) at 23 : 59 after <time> until <time> 
+previous a year(s) at 23 : 59 to <time> 
+previous a year(s) 13 after <time> ago <time> 
+previous a year(s) 13 to <time> 
+previous a year(s) 8 : 58 from <time> before <time> 
+previous a year(s) 8 : 58 to <time> 
+previous s after <time> to <time> 
+previous s before <time> 
+previous may 28 starting <time> to <time> 
+previous may 28 ending <time> 
+previous may two after <time> ending <time> 
+previous may two ending <time> 
+previous may sixth after <time> ago <time> 
+previous may sixth to <time> 
+previous sept 6 from <time> to <time> 
+previous sept 6 except <time> 
+previous sept two starting <time> to <time> 
+previous sept two to <time> 
+previous sept fifteenth from <time> ago <time> 
+previous sept fifteenth to <time> 
+previous 12 / 28 from <time> ending <time> 
+previous 12 / 28 to <time> 
+previous 12 / two from <time> to <time> 
+previous 12 / two to <time> 
+previous 12 / fifteenth starting <time> before <time> 
+previous 12 / fifteenth ago <time> 
+previous 13 starting <time> to <time> 
+previous 13 ago <time> 
+previous two from <time> ago <time> 
+previous two before <time> 
+previous sixth from <time> before <time> 
+previous sixth to <time> 
+previous week(s) starting <time> to <time> 
+previous week(s) to <time> 
+previous minute(s) from <time> to <time> 
+previous minute(s) ending <time> 
+previous sunday at 0 from <time> except <time> 
+previous sunday at 0 to <time> 
+previous sunday at 23 : 59 from <time> until <time> 
+previous sunday at 23 : 59 to <time> 
+previous sunday 22 after <time> to <time> 
+previous sunday 22 ending <time> 
+previous sunday 10 : 59 from <time> to <time> 
+previous sunday 10 : 59 to <time> 
+previous mar 14 at 1 starting <time> ago <time> 
+previous mar 14 at 1 until <time> 
+previous mar 14 at 1 : 46 from <time> to <time> 
+previous mar 14 at 1 : 46 ending <time> 
+previous mar 14 3 from <time> to <time> 
+previous mar 14 3 ending <time> 
+previous mar 14 14 : 32 starting <time> ago <time> 
+previous mar 14 14 : 32 ago <time> 
+previous mar eight at 23 starting <time> to <time> 
+previous mar eight at 23 until <time> 
+previous mar eight at 23 : 11 after <time> until <time> 
+previous mar eight at 23 : 11 to <time> 
+previous mar eight 10 from <time> before <time> 
+previous mar eight 10 to <time> 
+previous mar eight 10 : 59 starting <time> until <time> 
+previous mar eight 10 : 59 to <time> 
+previous mar sixth at 23 after <time> to <time> 
+previous mar sixth at 23 to <time> 
+previous mar sixth at 22 : 59 after <time> to <time> 
+previous mar sixth at 22 : 59 to <time> 
+previous mar sixth 6 starting <time> ago <time> 
+previous mar sixth 6 to <time> 
+previous mar sixth 23 : 20 starting <time> ending <time> 
+previous mar sixth 23 : 20 to <time> 
+previous february 28 at 23 starting <time> ending <time> 
+previous february 28 at 23 to <time> 
+previous february 28 at 22 : 59 starting <time> until <time> 
+previous february 28 at 22 : 59 before <time> 
+previous february 28 9 from <time> before <time> 
+previous february 28 9 to <time> 
+previous february 28 5 : 49 after <time> ago <time> 
+previous february 28 5 : 49 until <time> 
+previous february five at 19 starting <time> to <time> 
+previous february five at 19 to <time> 
+previous february five at 3 : 59 from <time> to <time> 
+previous february five at 3 : 59 to <time> 
+previous february five 6 from <time> to <time> 
+previous february five 6 until <time> 
+previous february five 23 : 59 from <time> before <time> 
+previous february five 23 : 59 to <time> 
+previous february fifteenth at 12 from <time> before <time> 
+previous february fifteenth at 12 ending <time> 
+previous february fifteenth at 6 : 59 from <time> except <time> 
+previous february fifteenth at 6 : 59 until <time> 
+previous february fifteenth 16 starting <time> to <time> 
+previous february fifteenth 16 to <time> 
+previous february fifteenth 23 : 1 after <time> ending <time> 
+previous february fifteenth 23 : 1 until <time> 
+previous 7 / 3 at 15 starting <time> until <time> 
+previous 7 / 3 at 15 to <time> 
+previous 7 / 3 at 22 : 5 after <time> ago <time> 
+previous 7 / 3 at 22 : 5 ending <time> 
+previous 7 / 3 23 from <time> until <time> 
+previous 7 / 3 23 except <time> 
+previous 7 / 3 20 : 59 from <time> to <time> 
+previous 7 / 3 20 : 59 until <time> 
+previous 7 / fourteen at 23 from <time> before <time> 
+previous 7 / fourteen at 23 to <time> 
+previous 7 / fourteen at 8 : 59 after <time> to <time> 
+previous 7 / fourteen at 8 : 59 to <time> 
+previous 7 / fourteen 23 after <time> until <time> 
+previous 7 / fourteen 23 to <time> 
+previous 7 / fourteen 23 : 59 from <time> until <time> 
+previous 7 / fourteen 23 : 59 to <time> 
+previous 7 / fifteenth at 19 starting <time> before <time> 
+previous 7 / fifteenth at 19 ago <time> 
+previous 7 / fifteenth at 23 : 59 from <time> to <time> 
+previous 7 / fifteenth at 23 : 59 before <time> 
+previous 7 / fifteenth 3 after <time> to <time> 
+previous 7 / fifteenth 3 to <time> 
+previous 7 / fifteenth 6 : 14 from <time> ending <time> 
+previous 7 / fifteenth 6 : 14 before <time> 
+previous 14 at 23 starting <time> ago <time> 
+previous 14 at 23 to <time> 
+previous 14 at 18 : 7 from <time> until <time> 
+previous 14 at 18 : 7 before <time> 
+previous 14 21 after <time> before <time> 
+previous 14 21 until <time> 
+previous 14 23 : 59 from <time> except <time> 
+previous 14 23 : 59 to <time> 
+previous two at 23 after <time> to <time> 
+previous two at 23 until <time> 
+previous two at 19 : 54 after <time> until <time> 
+previous two at 19 : 54 until <time> 
+previous two 23 starting <time> ending <time> 
+previous two 23 except <time> 
+previous two 20 : 59 after <time> to <time> 
+previous two 20 : 59 to <time> 
+previous fifteenth at 7 after <time> to <time> 
+previous fifteenth at 7 except <time> 
+previous fifteenth at 19 : 41 from <time> until <time> 
+previous fifteenth at 19 : 41 to <time> 
+previous fifteenth 13 from <time> ending <time> 
+previous fifteenth 13 before <time> 
+previous fifteenth 5 : 59 from <time> to <time> 
+previous fifteenth 5 : 59 to <time> 
+previous day(s) at 23 after <time> ago <time> 
+previous day(s) at 23 to <time> 
+previous day(s) at 3 : 18 from <time> until <time> 
+previous day(s) at 3 : 18 before <time> 
+previous day(s) 23 from <time> to <time> 
+previous day(s) 23 except <time> 
+previous day(s) 11 : 45 starting <time> until <time> 
+previous day(s) 11 : 45 until <time> 

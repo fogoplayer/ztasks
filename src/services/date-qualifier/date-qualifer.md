@@ -10,7 +10,7 @@ OFFSET = in | Ɛ
 FREQUENCY = every | next | previous
 # other = 2, a = 1
 DURATION_MULT = other | NUMBER | a | an | Ɛ   # watch out--could be a number
-  NUMBER = <number>
+  NUMBER = <number> | NUMBER number # tens ones, etc
 TIME = DAYSPECIFIER | TIMEDURATIONSPECIFIER | DAYSPECIFIER AT TIMESPECIFIER
   DAYSPECIFIER =  WEEKDAY | DATE | day(s) | week(s) | month(s) | year(s)
     DATE = MONTHSTRING DAY | MONTHNUM / DAY | DAY

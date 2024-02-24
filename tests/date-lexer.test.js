@@ -50,6 +50,34 @@ describe("Lexing Base Data Types", () => {
     expect(lexDateString("sep")).toEqual([new LexemeValue(Lexeme.MONTH, 9)]);
   });
 
+  it("lexes weekdays", () => {
+    expect(lexDateString("Sunday")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "sunday")]);
+    expect(lexDateString("sun")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "sunday")]);
+    expect(lexDateString("su")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "sunday")]);
+    expect(lexDateString("monday")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "monday")]);
+    expect(lexDateString("Monday")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "monday")]);
+    expect(lexDateString("mon")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "monday")]);
+    expect(lexDateString("m")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "monday")]);
+    expect(lexDateString("tuesday")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "tuesday")]);
+    expect(lexDateString("tues")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "tuesday")]);
+    expect(lexDateString("tue")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "tuesday")]);
+    expect(lexDateString("t")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "tuesday")]);
+    expect(lexDateString("wednesday")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "wednesday")]);
+    expect(lexDateString("wed")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "wednesday")]);
+    expect(lexDateString("w")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "wednesday")]);
+    expect(lexDateString("thursday")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "thursday")]);
+    expect(lexDateString("thurs")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "thursday")]);
+    expect(lexDateString("thur")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "thursday")]);
+    expect(lexDateString("thu")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "thursday")]);
+    expect(lexDateString("th")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "thursday")]);
+    expect(lexDateString("friday")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "friday")]);
+    expect(lexDateString("fri")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "friday")]);
+    expect(lexDateString("f")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "friday")]);
+    expect(lexDateString("saturday")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "saturday")]);
+    expect(lexDateString("sat")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "saturday")]);
+    expect(lexDateString("sa")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "saturday")]);
+  });
+
   it("lexes or's", () => {
     expect(lexDateString("or")).toEqual([new LexemeValue(Lexeme.OR)]);
     expect(lexDateString(",")).toEqual([new LexemeValue(Lexeme.OR)]);
@@ -86,7 +114,12 @@ describe("Lexing Base Data Types", () => {
   });
 });
 
-describe("Lexing Date Qualifiers", () => {
+describe("Lexing Combinations of basic data", () => {
+  it("lexes dates", () => {
+    expect(lexDateString("Feb 5")).toEqual([new LexemeValue(Lexeme.MONTH, 2), new LexemeValue(Lexeme.NUMBER, 5)]);
+    expect(lexDateString("2/5")).toEqual([new LexemeValue(Lexeme.MONTH, 2), new LexemeValue(Lexeme.NUMBER, 5)]);
+  });
+
   it("lexes basic recurring events", () => {
     expect(lexDateString("every day")).toEqual([
       new LexemeValue(Lexeme.FREQUENCY, "every"),
@@ -102,7 +135,7 @@ describe("Lexing Date Qualifiers", () => {
       new LexemeValue(Lexeme.NUMBER, 2),
       new LexemeValue(Lexeme.DAY_SPECIFIER, "day"),
     ]);
-    expect(lexDateString("every 3 months")).toEqual([
+    expect(lexDateString("every three months")).toEqual([
       new LexemeValue(Lexeme.FREQUENCY, "every"),
       new LexemeValue(Lexeme.NUMBER, 3),
       new LexemeValue(Lexeme.DAY_SPECIFIER, "month"),

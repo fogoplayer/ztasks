@@ -130,12 +130,15 @@ export function lexDateString(token) {
       case "mon":
       case "m":
       case "tuesday":
+      case "tues":
       case "tue":
       case "tu":
       case "wednesday":
       case "wed":
       case "w":
       case "thursday":
+      case "thurs":
+      case "thur":
       case "thu":
       case "th":
       case "friday":
@@ -264,6 +267,7 @@ export function lexWeekday(token) {
 
 /** @type {(token: string) => LexemeValue} */
 export function lexDefault(token) {
+  // TODO what if token is <number>/<number>?
   const lexeme = lexNumber(token) || lexMonth(token);
   if (lexeme) return lexeme;
   throw new Error(`Lexer Error: ${token}`);

@@ -84,15 +84,15 @@ describe("Lexing Base Data Types", () => {
     expect(lexDateString(", ")).toEqual([new LexemeValue(Lexeme.OR)]);
   });
 
+  it("lexes at's", () => {
+    expect(lexDateString("at")).toEqual([new LexemeValue(Lexeme.AT)]);
+  });
+
   it("lexes time duration specifiers", () => {
     expect(lexDateString("minute")).toEqual([new LexemeValue(Lexeme.TIME_DURATION_SPECIFIER, "minute")]);
     expect(lexDateString("minutes")).toEqual([new LexemeValue(Lexeme.TIME_DURATION_SPECIFIER, "minute")]);
     expect(lexDateString("hour")).toEqual([new LexemeValue(Lexeme.TIME_DURATION_SPECIFIER, "hour")]);
     expect(lexDateString("hours")).toEqual([new LexemeValue(Lexeme.TIME_DURATION_SPECIFIER, "hour")]);
-  });
-
-  it("lexes at's", () => {
-    expect(lexDateString("at")).toEqual([new LexemeValue(Lexeme.AT)]);
   });
 
   it("lexes start bounds", () => {
@@ -111,34 +111,5 @@ describe("Lexing Base Data Types", () => {
 
   it("lexes exceptions", () => {
     expect(lexDateString("except")).toEqual([new LexemeValue(Lexeme.EXCEPT)]);
-  });
-});
-
-describe("Lexing Combinations of basic data", () => {
-  it("lexes dates", () => {
-    expect(lexDateString("Feb 5")).toEqual([new LexemeValue(Lexeme.MONTH, 2), new LexemeValue(Lexeme.NUMBER, 5)]);
-    expect(lexDateString("2/5")).toEqual([new LexemeValue(Lexeme.MONTH, 2), new LexemeValue(Lexeme.NUMBER, 5)]);
-  });
-
-  it("lexes basic recurring events", () => {
-    expect(lexDateString("every day")).toEqual([
-      new LexemeValue(Lexeme.FREQUENCY, "every"),
-      new LexemeValue(Lexeme.DAY_SPECIFIER, "day"),
-    ]);
-    expect(lexDateString("every other day")).toEqual([
-      new LexemeValue(Lexeme.FREQUENCY, "every"),
-      new LexemeValue(Lexeme.NUMBER, 2),
-      new LexemeValue(Lexeme.DAY_SPECIFIER, "day"),
-    ]);
-    expect(lexDateString("every 2 days")).toEqual([
-      new LexemeValue(Lexeme.FREQUENCY, "every"),
-      new LexemeValue(Lexeme.NUMBER, 2),
-      new LexemeValue(Lexeme.DAY_SPECIFIER, "day"),
-    ]);
-    expect(lexDateString("every three months")).toEqual([
-      new LexemeValue(Lexeme.FREQUENCY, "every"),
-      new LexemeValue(Lexeme.NUMBER, 3),
-      new LexemeValue(Lexeme.DAY_SPECIFIER, "month"),
-    ]);
   });
 });

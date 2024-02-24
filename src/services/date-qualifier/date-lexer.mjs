@@ -124,29 +124,51 @@ export function lexDateString(token) {
         break;
 
       case "sunday":
+      case "sundays":
       case "sun":
+      case "suns":
       case "su":
+      case "sus":
       case "monday":
+      case "mondays":
       case "mon":
+      case "mons":
       case "m":
+      case "ms":
       case "tuesday":
+      case "tuesdays":
       case "tues":
+      case "tuess":
       case "tue":
       case "tu":
+      case "tus":
       case "wednesday":
+      case "wednesdays":
       case "wed":
+      case "weds":
       case "w":
+      case "ws":
       case "thursday":
+      case "thursdays":
       case "thurs":
+      case "thurss":
       case "thur":
       case "thu":
+      case "thus":
       case "th":
+      case "ths":
       case "friday":
+      case "fridays":
       case "fri":
+      case "fris":
       case "f":
+      case "fs":
       case "saturday":
+      case "saturdays":
       case "sat":
+      case "sats":
       case "sa":
+      case "sas":
         lexeme = new LexemeValue(Lexeme.WEEKDAY, lexWeekday(token));
         lexemes.push(lexeme);
         break;
@@ -226,41 +248,63 @@ export function removePlurals(token) {
 export function lexWeekday(token) {
   switch (token) {
     case "sunday":
+    case "sundays":
     case "sun":
+    case "suns":
     case "su":
+    case "sus":
       return "sunday";
 
     case "monday":
+    case "mondays":
     case "mon":
+    case "mons":
     case "m":
+    case "ms":
       return "monday";
 
     case "tuesday":
+    case "tuesdays":
     case "tues":
+    case "tuess":
     case "tue":
     case "tu":
+    case "tus":
       return "tuesday";
 
     case "wednesday":
+    case "wednesdays":
     case "wed":
+    case "weds":
     case "w":
+    case "ws":
       return "wednesday";
 
     case "thursday":
+    case "thursdays":
     case "thurs":
+    case "thurss":
     case "thur":
     case "thu":
+    case "thus":
     case "th":
+    case "ths":
       return "thursday";
 
     case "friday":
+    case "fridays":
     case "fri":
+    case "fris":
     case "f":
+    case "fs":
       return "friday";
 
     case "saturday":
+    case "saturdays":
     case "sat":
+    case "sats":
     case "sa":
+    case "sas":
       return "saturday";
 
     default:

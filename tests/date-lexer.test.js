@@ -61,7 +61,7 @@ describe("Lexing Base Data Types", () => {
     expect(lexDateString("tuesday")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "tuesday")]);
     expect(lexDateString("tues")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "tuesday")]);
     expect(lexDateString("tue")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "tuesday")]);
-    expect(lexDateString("t")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "tuesday")]);
+    expect(lexDateString("tu")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "tuesday")]);
     expect(lexDateString("wednesday")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "wednesday")]);
     expect(lexDateString("wed")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "wednesday")]);
     expect(lexDateString("w")).toEqual([new LexemeValue(Lexeme.WEEKDAY, "wednesday")]);
@@ -111,5 +111,18 @@ describe("Lexing Base Data Types", () => {
 
   it("lexes exceptions", () => {
     expect(lexDateString("except")).toEqual([new LexemeValue(Lexeme.EXCEPT)]);
+  });
+});
+
+describe("Lexing Dates and Times", () => {
+  it("Lexes Dates", () => {
+    expect(lexDateString("Jan 4")).toEqual([new LexemeValue(Lexeme.MONTH, 1), new LexemeValue(Lexeme.NUMBER, 4)]);
+    expect(lexDateString("2/4")).toEqual([new LexemeValue(Lexeme.NUMBER, 2), new LexemeValue(Lexeme.NUMBER, 4)]);
+    expect(lexDateString("19")).toEqual([new LexemeValue(Lexeme.NUMBER, 19)]);
+  });
+
+  it("Lexes Times", () => {
+    expect(lexDateString("8:00")).toEqual([new LexemeValue(Lexeme.NUMBER, 8), new LexemeValue(Lexeme.NUMBER, 0)]);
+    expect(lexDateString("8")).toEqual([new LexemeValue(Lexeme.NUMBER, 8)]);
   });
 });

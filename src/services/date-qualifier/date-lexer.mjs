@@ -236,6 +236,7 @@ export function lexWeekday(token) {
       return "monday";
 
     case "tuesday":
+    case "tues":
     case "tue":
     case "tu":
       return "tuesday";
@@ -246,6 +247,8 @@ export function lexWeekday(token) {
       return "wednesday";
 
     case "thursday":
+    case "thurs":
+    case "thur":
     case "thu":
     case "th":
       return "thursday";

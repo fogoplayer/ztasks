@@ -193,7 +193,7 @@ export function lexDateString(token) {
 
       default:
         lexeme = lexDefault(token);
-        lexemes.push(lexeme);
+        lexemes.push(...lexeme);
         break;
     }
   }
@@ -268,11 +268,14 @@ export function lexWeekday(token) {
   }
 }
 
-/** @type {(token: string) => LexemeValue} */
+/** @type {(token: string) => LexemeValue[]} */
 export function lexDefault(token) {
   // TODO what if token is <number>/<number>?
+  if (token.includes("/")) return token.split("/").flatMap((token) => lexDateString(token));
+  if (token.includes(":")) return token.split(":").flatMap((token) => lexDateString(token));
+
   const lexeme = lexNumber(token) || lexMonth(token);
-  if (lexeme) return lexeme;
+  if (lexeme) return [lexeme];
   throw new Error(`Lexer Error: ${token}`);
 }
 

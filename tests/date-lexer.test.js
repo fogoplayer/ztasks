@@ -114,15 +114,67 @@ describe("Lexing Base Data Types", () => {
   });
 });
 
-describe("Lexing Dates and Times", () => {
-  it("Lexes Dates", () => {
+describe("Lexing Basic Dates and Times", () => {
+  it("lexes absolute dates", () => {
     expect(lexDateString("Jan 4")).toEqual([new LexemeValue(Lexeme.MONTH, 1), new LexemeValue(Lexeme.NUMBER, 4)]);
     expect(lexDateString("2/4")).toEqual([new LexemeValue(Lexeme.NUMBER, 2), new LexemeValue(Lexeme.NUMBER, 4)]);
     expect(lexDateString("19")).toEqual([new LexemeValue(Lexeme.NUMBER, 19)]);
   });
 
-  it("Lexes Times", () => {
+  it("lexes absolute ", () => {
     expect(lexDateString("8:00")).toEqual([new LexemeValue(Lexeme.NUMBER, 8), new LexemeValue(Lexeme.NUMBER, 0)]);
     expect(lexDateString("8")).toEqual([new LexemeValue(Lexeme.NUMBER, 8)]);
+  });
+});
+
+describe("Lexing Compound Days and Times", () => {
+  it("lexes 'every' dates", () => {
+    expect(lexDateString("every 2 weeks")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.NUMBER, 2),
+      new LexemeValue(Lexeme.DAY_SPECIFIER, "week"),
+    ]);
+    expect(lexDateString("every other month")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.NUMBER, 2),
+      new LexemeValue(Lexeme.DAY_SPECIFIER, "month"),
+    ]);
+    expect(lexDateString("every 3rd day")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.NUMBER, 3),
+      new LexemeValue(Lexeme.DAY_SPECIFIER, "day"),
+    ]);
+    expect(lexDateString("every sunday")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.WEEKDAY, "sunday"),
+    ]);
+    expect(lexDateString("every 3 tuesdays")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.NUMBER, 3),
+      new LexemeValue(Lexeme.WEEKDAY, "tuesday"),
+    ]);
+    expect(lexDateString("every other tuesday")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.NUMBER, 2),
+      new LexemeValue(Lexeme.WEEKDAY, "tuesday"),
+    ]);
+  });
+
+  it("lexes 'every' times", () => {
+    expect(lexDateString("every 2 hours")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.NUMBER, 2),
+      new LexemeValue(Lexeme.TIME_DURATION_SPECIFIER, "hour"),
+    ]);
+    expect(lexDateString("every other minute")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.NUMBER, 2),
+      new LexemeValue(Lexeme.TIME_DURATION_SPECIFIER, "minute"),
+    ]);
+    expect(lexDateString("every 8:00")).toEqual([
+      new LexemeValue(Lexeme.FREQUENCY, "every"),
+      new LexemeValue(Lexeme.NUMBER, 8),
+      new LexemeValue(Lexeme.NUMBER, 0),
+    ]);
   });
 });

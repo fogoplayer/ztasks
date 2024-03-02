@@ -2,6 +2,34 @@
 import { LitElement } from "lit";
 import { ListItem } from "../ListItem.mjs";
 
+export class InsertTaskEvent extends CustomEvent {
+  /**
+   *
+   * @param {boolean} above if the task should be inserted above (as opposed to below) the current task
+   * @param {string} taskToInsert a stringified JSON representation of the task to be inserted
+   * @param {ListItem} insertionTarget the target list item to insert the task into
+   */
+  constructor(above, taskToInsert, insertionTarget) {
+    super("inserttask", {
+      composed: true,
+      bubbles: true,
+      detail: { above, taskToInsert: taskToInsert, insertionTarget },
+    });
+  }
+
+  get above() {
+    return this.detail.above;
+  }
+
+  get taskToInsert() {
+    return this.detail.taskToInsert;
+  }
+
+  get insertionTarget() {
+    return this.detail.insertionTarget;
+  }
+}
+
 /**
  *
  * @param {ListItem} superclass
@@ -22,14 +50,15 @@ export const Draggable = (superclass) =>
 
     firstUpdated() {
       super.firstUpdated();
-      const header = this.renderRoot.querySelector("header");
-      header.draggable = true;
-      header.addEventListener("dragstart", this.onDragStart);
-      header.addEventListener("dragenter", this.onDragOver);
-      header.addEventListener("dragover", this.onDragOver);
-      header.addEventListener("dragleave", this.onDragLeave);
-      header.addEventListener("dragend", this.onDragEnd);
-      header.addEventListener("drop", this.onDrop);
+      this.header = /** @type {HTMLDivElement} */ (this.renderRoot.querySelector("header"));
+      this.header.draggable = true;
+      this.header.addEventListener("dragstart", this.onDragStart.bind(this));
+      this.header.addEventListener("dragenter", this.onDragOver.bind(this));
+      this.header.addEventListener("dragover", this.onDragOver.bind(this));
+      this.header.addEventListener("dragleave", this.onDragLeave.bind(this));
+      this.header.addEventListener("dragend", this.onDragEnd.bind(this));
+      this.header.addEventListener("drop", this.onDrop.bind(this));
+      this.addEventListener("inserttask", this.onInsertTask.bind(this));
     }
 
     /** @param {Map<string, unknown>} diff */
@@ -37,17 +66,30 @@ export const Draggable = (superclass) =>
       super.updated(diff);
       if (diff.has("insertAbove")) {
         if (this.insertAbove === null) {
-          this.style.removeProperty("padding-top");
-          this.style.removeProperty("padding-bottom");
-          this.style.removeProperty("background-color");
+          this.header?.style.removeProperty("padding-top");
+          this.header?.style.removeProperty("padding-bottom");
+          this.header?.style.removeProperty("background-color");
         } else if (this.insertAbove) {
-          this.style.paddingTop = "2em";
-          this.style.removeProperty("padding-bottom");
+          if (this.header) this.header.style.paddingTop = "2em";
+          this.header?.style.removeProperty("padding-bottom");
         } else {
-          this.style.paddingBottom = "2em";
-          this.style.removeProperty("padding-top");
+          if (this.header) this.header.style.paddingBottom = "2em";
+          this.header?.style.removeProperty("padding-top");
         }
       }
+    }
+
+    /**
+     *
+     * @param {InsertTaskEvent} e
+     */
+    onInsertTask(e) {
+      if (this === e.insertionTarget) return;
+
+      e.stopPropagation();
+      const task = JSON.parse(e.taskToInsert);
+      debugger;
+      // this.insertTask(e.above, task);
     }
 
     /**
@@ -55,9 +97,9 @@ export const Draggable = (superclass) =>
      */
     onDragStart(e) {
       e.stopPropagation();
-      e.dataTransfer?.setData("text/plain", JSON.stringify(this.task));
+      e.dataTransfer?.setData("task", JSON.stringify(this.task));
 
-      this.style.backgroundColor = "lightgreen";
+      if (this.header) this.header.style.backgroundColor = "lightgreen";
     }
 
     /**
@@ -75,7 +117,7 @@ export const Draggable = (superclass) =>
         this.insertAbove = false;
       }
       //
-      this.style.backgroundColor = "green";
+      if (this.header) this.header.style.backgroundColor = "green";
     }
 
     /**
@@ -102,9 +144,16 @@ export const Draggable = (superclass) =>
     onDrop(e) {
       e.preventDefault();
       e.stopPropagation();
-      this.insertAbove = null;
 
-      this.style.backgroundColor = "lightblue";
-      setTimeout(() => this.style.removeProperty("background-color"), 3000);
+      const insertEvent = new InsertTaskEvent(
+        /** @type {boolean} */ (this.insertAbove),
+        e.dataTransfer.getData("task"),
+        this
+      );
+      this.dispatchEvent(insertEvent);
+
+      this.insertAbove = null;
+      if (this.header) this.header.style.backgroundColor = "lightblue";
+      setTimeout(() => this.header?.style.removeProperty("background-color"), 3000);
     }
   };

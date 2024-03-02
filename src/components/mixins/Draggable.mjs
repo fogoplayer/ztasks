@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import { LitElement } from "lit";
 import { ListItem } from "../ListItem.mjs";
 
 /**
@@ -5,6 +7,7 @@ import { ListItem } from "../ListItem.mjs";
  * @param {ListItem} superclass
  */
 export const Draggable = (superclass) =>
+  /** @extends LitElement */
   class extends superclass {
     static properties = {
       insertAbove: { type: Boolean },
@@ -12,6 +15,9 @@ export const Draggable = (superclass) =>
 
     constructor() {
       super();
+
+      /** @type {Boolean?} */
+      this.insertAbove = undefined;
     }
 
     firstUpdated() {
@@ -27,15 +33,15 @@ export const Draggable = (superclass) =>
       header.addEventListener("drop", this.onDrop);
     }
 
+    /** @param {Map<string, unknown>} diff */
     updated(diff) {
-      super.updated();
+      super.updated(diff);
       if (diff.has("insertAbove")) {
         if (this.insertAbove === undefined) {
           this.style.removeProperty("padding-top");
           this.style.removeProperty("padding-bottom");
           this.style.removeProperty("background-color");
-        }
-        if (this.insertAbove) {
+        } else if (this.insertAbove) {
           this.style.paddingTop = "2em";
           this.style.removeProperty("padding-bottom");
         } else {
@@ -46,7 +52,6 @@ export const Draggable = (superclass) =>
     }
 
     /**
-     * @this {HTMLDivElement}
      * @param {DragEvent} e
      */
     onDragStart(e) {
@@ -57,7 +62,6 @@ export const Draggable = (superclass) =>
     }
 
     /**
-     * @this {HTMLDivElement}
      * @param {DragEvent} e
      */
     onDragOver(e) {

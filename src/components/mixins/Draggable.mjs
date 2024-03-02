@@ -17,11 +17,10 @@ export const Draggable = (superclass) =>
       super();
 
       /** @type {Boolean?} */
-      this.insertAbove = undefined;
+      this.insertAbove = null;
     }
 
     firstUpdated() {
-      /** @type {HTMLDivElement} */
       super.firstUpdated();
       const header = this.renderRoot.querySelector("header");
       header.draggable = true;
@@ -37,7 +36,7 @@ export const Draggable = (superclass) =>
     updated(diff) {
       super.updated(diff);
       if (diff.has("insertAbove")) {
-        if (this.insertAbove === undefined) {
+        if (this.insertAbove === null) {
           this.style.removeProperty("padding-top");
           this.style.removeProperty("padding-bottom");
           this.style.removeProperty("background-color");
@@ -80,34 +79,30 @@ export const Draggable = (superclass) =>
     }
 
     /**
-     * @this {HTMLDivElement}
      * @param {DragEvent} e
      */
     onDragLeave(e) {
       e.preventDefault();
       e.stopPropagation();
-      this.insertAbove = undefined;
+      this.insertAbove = null;
     }
 
     /**
-     * @this {HTMLDivElement}
      * @param {DragEvent} e
      */
     onDragEnd(e) {
       e.preventDefault();
       e.stopPropagation();
-      this.style.removeProperty("background-color");
+      this.insertAbove = null;
     }
 
     /**
-     * @this {HTMLDivElement}
      * @param {DragEvent} e
      */
     onDrop(e) {
       e.preventDefault();
       e.stopPropagation();
-      this.style.removeProperty("padding-top");
-      this.style.removeProperty("padding-bottom");
+      this.insertAbove = null;
 
       this.style.backgroundColor = "lightblue";
       setTimeout(() => this.style.removeProperty("background-color"), 3000);

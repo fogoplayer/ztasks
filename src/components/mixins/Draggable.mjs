@@ -6,12 +6,17 @@ import { ListItem } from "../ListItem.mjs";
  */
 export const Draggable = (superclass) =>
   class extends superclass {
+    static properties = {
+      insertAbove: { type: Boolean },
+    };
+
     constructor() {
       super();
     }
 
     firstUpdated() {
       /** @type {HTMLDivElement} */
+      super.firstUpdated();
       const header = this.renderRoot.querySelector("header");
       header.draggable = true;
       header.addEventListener("dragstart", this.onDragStart);
@@ -22,14 +27,32 @@ export const Draggable = (superclass) =>
       header.addEventListener("drop", this.onDrop);
     }
 
+    updated(diff) {
+      super.updated();
+      if (diff.has("insertAbove")) {
+        if (this.insertAbove === undefined) {
+          this.style.removeProperty("padding-top");
+          this.style.removeProperty("padding-bottom");
+          this.style.removeProperty("background-color");
+        }
+        if (this.insertAbove) {
+          this.style.paddingTop = "2em";
+          this.style.removeProperty("padding-bottom");
+        } else {
+          this.style.paddingBottom = "2em";
+          this.style.removeProperty("padding-top");
+        }
+      }
+    }
+
     /**
      * @this {HTMLDivElement}
      * @param {DragEvent} e
      */
     onDragStart(e) {
       e.stopPropagation();
-      // e.dataTransfer.setData('text/plain', JSON.stringify(this.task));
-      //
+      e.dataTransfer?.setData("text/plain", JSON.stringify(this.task));
+
       this.style.backgroundColor = "lightgreen";
     }
 
@@ -44,11 +67,9 @@ export const Draggable = (superclass) =>
       // add padding to top or bottom
       const headerBounds = this.getBoundingClientRect();
       if (e.y < headerBounds.top + headerBounds.height / 2) {
-        this.style.paddingTop = "2em";
-        this.style.removeProperty("padding-bottom");
+        this.insertAbove = true;
       } else {
-        this.style.paddingBottom = "2em";
-        this.style.removeProperty("padding-top");
+        this.insertAbove = false;
       }
       //
       this.style.backgroundColor = "green";
@@ -61,10 +82,7 @@ export const Draggable = (superclass) =>
     onDragLeave(e) {
       e.preventDefault();
       e.stopPropagation();
-      this.style.removeProperty("padding-top");
-      this.style.removeProperty("padding-bottom");
-      //
-      this.style.removeProperty("background-color");
+      this.insertAbove = undefined;
     }
 
     /**

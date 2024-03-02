@@ -11,7 +11,7 @@ FREQUENCY = every | next | previous
 # other = 2, a = 1
 DURATION_MULT = other | NUMBER | a | an | Ɛ   # watch out--could be a number
   NUMBER = <number> | NUMBER number # tens ones, etc
-TIME = DAYSPECIFIER | TIMEDURATIONSPECIFIER | DAYSPECIFIER AT TIMESPECIFIER
+TIME = DAYSPECIFIER | TIMEDURATIONSPECIFIER | DAYSPECIFIER AT TIMESPECIFIER | TIMESPECIFIER
   DAYSPECIFIER =  WEEKDAY | DATE | day(s) | week(s) | month(s) | year(s)
     DATE = MONTHSTRING DAY | MONTHNUM / DAY | DAY   # I don't think we need the slash
       # union the two months?
@@ -44,7 +44,10 @@ BOUNDS = STARTBOUNDS_WITH_TIME ENDBOUNDS_WITH_TIME
 # each (every)
 # last
 # first
-
+# 3rd, etc
+# MM/DD/YYYY
+# JS Date/time
+# am/pm
 ```
 
 <!--

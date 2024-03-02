@@ -1,5 +1,3 @@
-
-# 
 D = SINGLE | OFFSET DURATION_MULT TIME | FREQUENCY DURATION_MULT TIME BOUNDS
 SINGLE = today | tomorrow | yesterday
 OFFSET = in | Ɛ
@@ -7,34 +5,34 @@ FREQUENCY = every | next | previous
 # other = 2, a = 1
 DURATION_MULT = other | 1\2\3\4\5\6\7\8\9\10 | a\an | Ɛ
 TIME = DAYSPECIFIER | TIMEDURATIONSPECIFIER AGO | DAYSPECIFIER AT TIMESPECIFIER
-  DAYSPECIFIER =  WEEKDAY | DATE | day(s)\week(s)\month(s)\year(s)
-      DATE = MONTHSTRING DAY | MONTHNUM / DAY | DAY
-        # union the two months?
-        MONTHSTRING = jan\mar\may\jun\july\aug\nov\dec | february\april\sept\october
-        MONTHNUM = 1\2\3\4\5\6\7\8\9\10\11\12
-        DAY = 1\2\3\4\5\6\7\8\9\10\11\12\13\14\15\16\17\18\19\20\21\22\23\24\25\26\27\28 | two\five\eight\fourteen | third\sixth\ninth\fifteenth
-    WEEKDAY = SUN\MON\TUE\WED\THU\FRI\SAT 
-              # | WEEKDAY OR WEEKDAY
-      SUN = sunday\sun\s
-      MON = monday\mon\m
-      TUE = tuesday\tue\tu
-      WED = wednesday\wed\w
-      THU = thursday\thu\th
-      FRI = friday\fri\f
-      SAT = saturday\sat\s
-      OR = , | ", " | or
-  TIMEDURATIONSPECIFIER =  minute(s)\hour(s) 
-  AT = at | Ɛ
-  TIMESPECIFIER = HOUR | HOUR : MIN
-    HOUR = 0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15\16\17\18\19\20\21\22\23
-    MIN = 0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15\16\17\18\19\20\21\22\23\24\25\26\27\28\29\30\31\32\33\34\35\36\37\38\39\40\41\42\43\44\45\46\47\48\49\50\51\52\53\54\55\56\57\58\59
+🟥DAYSPECIFIER =  WEEKDAY | DATE | day(s)\week(s)\month(s)\year(s)
+🟥🟧DATE = MONTHSTRING DAY | MONTHNUM / DAY | DAY
+      # union the two months?
+🟥🟧🟩MONTHSTRING = jan\mar\may\jun\july\aug\nov\dec | february\april\sept\october
+🟥🟧🟩MONTHNUM = 1\2\3\4\5\6\7\8\9\10\11\12
+🟥🟧🟩DAY = 1\2\3\4\5\6\7\8\9\10\11\12\13\14\15\16\17\18\19\20\21\22\23\24\25\26\27\28 | two\five\eight\fourteen | third\sixth\ninth\fifteenth
+🟥🟧WEEKDAY = SUN\MON\TUE\WED\THU\FRI\SAT 
+🟥🟧          # | WEEKDAY OR WEEKDAY
+🟥🟧🟩SUN = sunday\sun\s
+🟥🟧🟩MON = monday\mon\m
+🟥🟧🟩TUE = tuesday\tue\tu
+🟥🟧🟩WED = wednesday\wed\w
+🟥🟧🟩THU = thursday\thu\th
+🟥🟧🟩FRI = friday\fri\f
+🟥🟧🟩SAT = saturday\sat\s
+🟥🟧🟩OR = , | ", " | or
+🟥TIMEDURATIONSPECIFIER =  minute(s)\hour(s) 
+🟥AT = at | Ɛ
+🟥TIMESPECIFIER = HOUR | HOUR : MIN
+🟥🟧HOUR = 0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15\16\17\18\19\20\21\22\23
+🟥🟧MIN = 0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15\16\17\18\19\20\21\22\23\24\25\26\27\28\29\30\31\32\33\34\35\36\37\38\39\40\41\42\43\44\45\46\47\48\49\50\51\52\53\54\55\56\57\58\59
 BOUNDS = STARTBOUNDS_WITH_TIME ENDBOUNDS_WITH_TIME
-  STARTBOUNDS_WITH_TIME = STARTBOUNDS <time> | Ɛ
-    STARTBOUNDS = after\starting\from
-  ENDBOUNDS_WITH_TIME = ENDBOUNDS <time> | Ɛ
-    ENDBOUNDS = until\ending\before\to
-  EXCEPTIONS = except <time> | Ɛ
-  AGO = ago | Ɛ
+🟥STARTBOUNDS_WITH_TIME = STARTBOUNDS <time> | Ɛ
+🟥🟧STARTBOUNDS = after\starting\from
+🟥ENDBOUNDS_WITH_TIME = ENDBOUNDS <time> | Ɛ
+🟥🟧ENDBOUNDS = until\ending\before\to
+🟥EXCEPTIONS = except <time> | Ɛ
+🟥AGO = ago | Ɛ
 
 # Reminders
 

@@ -1,4 +1,5 @@
-import { LitElement, html, css } from "../libs/lit-all@2.7.6.js";
+// @ts-ignore
+import { LitElement, html, css, repeat } from "../libs/lit-all@2.7.6.js";
 import globalCss from "../global-styles/global.css.mjs";
 import "../components/ListItem.mjs";
 import { Task } from "../models/Task.mjs";
@@ -13,13 +14,27 @@ export default class Home extends LitElement {
   constructor() {
     super();
     this.task = makeTask();
-    // console.log(JSON.stringify(this.task, null, 2));
   }
 
   render() {
-    return html`<header><h1>%project-name%</h1></header>
-      <main>Welcome to my app!
-        <list-item .task=${this.task}><list-item>
+    return html`<header>
+        <custom-checkbox ?checked=${this.task?.complete} ?disabled="${!this.task?.title}"></custom-checkbox>
+        <input type="text" class="task-title" value="${this.task?.title || ""}" placeholder="Create a new task" />
+      </header>
+      <main>
+        ${this.task
+          ? repeat(
+              this.task.subtasks,
+              /** @param {Task} subtask */
+              (subtask) => subtask.id,
+              /**
+               * @param {Task} subtask
+               * @param {number} i
+               */
+              (subtask, i) => html`<list-item .task=${subtask} index="${i}"></list-item>`
+            )
+          : ""}
+        <list-item .task=${new Task({})}></list-item>
       </main>`;
   }
 

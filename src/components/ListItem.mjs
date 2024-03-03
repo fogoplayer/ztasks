@@ -1,5 +1,7 @@
+/** @typedef {import("../models/Task.mjs").Task} Task */
+
+// @ts-ignore
 import { LitElement, html, css, repeat } from "lit";
-import Task from "../models/Task.mjs";
 import globalCss from "../global-styles/global.css.mjs";
 import "./Collapsible.mjs";
 import "./CustomCheckbox.mjs";
@@ -32,7 +34,7 @@ export class ListItem extends Draggable(LitElement) {
         <!-- <input type="checkbox" ?checked=${this.task?.complete} /> -->
         <custom-checkbox ?checked=${this.task?.complete}></custom-checkbox>
 
-        <input type="text" class="task-title" value="${this.task?.title}" />
+        <input type="text" class="task-title" value="${this.task?.title || ""}" />
 
         <a href="" class="details-link">
           ${this.task?.description ||
@@ -54,7 +56,12 @@ export class ListItem extends Draggable(LitElement) {
           ${this.task
             ? repeat(
                 this.task.subtasks,
+                /** @param {Task} subtask */
                 (subtask) => subtask.id,
+                /**
+                 * @param {Task} subtask
+                 * @param {number} i
+                 */
                 (subtask, i) => html`<list-item .task=${subtask} index="${i}"></list-item>`
               )
             : ""}

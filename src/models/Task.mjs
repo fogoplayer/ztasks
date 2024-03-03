@@ -3,7 +3,7 @@
  * @typedef {{ [K in keyof T as T[K] extends Function ? never : K]: T[K]}} PropertiesOnly
  */
 
-export default class Task {
+export class Task {
   /**
    * Creates a new Task object.
    *

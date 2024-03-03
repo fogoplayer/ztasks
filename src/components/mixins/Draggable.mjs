@@ -2,8 +2,7 @@
 
 // eslint-disable-next-line no-unused-vars
 import { LitElement } from "lit";
-import { ListItem } from "../ListItem.mjs";
-import Task from "../../models/Task.mjs";
+import { Task } from "../../models/Task.mjs";
 
 export class InsertTaskEvent extends CustomEvent {
   /**
@@ -135,7 +134,7 @@ export const Draggable = (superclass) =>
 
       let deletionIndex = taskToRemove.index;
 
-      this.task.subtasks.splice(deletionIndex, 1);
+      this.task?.subtasks.splice(deletionIndex, 1);
     }
 
     /**

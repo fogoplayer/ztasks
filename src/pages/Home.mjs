@@ -1,7 +1,7 @@
 import { LitElement, html, css } from "../libs/lit-all@2.7.6.js";
 import globalCss from "../global-styles/global.css.mjs";
 import "../components/ListItem.mjs";
-import Task from "../models/Task.mjs";
+import { Task } from "../models/Task.mjs";
 
 export default class Home extends LitElement {
   static get properties() {

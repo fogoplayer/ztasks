@@ -12,6 +12,7 @@ export class ListItem extends Draggable(LitElement) {
   static properties = {
     task: { reflect: true, type: Object, attribute: true },
     open: { state: true, type: Boolean },
+    index: { props: true, type: Number },
   };
 
   constructor() {
@@ -50,7 +51,7 @@ export class ListItem extends Draggable(LitElement) {
       </header>
       <collapsible- class="subtasks" ?open="${this.open}">
         <ul class="subtasks unstyled-ul">
-          ${this.task?.subtasks.map((subtask) => html`<list-item .task=${subtask}></list-item>`)}
+          ${this.task?.subtasks.map((subtask, i) => html`<list-item .task=${subtask} index="${i}"></list-item>`)}
         </ul>
       </collapsible->`;
   }

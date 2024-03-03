@@ -13,7 +13,7 @@ export default class Home extends LitElement {
   constructor() {
     super();
     this.task = makeTask();
-    console.log(JSON.stringify(this.task, null, 2));
+    // console.log(JSON.stringify(this.task, null, 2));
   }
 
   render() {
@@ -42,7 +42,9 @@ function makeTask() {
     complete: oneIn(2),
     dueDate: oneIn(7) ? new Date(Date.now() + randomInt(-10, 10) * 24 * 60 * 60 * 1000) : null,
     recurring: oneIn(3) ? "daily" : "",
-    reminders: oneIn(4) ? new Array(randomInt(1, 5)).fill(0).map(() => new Date(Date.now() + randomInt(1, 10) * 24 * 60 * 60 * 1000)) : [],
+    reminders: oneIn(4)
+      ? new Array(randomInt(1, 5)).fill(0).map(() => new Date(Date.now() + randomInt(1, 10) * 24 * 60 * 60 * 1000))
+      : [],
     subtasks: oneIn(tasksMade) ? new Array(randomInt(1, 10)).fill(0).map(makeTask) : [],
     owners: oneIn(4) ? ["Alice", "Bob", "Charlie"] : undefined,
   });

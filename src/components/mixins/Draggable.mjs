@@ -38,7 +38,7 @@ export class RemoveTaskEvent extends CustomEvent {
    * @ param {ListItem} insertionTarget the target list item to insert the task into
    */
   constructor(taskToRemove /* , insertionTarget */) {
-    super("inserttask", {
+    super("removetask", {
       composed: true,
       bubbles: true,
       detail: { taskToRemove /* , insertionTarget */ },
@@ -83,6 +83,7 @@ export const Draggable = (superclass) =>
       this.header.addEventListener("dragend", this.onDragEnd.bind(this));
       this.header.addEventListener("drop", this.onDrop.bind(this));
       this.addEventListener("inserttask", this.onInsertTask.bind(this));
+      this.addEventListener("removetask", this.onRemoveTask.bind(this));
     }
 
     /** @param {Map<string, unknown>} diff */
@@ -115,10 +116,27 @@ export const Draggable = (superclass) =>
       const taskTarget = e.insertionTarget;
       const above = e.above;
 
-      let insertionIndex = this.task.subtasks.indexOf(taskTarget.task);
+      let insertionIndex = taskTarget.index;
       if (!above) insertionIndex++;
 
       this.task.subtasks.splice(insertionIndex, 0, new Task(taskToInsert));
+      this.requestUpdate();
+    }
+
+    /**
+     *
+     * @param {RemoveTaskEvent} e
+     */
+    onRemoveTask(e) {
+      if (this === e.taskToRemove) return;
+
+      e.stopPropagation();
+      const taskToRemove = e.taskToRemove;
+
+      let deletionIndex = taskToRemove.index;
+      console.log(deletionIndex);
+
+      this.task.subtasks.splice(deletionIndex, 1);
       this.requestUpdate();
     }
 
@@ -130,7 +148,7 @@ export const Draggable = (superclass) =>
       e.dataTransfer?.setData("task", JSON.stringify(this.task));
 
       if (this.header) this.header.style.backgroundColor = "lightgreen";
-      this.dispatchEvent(new RemoveTaskEvent(JSON.stringify(this.task)));
+      this.dispatchEvent(new RemoveTaskEvent(this));
     }
 
     /**

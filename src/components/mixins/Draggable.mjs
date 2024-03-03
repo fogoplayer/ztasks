@@ -122,7 +122,6 @@ export const Draggable = (superclass) =>
       this.task?.subtasks.splice(insertionIndex, 0, new Task(taskToInsert));
 
       this.requestUpdate();
-      console.log(this);
     }
 
     /**
@@ -135,9 +134,8 @@ export const Draggable = (superclass) =>
       const taskToRemove = e.taskToRemove;
 
       let deletionIndex = taskToRemove.index;
-      console.log(deletionIndex);
 
-      // this.task.subtasks.splice(deletionIndex, 1);
+      this.task.subtasks.splice(deletionIndex, 1);
     }
 
     /**

@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, repeat } from "lit";
 import Task from "../models/Task.mjs";
 import globalCss from "../global-styles/global.css.mjs";
 import "./Collapsible.mjs";
@@ -51,7 +51,13 @@ export class ListItem extends Draggable(LitElement) {
       </header>
       <collapsible- class="subtasks" ?open="${this.open}">
         <ul class="subtasks unstyled-ul">
-          ${this.task?.subtasks.map((subtask, i) => html`<list-item .task=${subtask} index="${i}"></list-item>`)}
+          ${this.task
+            ? repeat(
+                this.task.subtasks,
+                (subtask) => subtask.id,
+                (subtask, i) => html`<list-item .task=${subtask} index="${i}"></list-item>`
+              )
+            : ""}
         </ul>
       </collapsible->`;
   }

@@ -1,3 +1,5 @@
+/** @typedef {import("../ListItem.mjs").ListItem} ListItem */
+
 // eslint-disable-next-line no-unused-vars
 import { LitElement } from "lit";
 import { ListItem } from "../ListItem.mjs";
@@ -5,7 +7,6 @@ import Task from "../../models/Task.mjs";
 
 export class InsertTaskEvent extends CustomEvent {
   /**
-   *
    * @param {boolean} above if the task should be inserted above (as opposed to below) the current task
    * @param {string} taskToInsert a stringified JSON representation of the task to be inserted
    * @param {ListItem} insertionTarget the target list item to insert the task into
@@ -33,36 +34,31 @@ export class InsertTaskEvent extends CustomEvent {
 
 export class RemoveTaskEvent extends CustomEvent {
   /**
-   *
-   * @param {string} taskToRemove a stringified JSON representation of the task to be inserted
-   * @ param {ListItem} insertionTarget the target list item to insert the task into
+   * @param {unknown} taskToRemove
    */
-  constructor(taskToRemove /* , insertionTarget */) {
+  constructor(taskToRemove) {
     super("removetask", {
       composed: true,
       bubbles: true,
-      detail: { taskToRemove /* , insertionTarget */ },
+      detail: { taskToRemove },
     });
   }
 
   get taskToRemove() {
     return this.detail.taskToRemove;
   }
-
-  // get insertionTarget() {
-  //   return this.detail.insertionTarget;
-  // }
 }
 
 /**
- *
- * @param {ListItem} superclass
+ * @param {unknown} superclass
  */
 export const Draggable = (superclass) =>
   /** @extends LitElement */
   class extends superclass {
     static properties = {
       insertAbove: { type: Boolean },
+      // index: { props: true, type: Number },
+      // task: { reflect: true, type: Object, attribute: true },
     };
 
     constructor() {
@@ -70,9 +66,14 @@ export const Draggable = (superclass) =>
 
       /** @type {Boolean?} */
       this.insertAbove = null;
+      /** @type {Number?} */
+      this.index = null;
+      /** @type {Task?} */
+      this.task = null;
     }
 
     firstUpdated() {
+      // @ts-ignore
       super.firstUpdated();
       this.header = /** @type {HTMLDivElement} */ (this.renderRoot.querySelector("header"));
       this.header.draggable = true;
@@ -81,9 +82,9 @@ export const Draggable = (superclass) =>
       this.header.addEventListener("dragover", this.onDragOver.bind(this));
       this.header.addEventListener("dragleave", this.onDragLeave.bind(this));
       this.header.addEventListener("dragend", this.onDragEnd.bind(this));
-      this.header.addEventListener("drop", this.onDrop.bind(this));
-      this.addEventListener("inserttask", this.onInsertTask.bind(this));
-      this.addEventListener("removetask", this.onRemoveTask.bind(this));
+      this.header.addEventListener("drop", /** @type {EventListener} */ (this.onDrop.bind(this)));
+      this.addEventListener("inserttask", /** @type {EventListener} */ (this.onInsertTask.bind(this)));
+      this.addEventListener("removetask", /** @type {EventListener} */ (this.onRemoveTask.bind(this)));
     }
 
     /** @param {Map<string, unknown>} diff */
@@ -105,7 +106,6 @@ export const Draggable = (superclass) =>
     }
 
     /**
-     *
      * @param {InsertTaskEvent} e
      */
     onInsertTask(e) {
@@ -119,12 +119,13 @@ export const Draggable = (superclass) =>
       let insertionIndex = taskTarget.index;
       if (!above) insertionIndex++;
 
-      this.task.subtasks.splice(insertionIndex, 0, new Task(taskToInsert));
+      this.task?.subtasks.splice(insertionIndex, 0, new Task(taskToInsert));
+
       this.requestUpdate();
+      console.log(this);
     }
 
     /**
-     *
      * @param {RemoveTaskEvent} e
      */
     onRemoveTask(e) {
@@ -136,8 +137,7 @@ export const Draggable = (superclass) =>
       let deletionIndex = taskToRemove.index;
       console.log(deletionIndex);
 
-      this.task.subtasks.splice(deletionIndex, 1);
-      this.requestUpdate();
+      // this.task.subtasks.splice(deletionIndex, 1);
     }
 
     /**
@@ -188,16 +188,18 @@ export const Draggable = (superclass) =>
     }
 
     /**
-     * @param {DragEvent} e
+     * @param {DragEvent & {dataTransfer: DataTransfer}} e
      */
     onDrop(e) {
       e.preventDefault();
       e.stopPropagation();
 
       const insertEvent = new InsertTaskEvent(
-        /** @type {boolean} */ (this.insertAbove),
+        /** @type {boolean} */
+        (this.insertAbove),
         e.dataTransfer.getData("task"),
-        this
+        /** @type {ListItem} */
+        (/** @type {unknown} */ (this))
       );
       this.dispatchEvent(insertEvent);
 

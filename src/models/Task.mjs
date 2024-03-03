@@ -33,7 +33,7 @@ export default class Task {
     /** @type {boolean} */
     this.complete = complete;
     /** @type {Date?} */
-    this.dueDate = dueDate;
+    this.dueDate = typeof dueDate === "string" ? new Date(dueDate) : dueDate;
     /** @type {string} */
     this.recurring = recurring;
     /** @type {Date[]} */

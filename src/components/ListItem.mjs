@@ -24,17 +24,23 @@ export class ListItem extends Draggable(LitElement) {
 
   render() {
     return html` <header>
-        ${this.task?.subtasks.length ? "" : html`<span></span>`}
+        ${
+          // If we don't need to display the chevron, we can use an empty span to maintain the grid layout
+          this.task?.subtasks.length ? "" : html`<span></span>`
+        }
         <span class="drag-handle material-symbols">drag_handle</span>
-        ${this.task?.subtasks.length
-          ? html`<button class="toggle-subtasks ${this.open ? "open" : ""}" @click=${() => (this.open = !this.open)}>
-              <span class="material-symbols"> chevron_right </span>
-            </button>`
-          : null}
+        ${
+          // If there are no subtasks, don't display the chevron
+          this.task?.subtasks.length
+            ? html`<button class="toggle-subtasks ${this.open ? "open" : ""}" @click=${() => (this.open = !this.open)}>
+                <span class="material-symbols"> chevron_right </span>
+              </button>`
+            : null
+        }
         <!-- <input type="checkbox" ?checked=${this.task?.complete} /> -->
-        <custom-checkbox ?checked=${this.task?.complete}></custom-checkbox>
+        <custom-checkbox ?checked=${this.task?.complete} ?disabled="${!this.task?.title}"></custom-checkbox>
 
-        <input type="text" class="task-title" value="${this.task?.title || ""}" />
+        <input type="text" class="task-title" value="${this.task?.title || ""}" placeholder="Create a new task" />
 
         <a href="" class="details-link">
           ${this.task?.description ||

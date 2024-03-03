@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { LitElement } from "lit";
 import { ListItem } from "../ListItem.mjs";
+import Task from "../../models/Task.mjs";
 
 export class InsertTaskEvent extends CustomEvent {
   /**
@@ -13,7 +14,7 @@ export class InsertTaskEvent extends CustomEvent {
     super("inserttask", {
       composed: true,
       bubbles: true,
-      detail: { above, taskToInsert: taskToInsert, insertionTarget },
+      detail: { above, taskToInsert, insertionTarget },
     });
   }
 
@@ -28,6 +29,29 @@ export class InsertTaskEvent extends CustomEvent {
   get insertionTarget() {
     return this.detail.insertionTarget;
   }
+}
+
+export class RemoveTaskEvent extends CustomEvent {
+  /**
+   *
+   * @param {string} taskToRemove a stringified JSON representation of the task to be inserted
+   * @ param {ListItem} insertionTarget the target list item to insert the task into
+   */
+  constructor(taskToRemove /* , insertionTarget */) {
+    super("inserttask", {
+      composed: true,
+      bubbles: true,
+      detail: { taskToRemove /* , insertionTarget */ },
+    });
+  }
+
+  get taskToRemove() {
+    return this.detail.taskToRemove;
+  }
+
+  // get insertionTarget() {
+  //   return this.detail.insertionTarget;
+  // }
 }
 
 /**
@@ -87,9 +111,15 @@ export const Draggable = (superclass) =>
       if (this === e.insertionTarget) return;
 
       e.stopPropagation();
-      const task = JSON.parse(e.taskToInsert);
-      debugger;
-      // this.insertTask(e.above, task);
+      const taskToInsert = JSON.parse(e.taskToInsert);
+      const taskTarget = e.insertionTarget;
+      const above = e.above;
+
+      let insertionIndex = this.task.subtasks.indexOf(taskTarget.task);
+      if (!above) insertionIndex++;
+
+      this.task.subtasks.splice(insertionIndex, 0, new Task(taskToInsert));
+      this.requestUpdate();
     }
 
     /**
@@ -100,6 +130,7 @@ export const Draggable = (superclass) =>
       e.dataTransfer?.setData("task", JSON.stringify(this.task));
 
       if (this.header) this.header.style.backgroundColor = "lightgreen";
+      this.dispatchEvent(new RemoveTaskEvent(JSON.stringify(this.task)));
     }
 
     /**

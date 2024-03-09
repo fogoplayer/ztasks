@@ -16,6 +16,7 @@ export default class App extends LitElement {
 
   constructor() {
     super();
+    this.createRoute("/:taskId", Home);
     this.createRoute("/", Home);
     page.start();
   }

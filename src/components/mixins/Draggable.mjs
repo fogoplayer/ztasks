@@ -7,14 +7,14 @@ import { Task } from "../../models/Task.mjs";
 export class InsertTaskEvent extends CustomEvent {
   /**
    * @param {boolean} above if the task should be inserted above (as opposed to below) the current task
-   * @param {string} taskToInsert a stringified JSON representation of the task to be inserted
+   * @param {string} taskIdToInsert a stringified JSON representation of the task to be inserted
    * @param {ListItem} insertionTarget the target list item to insert the task into
    */
-  constructor(above, taskToInsert, insertionTarget) {
+  constructor(above, taskIdToInsert, insertionTarget) {
     super("inserttask", {
       composed: true,
       bubbles: true,
-      detail: { above, taskToInsert, insertionTarget },
+      detail: { above, taskIdToInsert, insertionTarget },
     });
   }
 
@@ -22,8 +22,8 @@ export class InsertTaskEvent extends CustomEvent {
     return this.detail.above;
   }
 
-  get taskToInsert() {
-    return this.detail.taskToInsert;
+  get taskIdToInsert() {
+    return this.detail.taskIdToInsert;
   }
 
   get insertionTarget() {
@@ -105,14 +105,13 @@ export const Draggable = (superclass) =>
       if (this === e.insertionTarget) return;
 
       e.stopPropagation();
-      const taskToInsert = JSON.parse(e.taskToInsert);
+      const taskIdToInsert = e.taskIdToInsert;
       const taskTarget = e.insertionTarget;
       const above = e.above;
 
       let insertionIndex = taskTarget.index;
       if (!above) insertionIndex++;
-
-      this.task?.subtasks.splice(insertionIndex, 0, new Task(taskToInsert));
+      this.task?.subtasks.splice(insertionIndex, 0, taskIdToInsert);
 
       this.requestUpdate();
     }
@@ -136,7 +135,7 @@ export const Draggable = (superclass) =>
      */
     onDragStart(e) {
       e.stopPropagation();
-      e.dataTransfer?.setData("task", JSON.stringify(this.task));
+      e.dataTransfer?.setData("task", this.taskId);
 
       if (this.header) this.header.style.backgroundColor = "lightgreen";
       this.dispatchEvent(new RemoveTaskEvent(this));

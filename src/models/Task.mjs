@@ -39,7 +39,10 @@ export class Task {
     /** @type {Date[]} */
     this.reminders = reminders;
     /** @type {Task[]} */
-    this.subtasks = subtasks;
+    this.subtasks = subtasks.map((subtask) => {
+      if (subtask instanceof Task) return subtask;
+      return new Task(subtask);
+    });
     /** @type {string[]} */
     this.owners = owners;
   }

@@ -82,10 +82,8 @@ export class ListItem extends Draggable(LitElement) {
           ${this.task
             ? repeat(
                 this.task.subtasks,
-                /** @param {Task} subtask */
-                (subtask) => subtask.id,
                 /**
-                 * @param {Task} subtask
+                 * @param {string} subtask
                  * @param {number} i
                  */
                 (subtask, i) => html`<list-item task-id=${subtask} index="${i}"></list-item>`

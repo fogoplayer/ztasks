@@ -44,9 +44,5 @@ export class Task {
     this.owners = owners;
   }
 
-  toJSON() {
-    return { ...this, subtasks: this.subtasks.map((subtask) => subtask.id) };
-  }
-
   toString = this.toJSON;
 }

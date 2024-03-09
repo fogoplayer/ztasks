@@ -23,6 +23,8 @@ if (taskData) {
   });
 } else {
   makeTask();
+  console.log(taskDict);
+  console.log(JSON.stringify(taskDict, null, 2));
   localStorage.setItem("task-data", JSON.stringify(Object.values(taskDict)));
 }
 

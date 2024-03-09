@@ -38,12 +38,15 @@ export class Task {
     this.recurring = recurring;
     /** @type {Date[]} */
     this.reminders = reminders;
-    /** @type {Task[]} */
-    this.subtasks = subtasks.map((subtask) => {
-      if (subtask instanceof Task) return subtask;
-      return new Task(subtask);
-    });
+    /** @type {string[]} */
+    this.subtasks = subtasks;
     /** @type {string[]} */
     this.owners = owners;
   }
+
+  toJSON() {
+    return { ...this, subtasks: this.subtasks.map((subtask) => subtask.id) };
+  }
+
+  toString = this.toJSON;
 }

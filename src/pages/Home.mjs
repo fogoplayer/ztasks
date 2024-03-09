@@ -26,13 +26,11 @@ export default class Home extends LitElement {
         ${this.task
           ? repeat(
               this.task.subtasks,
-              /** @param {Task} subtask */
-              (subtask) => subtask.id,
               /**
-               * @param {Task} subtask
+               * @param {string} subtask
                * @param {number} i
                */
-              (subtask, i) => html`<list-item .task=${subtask} index="${i}"></list-item>`
+              (subtask, i) => html`<list-item task-id="${subtask}" index="${i}"></list-item>`
             )
           : ""}
         <list-item .task=${new Task({})}></list-item>

@@ -56,8 +56,6 @@ export const Draggable = (superclass) =>
   class extends superclass {
     static properties = {
       insertAbove: { type: Boolean },
-      // index: { props: true, type: Number },
-      // task: { reflect: true, type: Object, attribute: true },
     };
 
     constructor() {
@@ -65,10 +63,6 @@ export const Draggable = (superclass) =>
 
       /** @type {Boolean?} */
       this.insertAbove = null;
-      /** @type {Number?} */
-      this.index = null;
-      /** @type {Task?} */
-      this.task = null;
     }
 
     firstUpdated() {

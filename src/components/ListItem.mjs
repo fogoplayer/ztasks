@@ -1,4 +1,5 @@
 /** @typedef {import("../models/Task.mjs").Task} Task */
+import * as TaskDAO from "../services/daos/TaskDAO.mjs";
 
 // @ts-ignore
 import { LitElement, html, css, repeat } from "lit";
@@ -13,6 +14,7 @@ export class ListItem extends Draggable(LitElement) {
 
   static properties = {
     task: { reflect: true, type: Object, attribute: true },
+    taskId: { reflect: true, type: String, attribute: "task-id" },
     open: { state: true, type: Boolean },
     index: { props: true, type: Number },
   };
@@ -20,6 +22,24 @@ export class ListItem extends Draggable(LitElement) {
   constructor() {
     super();
     this.open = true;
+
+    /** @type {Number?} */
+    this.index = null;
+    /** @type {Task?} */
+    this.task = null;
+    /** @type {String?} */
+    this.taskId = null;
+  }
+
+  /**
+   * @param {Map<string, unknown>} diff
+   */
+  updated(diff) {
+    super.updated(diff);
+    if (diff.has("taskId") && this.taskId) {
+      this.task = TaskDAO.getTaskById(this.taskId);
+      this.requestUpdate();
+    }
   }
 
   render() {
@@ -68,7 +88,7 @@ export class ListItem extends Draggable(LitElement) {
                  * @param {Task} subtask
                  * @param {number} i
                  */
-                (subtask, i) => html`<list-item .task=${subtask} index="${i}"></list-item>`
+                (subtask, i) => html`<list-item task-id=${subtask} index="${i}"></list-item>`
               )
             : ""}
         </ul>

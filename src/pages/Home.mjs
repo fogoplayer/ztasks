@@ -13,7 +13,15 @@ export default class Home extends LitElement {
 
   constructor() {
     super();
+
+    let taskData = localStorage.getItem("task-data");
+    if (taskData) {
+      this.task = new Task(JSON.parse(/** @type {string} */ (taskData)));
+      return;
+    }
+
     this.task = makeTask();
+    localStorage.setItem("task-data", JSON.stringify(this.task));
   }
 
   render() {

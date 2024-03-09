@@ -10,7 +10,7 @@ let tasksMade = 0;
  * @returns {Task?}
  */
 export function getTaskById(id) {
-  return taskDict[id];
+  return taskDict[id] || new Task({});
 }
 
 // Temp local storage data
@@ -42,7 +42,7 @@ function makeTask() {
     reminders: oneIn(4)
       ? new Array(randomInt(1, 5)).fill(0).map(() => new Date(Date.now() + randomInt(1, 10) * 24 * 60 * 60 * 1000))
       : [],
-    subtasks: oneIn(tasksMade) ? new Array(randomInt(1, 10)).fill(0).map(makeTask).map(getTaskById) : [],
+    subtasks: oneIn(tasksMade) ? new Array(randomInt(1, 10)).fill(0).map(makeTask) : [],
     owners: oneIn(4) ? ["Alice", "Bob", "Charlie"] : undefined,
   });
   taskDict[id] = newTask;

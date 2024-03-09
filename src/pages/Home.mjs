@@ -34,7 +34,7 @@ export default class Home extends InsertionDeletionHandler(LitElement) {
               (subtask, i) => html`<list-item task-id="${subtask}" index="${i}"></list-item>`
             )
           : ""}
-        <list-item .task=${new Task({})}></list-item>
+        <list-item task-id="${null}"></list-item>
       </main>`;
   }
 

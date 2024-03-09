@@ -34,8 +34,6 @@ export const Draggable = (superclass) =>
       this.header.addEventListener("dragleave", this.onDragLeave.bind(this));
       this.header.addEventListener("dragend", this.onDragEnd.bind(this));
       this.header.addEventListener("drop", /** @type {EventListener} */ (this.onDrop.bind(this)));
-      this.addEventListener("inserttask", /** @type {EventListener} */ (this.onInsertTask.bind(this)));
-      this.addEventListener("removetask", /** @type {EventListener} */ (this.onRemoveTask.bind(this)));
     }
 
     /** @param {Map<string, unknown>} diff */
@@ -55,38 +53,6 @@ export const Draggable = (superclass) =>
         }
       }
     }
-
-    // /**
-    //  * @param {InsertTaskEvent} e
-    //  */
-    // onInsertTask(e) {
-    //   if (this === e.insertionTarget) return;
-
-    //   e.stopPropagation();
-    //   const taskIdToInsert = e.taskIdToInsert;
-    //   const taskTarget = e.insertionTarget;
-    //   const above = e.above;
-
-    //   let insertionIndex = taskTarget.index;
-    //   if (!above) insertionIndex++;
-    //   this.task?.subtasks.splice(insertionIndex, 0, taskIdToInsert);
-
-    //   this.requestUpdate();
-    // }
-
-    // /**
-    //  * @param {RemoveTaskEvent} e
-    //  */
-    // onRemoveTask(e) {
-    //   if (this === e.taskToRemove) return;
-
-    //   e.stopPropagation();
-    //   const taskToRemove = e.taskToRemove;
-
-    //   let deletionIndex = taskToRemove.index;
-
-    //   this.task?.subtasks.splice(deletionIndex, 1);
-    // }
 
     /**
      * @param {DragEvent} e

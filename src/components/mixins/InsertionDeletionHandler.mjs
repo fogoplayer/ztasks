@@ -7,6 +7,12 @@
 export const InsertionDeletionHandler = (superclass) =>
   /** @extends LitElement */
   class extends superclass {
+    firstUpdated() {
+      super.firstUpdated();
+      this.addEventListener("inserttask", this.onInsertTask);
+      this.addEventListener("removetask", this.onRemoveTask);
+    }
+
     /**
      * @param {InsertTaskEvent} e
      */

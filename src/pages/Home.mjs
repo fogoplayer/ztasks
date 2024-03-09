@@ -4,8 +4,9 @@ import globalCss from "../global-styles/global.css.mjs";
 import "../components/ListItem.mjs";
 import { Task } from "../models/Task.mjs";
 import * as TaskDAO from "../services/daos/TaskDAO.mjs";
+import { InsertionDeletionHandler } from "../components/mixins/InsertionDeletionHandler.mjs";
 
-export default class Home extends LitElement {
+export default class Home extends InsertionDeletionHandler(LitElement) {
   static get properties() {
     return {
       task: { type: Task, state: true },

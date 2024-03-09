@@ -62,7 +62,7 @@ export class ListItem extends Draggable(LitElement) {
 
         <input type="text" class="task-title" value="${this.task?.title || ""}" placeholder="Create a new task" />
 
-        <a href="" class="details-link">
+        <a href="${this.task?.id || ""}" class="details-link">
           ${this.task?.description ||
           this.task?.dueDate ||
           this.task?.reminders.length ||

@@ -4,13 +4,14 @@
 import { LitElement } from "lit";
 import { Task } from "../../models/Task.mjs";
 import { RemoveTaskEvent, InsertTaskEvent } from "../../models/DraggableEvents.mjs";
+import { InsertionDeletionHandler } from "./InsertionDeletionHandler.mjs";
 
 /**
  * @param {unknown} superclass
  */
 export const Draggable = (superclass) =>
   /** @extends LitElement */
-  class extends superclass {
+  class extends InsertionDeletionHandler(superclass) {
     static properties = {
       insertAbove: { type: Boolean },
     };
@@ -55,37 +56,37 @@ export const Draggable = (superclass) =>
       }
     }
 
-    /**
-     * @param {InsertTaskEvent} e
-     */
-    onInsertTask(e) {
-      if (this === e.insertionTarget) return;
+    // /**
+    //  * @param {InsertTaskEvent} e
+    //  */
+    // onInsertTask(e) {
+    //   if (this === e.insertionTarget) return;
 
-      e.stopPropagation();
-      const taskIdToInsert = e.taskIdToInsert;
-      const taskTarget = e.insertionTarget;
-      const above = e.above;
+    //   e.stopPropagation();
+    //   const taskIdToInsert = e.taskIdToInsert;
+    //   const taskTarget = e.insertionTarget;
+    //   const above = e.above;
 
-      let insertionIndex = taskTarget.index;
-      if (!above) insertionIndex++;
-      this.task?.subtasks.splice(insertionIndex, 0, taskIdToInsert);
+    //   let insertionIndex = taskTarget.index;
+    //   if (!above) insertionIndex++;
+    //   this.task?.subtasks.splice(insertionIndex, 0, taskIdToInsert);
 
-      this.requestUpdate();
-    }
+    //   this.requestUpdate();
+    // }
 
-    /**
-     * @param {RemoveTaskEvent} e
-     */
-    onRemoveTask(e) {
-      if (this === e.taskToRemove) return;
+    // /**
+    //  * @param {RemoveTaskEvent} e
+    //  */
+    // onRemoveTask(e) {
+    //   if (this === e.taskToRemove) return;
 
-      e.stopPropagation();
-      const taskToRemove = e.taskToRemove;
+    //   e.stopPropagation();
+    //   const taskToRemove = e.taskToRemove;
 
-      let deletionIndex = taskToRemove.index;
+    //   let deletionIndex = taskToRemove.index;
 
-      this.task?.subtasks.splice(deletionIndex, 1);
-    }
+    //   this.task?.subtasks.splice(deletionIndex, 1);
+    // }
 
     /**
      * @param {DragEvent} e

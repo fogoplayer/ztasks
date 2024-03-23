@@ -43,7 +43,7 @@ export class ListItem extends Draggable(LitElement) {
   }
 
   render() {
-    return html` <header>
+    return html`<header>
         ${
           // If we don't need to display the chevron, we can use an empty span to maintain the grid layout
           this.task?.subtasks.length ? "" : html`<span></span>`

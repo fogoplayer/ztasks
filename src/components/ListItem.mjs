@@ -1,4 +1,5 @@
 /** @typedef {import("../models/Task.mjs").Task} Task */
+import * as TaskDAO from "../services/daos/TaskDAO.mjs";
 
 // @ts-ignore
 import { LitElement, html, css, repeat } from "lit";
@@ -13,6 +14,7 @@ export class ListItem extends Draggable(LitElement) {
 
   static properties = {
     task: { reflect: true, type: Object, attribute: true },
+    taskId: { reflect: true, type: String, attribute: "task-id" },
     open: { state: true, type: Boolean },
     index: { props: true, type: Number },
   };
@@ -20,23 +22,47 @@ export class ListItem extends Draggable(LitElement) {
   constructor() {
     super();
     this.open = true;
+
+    /** @type {Number?} */
+    this.index = null;
+    /** @type {Task?} */
+    this.task = null;
+    /** @type {String?} */
+    this.taskId = null;
+  }
+
+  /**
+   * @param {Map<string, unknown>} diff
+   */
+  updated(diff) {
+    super.updated(diff);
+    if (diff.has("taskId") && this.taskId) {
+      this.task = TaskDAO.getTaskById(this.taskId);
+      this.requestUpdate();
+    }
   }
 
   render() {
-    return html` <header>
-        ${this.task?.subtasks.length ? "" : html`<span></span>`}
+    return html`<header>
+        ${
+          // If we don't need to display the chevron, we can use an empty span to maintain the grid layout
+          this.task?.subtasks.length ? "" : html`<span></span>`
+        }
         <span class="drag-handle material-symbols">drag_handle</span>
-        ${this.task?.subtasks.length
-          ? html`<button class="toggle-subtasks ${this.open ? "open" : ""}" @click=${() => (this.open = !this.open)}>
-              <span class="material-symbols"> chevron_right </span>
-            </button>`
-          : null}
+        ${
+          // If there are no subtasks, don't display the chevron
+          this.task?.subtasks.length
+            ? html`<button class="toggle-subtasks ${this.open ? "open" : ""}" @click=${() => (this.open = !this.open)}>
+                <span class="material-symbols"> chevron_right </span>
+              </button>`
+            : null
+        }
         <!-- <input type="checkbox" ?checked=${this.task?.complete} /> -->
-        <custom-checkbox ?checked=${this.task?.complete}></custom-checkbox>
+        <custom-checkbox ?checked=${this.task?.complete} ?disabled="${!this.task?.title}"></custom-checkbox>
 
-        <input type="text" class="task-title" value="${this.task?.title || ""}" />
+        <input type="text" class="task-title" value="${this.task?.title || ""}" placeholder="Create a new task" />
 
-        <a href="" class="details-link">
+        <a href="${this.task?.id || ""}" class="details-link">
           ${this.task?.description ||
           this.task?.dueDate ||
           this.task?.reminders.length ||
@@ -56,13 +82,11 @@ export class ListItem extends Draggable(LitElement) {
           ${this.task
             ? repeat(
                 this.task.subtasks,
-                /** @param {Task} subtask */
-                (subtask) => subtask.id,
                 /**
-                 * @param {Task} subtask
+                 * @param {string} subtask
                  * @param {number} i
                  */
-                (subtask, i) => html`<list-item .task=${subtask} index="${i}"></list-item>`
+                (subtask, i) => html`<list-item task-id=${subtask} index="${i}"></list-item>`
               )
             : ""}
         </ul>

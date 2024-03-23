@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css } from "lit";
 
 export class Collapsible extends LitElement {
   static get properties() {
@@ -8,7 +8,7 @@ export class Collapsible extends LitElement {
   }
 
   render() {
-    return html`<div class="outer ${this.open ? "open" : ""}">
+    return html`<div class="outer ${this.open ? "open" : ""}" ?inert="${!this.open}">
       <div class="inner">
         <slot></slot>
       </div>
@@ -21,7 +21,7 @@ export class Collapsible extends LitElement {
         display: grid;
         grid-template-rows: 0fr;
         transition: grid-template-rows var(--collapsible-timing) ease-in-out;
-      
+
         &.open {
           display: grid;
           grid-template-rows: 1fr;
@@ -29,11 +29,11 @@ export class Collapsible extends LitElement {
       }
 
       .inner {
-        min-height:0;
+        min-height: 0;
         overflow: hidden;
       }
-    `
+    `,
   ];
 }
 
-customElements.define('collapsible-', Collapsible);
+customElements.define("collapsible-", Collapsible);

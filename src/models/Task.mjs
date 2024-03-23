@@ -38,9 +38,11 @@ export class Task {
     this.recurring = recurring;
     /** @type {Date[]} */
     this.reminders = reminders;
-    /** @type {Task[]} */
+    /** @type {string[]} */
     this.subtasks = subtasks;
     /** @type {string[]} */
     this.owners = owners;
   }
+
+  toString = this.toJSON;
 }

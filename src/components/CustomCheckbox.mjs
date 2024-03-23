@@ -4,19 +4,29 @@ class CustomCheckbox extends LitElement {
   static properties = {
     name: { reflect: true, type: String, attribute: true },
     checked: { reflect: true, type: Boolean, attribute: true },
+    disabled: { reflect: true, type: Boolean, attribute: true },
   };
+
+  constructor() {
+    super();
+    this.name = "";
+    this.checked = false;
+    this.disabled = false;
+  }
 
   render() {
     return html`<div
-        class="skew-checkbox ${this.checked ? "checked" : ""}"
-        @click="${() => (this.checked = !this.checked)}"
+        class="skew-checkbox${this.checked ? " checked" : ""}"
+        @click="${() => {
+          if (!this.disabled) this.checked = !this.checked;
+        }}"
       >
         <div class="clip">
           <span class="border"></span>
           <span class="border blue"></span>
         </div>
       </div>
-      <input type="checkbox" name="${this.name}" hidden />`;
+      <input type="checkbox" name="${this.name}" hidden ?disabled="${this.disabled}" />`;
   }
 
   // constructor() {
